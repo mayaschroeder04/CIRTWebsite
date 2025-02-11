@@ -1,6 +1,6 @@
 body {
     overflow-x:hidden;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -23,7 +23,7 @@ header img {
 
 /* under the logo */
 .cirt-text {
-    font-family: 'Inter', sans-serif; /* Matches header font */
+    font-family: 'Titillium Web', sans-serif; /* Matches header font */
     color: black;
     font-size: 20px;
     font-weight: bold;
@@ -260,7 +260,6 @@ nav {
     height: 50px;
     width: 50px;
     font-family: 'Titillium Web', sans-serif;
-    color: #333;
     border-radius: 10px;
     box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
     background: white;
@@ -303,6 +302,19 @@ nav {
 #facebook svg {
     fill: #1877f2; /* Facebook blue */
 }
+
+#instagram span {
+    color: #e4405f; /* Instagram text color */
+}
+
+#linkedin span {
+    color: #0e76a8; /* LinkedIn text color */
+}
+
+#facebook span {
+    color: #1877f2; /* Facebook text color */
+}
+
 
 a {
     text-decoration: none;
