@@ -316,7 +316,7 @@ nav {
 }
 
 #instagram svg {
-    fill: #1da1f2;
+    fill: #e4405f; /* Instagram color */
 }
 
 #linkedin svg {
@@ -324,5 +324,10 @@ nav {
 }
 
 #facebook svg {
-    fill: #333;
+    fill: #1877f2; /* Facebook blue */
 }
+
+a {
+    text-decoration: none;
+}
+
