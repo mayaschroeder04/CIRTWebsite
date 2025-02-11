@@ -5,7 +5,6 @@ body {
     padding: 0;
 }
 
-/* this is register button */
 header {
     overflow-x:hidden;
     background-color: white;
@@ -15,11 +14,14 @@ header {
     justify-content: space-between;
 
 }
+
+/* logo */
 header img {
     height: 50px;
     margin-left: 20px;
 }
 
+/* under the logo */
 .cirt-text {
     font-family: 'Inter', sans-serif; /* Matches header font */
     color: black;
@@ -31,11 +33,11 @@ header img {
     margin-left: 20px;
 }
 
-.auth-buttons {
+.login-buttons {
     display: flex;
     gap: 10px;
 }
-.auth-buttons button {
+.login-buttons button {
     background-color: black;
     color: white;
     border: none;
@@ -46,7 +48,7 @@ header img {
     border-radius: 6px;
     margin-right: 10px;
 }
-.auth-buttons button:hover {
+.login-buttons button:hover {
     background-color: #a6192e;
     transform: scale(1.1);
 }
