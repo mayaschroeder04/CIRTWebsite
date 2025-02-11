@@ -13,6 +13,11 @@ header {
     align-items: center;
     justify-content: space-between;
 }
+header h1 {
+    color: black;
+    margin-top:2%;
+
+}
 
 /* logo */
 header img {
@@ -27,7 +32,6 @@ header img {
     font-size: 20px;
     font-weight: bold;
     margin-top: 1px;
-
     margin-bottom: 0;
     margin-left: 20px;
 }
@@ -71,7 +75,9 @@ nav {
     font-style: italic;
     color: white;
     font-family: 'Poppins', sans-serif; /* Modernized font */
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.75); /* Drop shadow for depth */
+    text-shadow:
+    0 0 10px rgba(0, 0, 0, 1),
+    0 0 50px rgba(25, 25, 112, 1);
 }
 
 
