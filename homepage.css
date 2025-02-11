@@ -228,34 +228,6 @@ nav {
     text-decoration: underline; /* Add underline on hover */
 }
 
-.tabs {
-    display: flex;
-    justify-content: left;
-    margin-left: 18.5%;
-    width: 50%; /* Match the search bar width */
-    margin-bottom: 40px;
-    border-bottom: None;
-    gap: 15px;
-    padding-bottom: 8px;
-}
-
-.tab {
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 14px;
-    border: none;
-    background: #a6192e;
-    font-weight: 600;
-    transition: 0.3s;
-    color: white;
-    border-radius: 6px;
-}
-
-.tab:hover {
-    background-color: #d9534f;
-    transform: scale(1.02);
-}
-
 .modal-content {
     text-align: center;
     padding: 20px;

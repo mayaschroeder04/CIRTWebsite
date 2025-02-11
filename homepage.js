@@ -26,10 +26,3 @@ function closeModal() {
 function continueAsGuest() {
     window.location.href = "fake_journal.html";
 }
-
-function switchTab(clickedTab) {
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    clickedTab.classList.add('active');
-}
