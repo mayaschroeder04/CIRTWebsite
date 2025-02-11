@@ -12,7 +12,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 /* logo */
@@ -62,11 +61,12 @@ header img {
     padding-top: 50px;
 
 }
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 nav {
     margin-left: 18.5%;
-    padding: 0px;
+    margin-top: -70px;
+    margin-bottom: -40px;
     font-size: 60px;
     font-style: italic;
     color: white;
