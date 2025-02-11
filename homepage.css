@@ -28,7 +28,7 @@ header img {
     font-size: 20px;
     font-weight: bold;
     margin-top: 1px;
-    margin-right: 0;
+
     margin-bottom: 0;
     margin-left: 20px;
 }
@@ -57,24 +57,29 @@ header img {
     background-image: url("skylinee.jpg");
     background-size: cover;
     background-position: center top;
-    padding-bottom: 150px; /* Adjust as needed */
+    padding-bottom: 200px; /* Adjust as needed */
     height: 250px;
     padding-top: 50px;
 
 }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 nav {
-    text-align: center;
-    padding: 10px;
-    font-size: 29px;
-    font-weight: bold;
+    margin-left: 18.5%;
+    padding: 0px;
+    font-size: 60px;
     font-style: italic;
     color: white;
+    font-family: 'Poppins', sans-serif; /* Modernized font */
+    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.75); /* Drop shadow for depth */
 }
+
+
 .search-bar {
     display: flex;
     justify-content: left;
     margin-left: 18.5%;
+    margin-top: 0px;
     margin-bottom: 20px;
 }
 .search-bar input {
