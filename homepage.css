@@ -4,6 +4,8 @@ body {
     margin: 0;
     padding: 0;
 }
+
+/* this is register button */
 header {
     overflow-x:hidden;
     background-color: white;
@@ -52,7 +54,7 @@ header img {
 .background-section {
     background-image: url("skylinee.jpg");
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     padding-bottom: 150px; /* Adjust as needed */
     height: 250px;
     padding-top: 50px;
