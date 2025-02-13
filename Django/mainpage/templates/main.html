@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Tampa CIRT Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="homepage.js">
+</head>
+<body>
+<header>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="tampalogo.png" alt="CIRT Logo">
+        <p class="cirt-text">CIRT</p>
+    </div>
+    <h1 style="color:black; margin-top:2%">CRIMINOLOGY INSTITUTE OF RESEARCH TECHNOLOGY</h1>
+    <div class="auth-buttons">
+        <button onclick="openModal()">Register/Login</button>
+    </div>
+
+</header>
+<div class="background-section">
+    <nav>
+        <p style="margin-right:4.5%;">Connecting minds. Empowering careers. Advancing justice.</p>
+    </nav>
+    <div class="search-bar">
+        <input type="text" placeholder="Search journals, books, images, sources...">
+    </div>
+</div>
+<!-- Tabs under search bar -->
+<div class="tabs">
+    <button class="tab" onclick = "switchTab(this)">Journals</button>
+    <button class="tab" onclick = "switchTab(this)">Books</button>
+    <button class="tab" onclick = "switchTab(this)">Images</button>
+    <button class="tab" onclick = "switchTab(this)">Authors</button>
+</div>
+
+<!-- Featured posts and red bar -->
+<div style="margin-top: 20px; margin-left: 18.5%; width: 60%;">
+    <h2 style="color: #333; text-transform: uppercase; margin: 0;">Featured Posts</h2>
+    <hr style="background-color: #a6192e; height: 3px; border: none;">
+</div>
+
+<section class="featured-post">
+    <h2>Journal Title</h2>
+    <p class="author">Author Name</p>
+    <p>Description goes here.</p>
+    <a class="read-more" onclick="openModal()">Continue Reading</a>
+</section>
+
+<div id="modal" class="modal">
+    <div id="modal-content"></div>
+    <button onclick="closeModal()">Close</button>
+</div>
+<div class="spacer"></div>
+
+<div class="footer-container">
+    <!-- Left and right "blocked out" areas -->
+    <div class="footer-buffer footer-buffer-left"></div>
+    <div class="footer-buffer footer-buffer-right"></div>
+
+    <!-- Footer main content -->
+    <div class="footer-inner">
+        <!-- Main Title: EXPLORE CIRT -->
+        <div class="main-title">
+            <h1>EXPLORE CIRT</h1>
+        </div>
+
+        <!-- Footer Sections -->
+        <div class="footer-sections">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">CIRT</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Explore Content</h3>
+                <ul>
+                    <li><a href="#">Explore CIRT</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Terms & Policies</h3>
+                <ul>
+                    <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Description</h3>
+                <p style="color:white"> Organized in 2023, the CIRT is designed to offer a variety of academic pursuits including: education for students and training for criminal justice professionals; engaging in local, regional, and nationwide criminal justice research and policy events; publishing and promoting high-level multidisciplinary research; expanding faculty and student reach in grant and funding opportunities; and coordinating further collaboration with local criminal justice agencies.
+                </p>
+            </div>
+        </div>
+
+        <!-- Social media icons at the bottom -->
+        <div class="social-icons">
+            <a href="https://www.instagram.com/utampacrm/" target="_blank">
+                <img src="insta.png" alt="Instagram">
+            </a>
+            <a href="https://www.facebook.com/utampacrm" target="_blank">
+                <img src="facebook.png" alt="Facebook">
+            </a>
+            <a href="https://www.linkedin.com/company/utampa-criminology-criminal-justice/" target="_blank">
+                <img src="linkedin.png" alt="LinkedIn">
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
