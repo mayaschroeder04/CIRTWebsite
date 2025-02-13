@@ -1,6 +1,6 @@
 body {
     overflow-x:hidden;
-    font-family: 'Titillium Web', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -16,7 +16,7 @@ header {
 header h1 {
     color: black;
     margin-top:2%;
-
+    margin-left: 20px;
 }
 
 /* logo */
@@ -25,9 +25,10 @@ header img {
     margin-left: 20px;
 }
 
+
 /* under the logo */
 .cirt-text {
-    font-family: 'Titillium Web', sans-serif; /* Matches header font */
+    font-family: 'Poppins', sans-serif; /* Matches header font */
     color: black;
     font-size: 20px;
     font-weight: bold;
