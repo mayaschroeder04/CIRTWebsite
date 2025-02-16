@@ -41,20 +41,40 @@ header img {
     display: flex;
     gap: 10px;
 }
-.login-buttons button {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    transition: 0.3s;
+
+/* Register button (outlined) */
+.register-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
     font-weight: bold;
     border-radius: 6px;
-    margin-right: 10px;
+    transition: 0.3s;
 }
-.login-buttons button:hover {
-    background-color: #a6192e;
-    transform: scale(1.1);
+
+.register-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+/* Log In button (red background) */
+.login-btn {
+    background-color: #a6192e; /* Deep red */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #8b141f; /* Slightly darker red */
 }
 
 .background-section {
