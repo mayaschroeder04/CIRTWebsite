@@ -17,6 +17,8 @@ header h1 {
     color: black;
     margin-top:2%;
     margin-left: 20px;
+    font-size: 30px;
+    font-weight: lighter;
 }
 
 /* logo */
@@ -31,7 +33,6 @@ header img {
     font-family: 'Poppins', sans-serif; /* Matches header font */
     color: black;
     font-size: 20px;
-    font-weight: bold;
     margin-top: 1px;
     margin-bottom: 0;
     margin-left: 20px;
@@ -50,7 +51,6 @@ header img {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    font-weight: bold;
     border-radius: 6px;
     transition: 0.3s;
 }
@@ -68,9 +68,9 @@ header img {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    font-weight: bold;
     border-radius: 6px;
     transition: 0.3s;
+    margin-right: 5px
 }
 
 .login-btn:hover {
@@ -85,6 +85,30 @@ header img {
     height: 250px;
     padding-top: 50px;
 
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust spacing between tabs and buttons */
+}
+
+.header-tabs {
+    display: flex;
+    gap: 15px; /* Space between tabs */
+}
+
+.tab {
+    color: #a6192e;
+    padding: 10px 15px;
+    transition: 0.3s;
+    font-size: 16px;
+    text-shadow: none;
+ 
+}
+
+.tab:hover {
+    color: #e4405f; /* Highlight effect on hover */
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
@@ -276,6 +300,7 @@ nav {
     color: blue;
     text-decoration: underline;
 }
+
 
 
 /*social media icons */
