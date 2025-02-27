@@ -6,25 +6,32 @@ body {
 }
 
 header {
-    overflow-x:hidden;
-    background-color: white;
-    color: white;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-}
-header h1 {
-    color: black;
-    margin-top:2%;
-    margin-left: 20px;
-    font-size: 30px;
-    font-weight: lighter;
+    align-items: center;
+    padding: 20px;
 }
 
-/* logo */
-header img {
-    height: 50px;
-    margin-left: 20px;
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left img {
+    height: 60px; /* Adjust size as needed */
+    margin-right: 15px;
+}
+
+.header-left h1 {
+    text-align: left;
+    font-size: 30px;
+    font-weight: lighter;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
 }
 
 
@@ -411,9 +418,8 @@ a {
 
 .input:focus, input:hover {
     outline: none;
-    border-color: rgba(234,76,137,0.4);
+    border-color: rgb(31, 32, 35);
     background-color: #fff;
-    box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
 }
 
 .icon {
