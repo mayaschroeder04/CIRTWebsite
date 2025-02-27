@@ -6,20 +6,20 @@
     <title>University of Tampa CIRT Website</title>
     {% load static %}
     <!-- Icon -->
-     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+     <link rel="icon" type="image/x-icon" href='{% static "favicon.ico"%}'>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- CSS File -->
-    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{%static 'homepage.css'%}">
     <!-- JS File -->
-    <script src="{% static 'js/homepage.js' %}"></script>
+    <script src="{%static 'homepage.js'%}"></script>
 </head>
 <body>
 
 <!-- top of the page -->
 <header>
     <div style="display: flex; flex-direction: column; align-items: center;">
-        <img src="{% static 'images/tampalogo.png' %}" alt="CIRT Logo">
+        <img src="{% static 'tampalogo.png'%}" alt="CIRT Logo">
         <p class="cirt-text">CIRT</p>
     </div>
     <h1 >CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
@@ -31,10 +31,12 @@
             <a href="#" class="tab">Publications</a>
             <a href="#" class="tab">Contact</a>
         </div>
+    </div>
     <div class="login-buttons">
         <button class="register-btn" onclick="openModal()">Register</button>
         <button class="login-btn" onclick="openModal()">Log In</button>
     </div>
+
 </header>
 <div class="background-section">
 
