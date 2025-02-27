@@ -430,8 +430,6 @@ a {
     height: 1rem;
 }
 
-
-
-
-
-
+.input::-webkit-search-cancel-button {
+    filter: invert(0%) grayscale(100%);
+}
