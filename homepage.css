@@ -58,7 +58,7 @@ header {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 6px;
     transition: 0.3s;
 }
 
@@ -76,7 +76,7 @@ header {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 6px;
     transition: 0.3s;
     margin-right: 5px
 }
@@ -389,79 +389,47 @@ a {
     text-decoration: none;
 }
 
-
 /* search bar */
 .group {
-    position: relative;
     display: flex;
+    justify-content: center;
+    line-height: 28px;
     align-items: center;
-    width: 62%;
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
-    border-radius: 20px;
-    padding: 7px;
-    backdrop-filter: blur(6px); /* Adds a blur effect for a frosted glass look */
-    transition: 0.3s;
-}
-.group:hover {
-    background: rgba(255, 255, 255, 0.7);
+    position: relative;
 }
 
 .input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent; /* Keeps text input background transparent */
-    font-size: 16px;
-    padding: 10px;
-}
-
-.icon {
-    width: 20px;
-    height: 20px;
-    margin-left: 10px;
-    opacity: 0.7;
-}
-
-
-.input {
-    flex: 1;
     width: 900px;
     height: 50px;
     line-height: 28px;
     padding: 0 1rem;
     padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
     outline: none;
-    background: transparent !important; /* Ensures transparency */
-    color: #2f3032;
+    background-color: #f3f3f4;
+    color: #0d0c22;
     transition: .3s ease;
 }
 
-/* Placeholder text color */
 .input::placeholder {
-    color: #3f3f3f;
+    color: #9e9ea7;
 }
 
-/* Input focus and hover effects */
-.input:focus, .input:hover {
+.input:focus, input:hover {
     outline: none;
     border-color: rgb(31, 32, 35);
-    background: rgba(255, 255, 255, 0.7); /* Slight opacity for effect */
+    background-color: #fff;
 }
 
-/* Search icon positioning */
 .icon {
     position: absolute;
-    left: 15px; /* Adjust based on layout */
-    fill: #2f3032;
+    margin-right: 860px;
+    fill: #9e9ea7;
     width: 1rem;
     height: 1rem;
 }
 
-
-
-
-
-
-
-
+.input::-webkit-search-cancel-button {
+    filter: invert(0%) grayscale(100%);
+}
