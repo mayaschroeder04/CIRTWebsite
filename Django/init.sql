@@ -6,3 +6,9 @@ CREATE TABLE IF NOT EXISTS web_pages (
 
 INSERT INTO web_pages (title, html_content)
 VALUES ('main', '$(cat /docker-entrypoint-initdb.d/main.html)');
+
+
+CREATE DATABASE IF NOT EXISTS criminology_db;
+CREATE USER 'admin'@'%' IDENTIFIED BY 'adminpassword';
+GRANT ALL PRIVILEGES ON criminology_db.* TO 'admin'@'%';
+FLUSH PRIVILEGES;
