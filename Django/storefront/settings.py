@@ -16,6 +16,14 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Add this line
+#
+# # Ensure `STATICFILES_DIRS` is correct
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),  # If you have a separate static folder
+# ]
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
