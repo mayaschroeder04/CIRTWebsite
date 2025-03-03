@@ -54,18 +54,70 @@
     <hr style="background-color: #a6192e; height: 3px; border: none;">
 </div>
 
-<!-- featured post box -->
+<!-- Featured Post 1 -->
 <section class="featured-post">
-    <h2>Journal Title</h2>
-    <p class="author">Author Name</p>
-    <p>Description goes here.</p>
-    <a class="read-more" onclick="openModal()">Continue Reading</a>
+    <h2>Random title 1</h2>
+    <p class="author">John Doe</p>
+    <p>A groundbreaking study exploring the impact of AI in criminal justice.</p>
+    <a class="read-more" onclick="openModal('Journal Title 1', 'A groundbreaking study exploring the impact of AI in criminal justice.')">Continue Reading</a>
 </section>
 
+<!-- Featured Post 2 -->
+<section class="featured-post">
+    <h2>Crime Pattern Studies</h2>
+    <p class="author">Jack Brown</p>
+    <p>An in-depth analysis of crime patterns in urban areas over the past decade.</p>
+    <a class="read-more" onclick="openModal('Journal Title 2', 'An in-depth analysis of crime patterns in urban areas over the past decade.')">Continue Reading</a>
+</section>
+
+<!-- Featured Post 3 -->
+<section class="featured-post">
+    <h2>Random title 3</h2>
+    <p class="author">Andy Miller</p>
+    <p>Examining the effectiveness of rehabilitation programs for non-violent offenders.</p>
+    <a class="read-more" onclick="openModal('Journal Title 3', 'Examining the effectiveness of rehabilitation programs for non-violent offenders.')">Continue Reading</a>
+</section>
+
+<!-- Modal (for all featured posts) -->
 <div id="modal" class="modal">
     <div id="modal-content"></div>
-    <button onclick="closeModal()">Close</button>
 </div>
+
+<script>
+    function openModal(title) {
+        let modal = document.getElementById("modal");
+        let modalContent = document.getElementById("modal-content");
+    
+        // Ensure modal elements exist before modifying them
+        if (modal && modalContent) {
+            modal.style.display = "block";
+            modalContent.innerHTML = 
+                <div class="modal-content">
+                    <h2><strong>Log in to continue reading</strong></h2>
+                    <p>${title}</p>
+                    <button onclick="redirectToLogin()">Sign Up / Log In</button>
+                    <button onclick="continueAsGuest()">Continue as Guest</button>
+                    <button onclick="closeModal()">Close</button>
+                </div>
+            ;
+        }
+    }
+    
+    function closeModal() {
+        let modal = document.getElementById("modal");
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+    function redirectToLogin() {
+        alert("Redirecting to login page... (Placeholder Action)");
+    }
+    
+    function continueAsGuest() {
+        alert("Continuing as guest... (Placeholder Action)");
+    }
+    </script>
 
 <!-- space between the footer and the featured post box -->
 <div class="spacer"></div>
