@@ -9,6 +9,14 @@ VALUES ('main', '$(cat /docker-entrypoint-initdb.d/main.html)');
 
 
 CREATE DATABASE IF NOT EXISTS criminology_db;
-CREATE USER 'admin'@'%' IDENTIFIED BY 'adminpassword';
+CREATE DATABASE IF NOT EXISTS criminology_db;
+
+-- Switch to the database
+USE criminology_db;
+
+-- Create the user if it doesn't exist
+CREATE USER IF NOT EXISTS 'admin'@'%' IDENTIFIED BY 'adminpassword';
+
+-- Grant privileges to the user
 GRANT ALL PRIVILEGES ON criminology_db.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
