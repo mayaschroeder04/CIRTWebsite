@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Tampa CIRT Website</title>
+    {% load static %}
+    <!-- Icon -->
+     <link rel="icon" type="image/x-icon" href='{% static "favicon.ico"%}'>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- CSS File -->
+    <link rel="stylesheet" href="{%static 'homepage.css'%}">
+    <!-- JS File -->
+    <script src="{%static 'homepage.js'%}"></script>
+</head>
+<body>
+
+<!-- top of the page -->
+<header>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <img src="{% static 'tampalogo.png'%}" alt="CIRT Logo">
+        <p class="cirt-text">CIRT</p>
+    </div>
+    <h1 >CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+    <div class="header-right">
+        <!-- Tabs Section -->
+        <div class="header-tabs">
+            <a href="#" class="tab">Home</a>
+            <a href="#" class="tab">Research</a>
+            <a href="#" class="tab">Publications</a>
+            <a href="#" class="tab">Contact</a>
+        </div>
+    </div>
+    <div class="login-buttons">
+        <button class="register-btn" onclick="openModal()">Register</button>
+        <button class="login-btn" onclick="openModal()">Log In</button>
+    </div>
+
+</header>
+<div class="background-section">
+
+    <!-- quote above search bar -->
+    <nav>
+        <p>
+            Connecting Minds. <br>
+            Empowering Change. <br>
+            Inspiring Innovation.
+        </p>
+
+    </nav>
+    <!-- search bar -->
+    <div class="search-bar">
+        <input type="text" placeholder="Search journals, books, images, sources...">
+    </div>
+</div>
+
+<!-- Featured posts and red bar -->
+<div style="margin-top: 20px; margin-left: 18.5%; width: 60%;">
+    <h2 style="color: #333; text-transform: uppercase; margin: 0;">Featured Posts</h2>
+    <hr style="background-color: #a6192e; height: 3px; border: none;">
+</div>
+
+<!-- featured post box -->
+<section class="featured-post">
+    <h2>Journal Title</h2>
+    <p class="author">Author Name</p>
+    <p>Description goes here.</p>
+    <a class="read-more" onclick="openModal()">Continue Reading</a>
+</section>
+
+<div id="modal" class="modal">
+    <div id="modal-content"></div>
+    <button onclick="closeModal()">Close</button>
+</div>
+
+<!-- space between the footer and the featured post box -->
+<div class="spacer"></div>
+
+<!-- left and right black bloxes in the footer -->
+<div class="footer-container">
+    <!-- Left and right "blocked out" areas -->
+    <div class="footer-buffer footer-buffer-left"></div>
+    <div class="footer-buffer footer-buffer-right"></div>
+
+    <!-- footer main content -->
+    <div class="footer-inner">
+        <!-- main title -->
+        <div class="main-title">
+            <h1>EXPLORE CIRT</h1>
+        </div>
+
+        <!-- footer sections -->
+        <div class="footer-sections">
+            <div class="footer-section">
+                <!-- first section -->
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">CIRT</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <!-- second section -->
+                <h3>Explore Content</h3>
+                <ul>
+                    <li><a href="#">Explore CIRT</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <!-- third section -->
+                <h3>Terms & Policies</h3>
+                <ul>
+                    <li><a href="{% url 'terms-and-conditions' %}">Terms and Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <!-- fourth section -->
+                <h3>Description</h3>
+                <p style="color:white"> Organized in 2023, the CIRT is designed to offer a variety of academic pursuits including: education for students and training for criminal justice professionals; engaging in local, regional, and nationwide criminal justice research and policy events; publishing and promoting high-level multidisciplinary research; expanding faculty and student reach in grant and funding opportunities; and coordinating further collaboration with local criminal justice agencies.
+                </p>
+            </div>
+        </div>
+
+        <!-- Social media icons at the bottom -->
+        <!-- From Uiverse.io by Pradeepsaranbishnoi -->
+        <div class="social-links">
+            <a id="instagram" class="social-btn flex-center" href="https://www.instagram.com/utampacrm/" target="_blank">
+                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0-2A7.5 7.5 0 0 0 0 7.5v9A7.5 7.5 0 0 0 7.5 24h9A7.5 7.5 0 0 0 24 16.5v-9A7.5 7.5 0 0 0 16.5 0h-9zM12 6.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2A3.5 3.5 0 1 0 12 16a3.5 3.5 0 0 0 0-7zm6-1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                </svg>
+                <span>utampacrm</span>
+            </a>
+
+            <a id="linkedin" class="social-btn flex-center" href="https://www.linkedin.com/company/utampa-criminology-criminal-justice/" target="_blank">
+                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"></path>
+                </svg>
+                <span>utampacrm</span>
+            </a>
+
+            <a id="facebook" class="social-btn flex-center" href="https://www.facebook.com/utampacrm" target="_blank">
+                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.41c0-3.1 1.892-4.79 4.656-4.79 1.324 0 2.464.098 2.794.143v3.24h-1.916c-1.504 0-1.794.716-1.794 1.764v2.31h3.59l-.467 3.622h-3.123V24h6.116C23.403 24 24 23.403 24 22.675V1.325C24 .597 23.403 0 22.675 0z"/>
+                </svg>
+                <span>utamapcrm</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
