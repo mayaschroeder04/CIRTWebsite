@@ -183,6 +183,7 @@ nav {
 
 }
 
+
 .modal {
     display: none;
     position: fixed;
@@ -194,6 +195,7 @@ nav {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
+
 .modal button {
     background-color: black;
     color: white;
@@ -218,6 +220,51 @@ nav {
     font-size: 30px; /* Font size for main title */
     margin: 0; /* Remove default margins */
 }
+
+/* login page */
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 500px; /* Increase width */
+    height: auto; /* Adjust height dynamically */
+    max-width: 90%; /* Ensure it doesn't exceed the screen */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.switch-link {
+    color: #8b141f;
+    text-decoration: underline;
+    cursor: pointer;
+
+}
+/* Button improvements */
+.button-container {
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: 80%;
+    margin: 8px 0;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.primary-btn {
+    background-color: #007BFF;
+    color: white;
+}
+
+.secondary-btn {
+    background-color: #ddd;
+    color: black;
+}
+
 
 .footer-container {
     position: relative;
@@ -300,22 +347,10 @@ nav {
     text-decoration: underline; /* Add underline on hover */
 }
 
-.modal-content {
-    text-align: center;
-    padding: 20px;
-}
-.modal-content h2 {
-    margin-bottom: 10px;
-}
-.modal-content p {
-    cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-}
 
 
 
-/*social media icons */
+/* social media icons */
 /* From Uiverse.io by Pradeepsaranbishnoi */
 .social-links,.flex-center {
     display: flex;
