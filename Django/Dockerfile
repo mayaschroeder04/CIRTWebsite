@@ -57,4 +57,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000 
  
 # Start the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "storefront.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "cirtwebsite.wsgi:application"]

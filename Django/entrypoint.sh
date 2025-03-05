@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 echo "Checking if netcat is installed..."
 which nc || echo "Netcat is NOT installed!"
@@ -23,4 +23,5 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Starting Gunicorn..."
-exec gunicorn --bind 0.0.0.0:8000 --workers 3 storefront.wsgi:application
+exec gunicorn --bind 0.0.0.0:8000 --workers 3 cirtwebsite.wsgi:application
+

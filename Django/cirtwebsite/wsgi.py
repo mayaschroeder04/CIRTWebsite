@@ -1,5 +1,5 @@
 """
-WSGI config for storefront project.
+WSGI config for cirtwebsite project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

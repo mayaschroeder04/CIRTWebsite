@@ -2,17 +2,17 @@ services:
   db:
     image: mysql:8
     environment:
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATABASE_USERNAME}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: criminology_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: adminpassword
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the script
-      - ./schema.sql:/docker-entrypoint-schemadb.d/schema.sql  # Mount the schema (Tables)
-      - ./seed.sql:/docker-entrypoint-seeddb.d/seed.sql  #  Mounts seed (User
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the initialization script
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql  # Mount the schema script
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql  # Mount the seed script
     env_file:
       - .env
 
@@ -33,11 +33,11 @@ services:
       DATABASE_PORT: ${DATABASE_PORT}
     env_file:
       - .env
-    command: ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "storefront.wsgi:application"]
+    command: ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "cirtwebsite.wsgi:application"]
 
     volumes:
-      - static_volume:/app/staticfiles  # Mount static files to be accessible
-
+        - ./mainpage/static:/app/mainpage/static  # Mount your static files directory
+        - ./staticfiles:/app/staticfiles  # Mount the collected static files directory
 volumes:
   mysql_data:
   static_volume:

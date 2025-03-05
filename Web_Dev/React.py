@@ -6,7 +6,7 @@ const FileCollector = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/api/files/") // Django API endpoint to fetch files
+    fetch("/api/files/") // Django API endpoinvt to fetch files
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch files");

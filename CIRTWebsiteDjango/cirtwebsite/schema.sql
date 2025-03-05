@@ -1,5 +1,7 @@
 -- @block
-CREATE TABLE Users(
+USE criminology_db;
+
+CREATE TABLE IF NOT EXISTS users(
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(150) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -9,42 +11,48 @@ CREATE TABLE Users(
 );
 
 -- @block
-CREATE TABLE Documents(
+CREATE TABLE IF NOT EXISTS documents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
+    category ENUM('Court Records', 'Academic Papers', 'Forensic Reports', 'Government Documents',
+        'Case Studies', 'Victimology and Sociology Reports') NOT NULL,
+    subcategory_id INT DEFAULT NULL, -- Controlled subcategories
     author VARCHAR(255) NOT NULL,
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    file_url VARCHAR(2083) NOT NULL, -- S3 URL for the file
+    file_url VARCHAR(2083) NOT NULL,
     file_size INT,
     file_type VARCHAR(50),
     status ENUM('pending', 'rejected', 'approved') DEFAULT 'pending',
-    reviewed_by VARCHAR(255),
+    reviewed_by INT,
     review_date TIMESTAMP NULL,
-    desription TEXT,
+    description TEXT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    visibility ENUM('public', 'restricted', 'admin-only') DEFAULT 'admin-only',
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (subcategory_id) REFERENCES subcategories(id) ON DELETE SET NULL
 );
 
+
 -- @block
-CREATE TABLE Document_Reviews(
+CREATE TABLE IF NOT EXISTS document_Reviews(
     id INT AUTO_INCREMENT PRIMARY KEY,
     document_id INT,
     reviewed_by INT,
     review_status ENUM('approved', 'rejected'),
     review_comments TEXT,
     review_date TIMESTAMP DEFAULT  CURRENT_TIMESTAMP,
-    FOREIGN KEY (document_id) REFERENCES Documents(id) ON DELETE CASCADE,
-    FOREIGN KEY (reviewed_by) REFERENCES Users(id) ON DELETE SET NULL
+    FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE,
+    FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- @block
-CREATE TABLE document_permissions(
+CREATE TABLE IF NOT EXISTS document_permissions(
     id INT AUTO_INCREMENT PRIMARY KEY,
     document_id INT,
     user_id INT,
     access_level ENUM('view', 'edit', 'admin') DEFAULT 'view',
-    FOREIGN KEY (document_id) REFERENCES Documents(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES Users(id)  ON DELETE CASCADE
+    FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS subcategories (
