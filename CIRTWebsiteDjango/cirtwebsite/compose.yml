@@ -15,6 +15,19 @@ services:
       - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql  # Mount the seed script
     env_file:
       - .env
+    networks:
+      -  app-network
+
+  #  Graphical interface for database
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
 
   django:
     entrypoint: ["bash", "-e", "/app/entrypoint.sh"]
