@@ -10,6 +10,9 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount the initialization scr
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql  # Mount the schema script
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql  # Mount the seed script
     env_file:
       - .env
 
