@@ -49,6 +49,8 @@ services:
     command: ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "cirtwebsite.wsgi:application"]
     volumes:
       - ./main/static:/app/static  # Mount static files to be accessible
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
