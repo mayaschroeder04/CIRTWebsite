@@ -19,4 +19,6 @@ CREATE USER IF NOT EXISTS 'admin'@'%' IDENTIFIED BY 'adminpassword';
 
 -- Grant privileges to the user
 GRANT ALL PRIVILEGES ON criminology_db.* TO 'admin'@'%';
+
+-- Flush privileges to apply changes
 FLUSH PRIVILEGES;
