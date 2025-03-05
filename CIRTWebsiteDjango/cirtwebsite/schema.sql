@@ -47,3 +47,10 @@ CREATE TABLE document_permissions(
     FOREIGN KEY (user_id) REFERENCES Users(id)  ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS subcategories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    category ENUM('Court Records', 'Academic Papers', 'Forensic Reports', 'Government Documents',
+        'Case Studies', 'Victimology and Sociology Reports') NOT NULL
+);
+
