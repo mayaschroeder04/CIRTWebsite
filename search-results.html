@@ -48,5 +48,65 @@
         </div>
     </div>
 
+    <!-- Search Results Script -->
+    <script>
+        // Function to extract query parameters from URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                query: params.get("query"),
+                filter: params.get("filter")
+            };
+        }
+
+        // Display search results
+        function displaySearchResults() {
+            const { query, filter } = getQueryParams();
+            const resultsContainer = document.getElementById("search-results-container");
+
+            if (!query) {
+                resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
+                return;
+            }
+
+            // Simulating search results (Replace this with actual search logic)
+            const results = [
+                { title: "AI in Criminal Justice", author: "John Doe", category: "Academic Papers", description: "A groundbreaking study exploring the impact of AI in criminal justice." },
+                { title: "Crime Pattern Studies", author: "Jack Brown", category: "Case Studies", description: "An in-depth analysis of crime patterns in urban areas over the past decade." },
+                { title: "Random Title 3", author: "Andy Miller", category: "Victimology and Sociology Reports", description: "Examining the effectiveness of rehabilitation programs for non-violent offenders." },
+                { title: "The Role of Data in Forensics", author: "Jane Smith", category: "Forensic Reports", description: "How forensic analysis is enhanced through data-driven insights." },
+                { title: "Court Rulings on Cybercrime", author: "Emily Carter", category: "Court Records", description: "A detailed review of major cybercrime cases and court rulings." }
+            ];
+
+            // Apply filter (if not 'All')
+            const filteredResults = filter === "All" ? results : results.filter(r => r.category === filter);
+
+            // Handle case where no results match
+            if (filteredResults.length === 0) {
+                resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${filter}".</p>`;
+                return;
+            }
+
+            // Generate results HTML
+            let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
+            filteredResults.forEach(result => {
+                resultHTML += `
+                <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin: 5px 0;">${result.title}</h3>
+                    <p><strong>Author:</strong> ${result.author}</p>
+                    <p><strong>Category:</strong> ${result.category}</p>
+                    <p>${result.description}</p>
+                    <a class="read-more" onclick="openModal('${result.title}', '${result.description}')">Continue Reading</a>
+                </li>`;
+            });
+            resultHTML += `</ul>`;
+
+            resultsContainer.innerHTML = resultHTML;
+        }
+
+        // Run function when the page loads
+        document.addEventListener("DOMContentLoaded", displaySearchResults);
+    </script>
+
 </body>
 </html>
