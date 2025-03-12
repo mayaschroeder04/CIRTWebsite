@@ -10,13 +10,29 @@ CREATE TABLE IF NOT EXISTS users(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
+-- @block
+CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- @block
+CREATE TABLE IF NOT EXISTS subcategories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    category_id INT NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+
+
 -- @block
 CREATE TABLE IF NOT EXISTS documents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    category ENUM('Court Records', 'Academic Papers', 'Forensic Reports', 'Government Documents',
-        'Case Studies', 'Victimology and Sociology Reports') NOT NULL,
-    subcategory_id INT DEFAULT NULL, -- Controlled subcategories
+    category_id INT NULL,  -- Category id to represent the
+    subcategory_id INT NULL, -- Controlled subcategories
     author VARCHAR(255) NOT NULL,
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     file_url VARCHAR(2083) NOT NULL,
@@ -29,6 +45,7 @@ CREATE TABLE IF NOT EXISTS documents (
     user_id INT,
     visibility ENUM('public', 'restricted', 'admin-only') DEFAULT 'admin-only',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL,
     FOREIGN KEY (subcategory_id) REFERENCES subcategories(id) ON DELETE SET NULL
 );
 
@@ -54,11 +71,3 @@ CREATE TABLE IF NOT EXISTS document_permissions(
     FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE CASCADE
 );
-
-CREATE TABLE IF NOT EXISTS subcategories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    category ENUM('Court Records', 'Academic Papers', 'Forensic Reports', 'Government Documents',
-        'Case Studies', 'Victimology and Sociology Reports') NOT NULL
-);
-

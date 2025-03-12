@@ -1,43 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>University of Tampa CIRT Website</title>
-    {% load static %}
-    <!-- Icon -->
-     <link rel="icon" type="image/x-icon" href='{% static "favicon.ico"%}'>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- CSS File -->
-    <link rel="stylesheet" href="{%static 'homepage.css'%}">
-    <!-- JS File -->
-    <script src="{%static 'homepage.js'%}"></script>
+    {% load static %}
+    <link rel="stylesheet" text="text/css" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
 </head>
 <body>
 
 <!-- top of the page -->
 <header>
-    <div style="display: flex; flex-direction: column; align-items: center;">
-        <img src="{% static 'tampalogo.png'%}" alt="CIRT Logo">
-        <p class="cirt-text">CIRT</p>
+    <div class="header-left">
+        {% load static %}
+        <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
     </div>
-    <h1 >CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
     <div class="header-right">
-        <!-- Tabs Section -->
         <div class="header-tabs">
-            <a href="#" class="tab">Home</a>
-            <a href="#" class="tab">Research</a>
-            <a href="#" class="tab">Publications</a>
-            <a href="#" class="tab">Contact</a>
+            {% load static %}
+            <a href="{% url 'journals' %}" class="tab">Journals</a>
+            <a href="{% url 'images' %}" class="tab">Images</a>
+            <a href="{% url 'authors' %}" class="tab">Authors</a>
+        </div>
+        <div class="login-buttons">
+            <button class="register-btn" onclick="openModal()">Register</button>
+            <button class="login-btn" onclick="openModal()">Log In</button>
         </div>
     </div>
-    <div class="login-buttons">
-        <button class="register-btn" onclick="openModal()">Register</button>
-        <button class="login-btn" onclick="openModal()">Log In</button>
-    </div>
-
 </header>
+
 <div class="background-section">
 
     <!-- quote above search bar -->
@@ -50,8 +45,10 @@
 
     </nav>
     <!-- search bar -->
-    <div class="search-bar">
-        <input type="text" placeholder="Search journals, books, images, sources...">
+    <!-- From Uiverse.io by alex ruix-->
+    <div class="group">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+        <input placeholder="Search" type="search" class="input">
     </div>
 </div>
 
@@ -61,23 +58,75 @@
     <hr style="background-color: #a6192e; height: 3px; border: none;">
 </div>
 
-<!-- featured post box -->
+<!-- Featured Post 1 -->
 <section class="featured-post">
-    <h2>Journal Title</h2>
-    <p class="author">Author Name</p>
-    <p>Description goes here.</p>
-    <a class="read-more" onclick="openModal()">Continue Reading</a>
+    <h2>AI in Criminal Justice</h2>
+    <p class="author">John Doe</p>
+    <p>A groundbreaking study exploring the impact of AI in criminal justice.</p>
+    <a class="read-more" onclick="openModal('Journal Title 1', 'A groundbreaking study exploring the impact of AI in criminal justice.')">Continue Reading</a>
 </section>
 
+<!-- Featured Post 2 -->
+<section class="featured-post">
+    <h2>Crime Pattern Studies</h2>
+    <p class="author">Jack Brown</p>
+    <p>An in-depth analysis of crime patterns in urban areas over the past decade.</p>
+    <a class="read-more" onclick="openModal('Journal Title 2', 'An in-depth analysis of crime patterns in urban areas over the past decade.')">Continue Reading</a>
+</section>
+
+<!-- Featured Post 3 -->
+<section class="featured-post">
+    <h2>Random title 3</h2>
+    <p class="author">Andy Miller</p>
+    <p>Examining the effectiveness of rehabilitation programs for non-violent offenders.</p>
+    <a class="read-more" onclick="openModal('Journal Title 3', 'Examining the effectiveness of rehabilitation programs for non-violent offenders.')">Continue Reading</a>
+</section>
+
+<!-- Modal (for all featured posts) -->
 <div id="modal" class="modal">
     <div id="modal-content"></div>
-    <button onclick="closeModal()">Close</button>
 </div>
+
+<script>
+    function openModal(title) {
+        let modal = document.getElementById("modal");
+        let modalContent = document.getElementById("modal-content");
+
+        // Ensure modal elements exist before modifying them
+        if (modal && modalContent) {
+            modal.style.display = "block";
+            modalContent.innerHTML =
+                <div class="modal-content">
+                    <h2><strong>Log in to continue reading</strong></h2>
+                    <p>${title}</p>
+                    <button onclick="redirectToLogin()">Sign Up / Log In</button>
+                    <button onclick="continueAsGuest()">Continue as Guest</button>
+                    <button onclick="closeModal()">Close</button>
+                </div>
+            ;
+        }
+    }
+
+    function closeModal() {
+        let modal = document.getElementById("modal");
+        if (modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function redirectToLogin() {
+        alert("Redirecting to login page... (Placeholder Action)");
+    }
+
+    function continueAsGuest() {
+        alert("Continuing as guest... (Placeholder Action)");
+    }
+    </script>
 
 <!-- space between the footer and the featured post box -->
 <div class="spacer"></div>
 
-<!-- left and right black bloxes in the footer -->
+<!-- left and right black boxes in the footer -->
 <div class="footer-container">
     <!-- Left and right "blocked out" areas -->
     <div class="footer-buffer footer-buffer-left"></div>

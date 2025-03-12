@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - University of Tampa CIRT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}" defer></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <a href="{% url 'homepage' %}">
+                <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+            </a>
+            <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+        </div>
+        <div class="header-right">
+            <div class="header-tabs">
+                <a href="{% url 'journals' %}" class="tab">Journals</a>
+                <a href="{% url 'images' %}" class="tab">Images</a>
+                <a href="{% url 'authors' %}" class="tab">Authors</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="spacer"></div>
+
+    <!-- Search Results Section -->
+    <h2 style="text-align: center;">Search Results</h2>
+    <div id="search-results-container" style="width: 60%; margin: auto;"></div>
+
+    <div class="spacer"></div>
+
+    <!-- Footer -->
+    <div class="footer-container">
+        <div class="footer-inner">
+            <div class="main-title">
+                <h1>EXPLORE CIRT</h1>
+            </div>
+            <button onclick="window.location.href='homepage.html'"
+                style="display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+                Back to Home
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Results Script -->
+    <script>
+        // Function to extract query parameters from URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                query: params.get("query"),
+                filter: params.get("filter")
+            };
+        }
+
+        // Display search results
+        function displaySearchResults() {
+            const { query, filter } = getQueryParams();
+            const resultsContainer = document.getElementById("search-results-container");
+
+            if (!query) {
+                resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
+                return;
+            }
+
+            // Simulating search results (Replace this with actual search logic)
+            const results = [
+                { title: "AI in Criminal Justice", author: "John Doe", category: "Academic Papers", description: "A groundbreaking study exploring the impact of AI in criminal justice." },
+                { title: "Crime Pattern Studies", author: "Jack Brown", category: "Case Studies", description: "An in-depth analysis of crime patterns in urban areas over the past decade." },
+                { title: "Random Title 3", author: "Andy Miller", category: "Victimology and Sociology Reports", description: "Examining the effectiveness of rehabilitation programs for non-violent offenders." },
+                { title: "The Role of Data in Forensics", author: "Jane Smith", category: "Forensic Reports", description: "How forensic analysis is enhanced through data-driven insights." },
+                { title: "Court Rulings on Cybercrime", author: "Emily Carter", category: "Court Records", description: "A detailed review of major cybercrime cases and court rulings." }
+            ];
+
+            // Apply filter (if not 'All')
+            const filteredResults = filter === "All" ? results : results.filter(r => r.category === filter);
+
+            // Handle case where no results match
+            if (filteredResults.length === 0) {
+                resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${filter}".</p>`;
+                return;
+            }
+
+            // Generate results HTML
+            let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
+            filteredResults.forEach(result => {
+                resultHTML += `
+                <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin: 5px 0;">${result.title}</h3>
+                    <p><strong>Author:</strong> ${result.author}</p>
+                    <p><strong>Category:</strong> ${result.category}</p>
+                    <p>${result.description}</p>
+                    <a class="read-more" onclick="openModal('${result.title}', '${result.description}')">Continue Reading</a>
+                </li>`;
+            });
+            resultHTML += `</ul>`;
+
+            resultsContainer.innerHTML = resultHTML;
+        }
+
+        // Run function when the page loads
+        document.addEventListener("DOMContentLoaded", displaySearchResults);
+    </script>
+
+</body>
+</html>
