@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from decouple import config
 from pathlib import Path
 import os
 
@@ -83,15 +84,14 @@ WSGI_APPLICATION = "cirtwebsite.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Change from 'postgresql_psycopg2'
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USERNAME'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'),
-        'PORT': os.getenv('DATABASE_PORT'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DATABASE_NAME', default='criminology_db'),  # Default to criminology_db if not set
+        'USER': config('DATABASE_USERNAME', default='admin'),
+        'PASSWORD': config('DATABASE_PASSWORD', default='adminpassword'),
+        'HOST': config('DATABASE_HOST', default='db'),  # Default to 'db' (or the service name in Docker Compose)
+        'PORT': config('DATABASE_PORT', default='3306'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

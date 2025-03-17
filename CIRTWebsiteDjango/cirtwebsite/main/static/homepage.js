@@ -59,7 +59,7 @@ function performSearch() {
     }
 
     console.log(`Searching for '${query}' in category: '${selectedFilter}'`);
-    window.location.href = `search-results.html?query=${encodeURIComponent(query)}&filter=${encodeURIComponent(selectedFilter)}`;
+    window.location.href = `search-results?query=${encodeURIComponent(query)}&filter=${encodeURIComponent(selectedFilter)}`;
 }
 
 // Trigger search on 'Enter' keypress

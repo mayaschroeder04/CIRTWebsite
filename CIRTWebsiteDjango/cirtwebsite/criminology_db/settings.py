@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'criminology_db',  # The database name
         'USER': 'admin',  # The MySQL username
         'PASSWORD': 'adminpassword',  # The password for the MySQL user
-        'HOST': 'db',  # This is the name of the service in docker-compose.yml
+        'HOST': 'cirtwebsite-db-1',  # This is the name of the service in docker-compose.yml
         'PORT': '3306',
     }
 }

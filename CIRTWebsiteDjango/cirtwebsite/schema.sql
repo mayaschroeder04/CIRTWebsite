@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS subcategories (
 
 
 -- @block
-CREATE TABLE IF NOT EXISTS documents (
+CREATE TABLE IF NOT EXISTS docs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     category_id INT NULL,  -- Category id to represent the
     subcategory_id INT NULL, -- Controlled subcategories
     author VARCHAR(255) NOT NULL,
-    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     file_url VARCHAR(2083) NOT NULL,
     file_size INT,
     file_type VARCHAR(50),
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS document_Reviews(
     review_status ENUM('approved', 'rejected'),
     review_comments TEXT,
     review_date TIMESTAMP DEFAULT  CURRENT_TIMESTAMP,
-    FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE,
+    FOREIGN KEY (document_id) REFERENCES docs(id) ON DELETE CASCADE,
     FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
@@ -68,6 +68,6 @@ CREATE TABLE IF NOT EXISTS document_permissions(
     document_id INT,
     user_id INT,
     access_level ENUM('view', 'edit', 'admin') DEFAULT 'view',
-    FOREIGN KEY (document_id) REFERENCES documents(id) ON DELETE CASCADE,
+    FOREIGN KEY (document_id) REFERENCES docs(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE CASCADE
 );

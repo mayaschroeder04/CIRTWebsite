@@ -42,7 +42,8 @@
             <div class="main-title">
                 <h1>EXPLORE CIRT</h1>
             </div>
-            <button onclick="window.location.href='homepage.html'"
+            <!-- hard coded homepage.html -->
+            <button onclick="window.location.href='/'"
                 style="display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; cursor: pointer;">
                 Back to Home
             </button>
@@ -65,23 +66,18 @@
             const { query, filter } = getQueryParams();
             const resultsContainer = document.getElementById("search-results-container");
 
-            if (!query) {
-                resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
-                return;
-            }
+           if (!query) {
+            resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
+            return;
+        }
 
-            // Simulating search results (Replace this with actual search logic)
-            const results = [
-                { title: "AI in Criminal Justice", author: "John Doe", category: "Academic Papers", description: "A groundbreaking study exploring the impact of AI in criminal justice." },
-                { title: "Crime Pattern Studies", author: "Jack Brown", category: "Case Studies", description: "An in-depth analysis of crime patterns in urban areas over the past decade." },
-                { title: "Random Title 3", author: "Andy Miller", category: "Victimology and Sociology Reports", description: "Examining the effectiveness of rehabilitation programs for non-violent offenders." },
-                { title: "The Role of Data in Forensics", author: "Jane Smith", category: "Forensic Reports", description: "How forensic analysis is enhanced through data-driven insights." },
-                { title: "Court Rulings on Cybercrime", author: "Emily Carter", category: "Court Records", description: "A detailed review of major cybercrime cases and court rulings." }
-            ];
+        // Get search results from Django context
+        console.log("Raw documents_json:", "{{ documents_json|escapejs }}");
 
-            // Apply filter (if not 'All')
-            const filteredResults = filter === "All" ? results : results.filter(r => r.category === filter);
+        const results = JSON.parse("{{ documents_json|escapejs }}");
 
+        // Apply filter (if not 'All')
+        const filteredResults = filter === "All" ? results : results.filter(r => r.category === filter);
             // Handle case where no results match
             if (filteredResults.length === 0) {
                 resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${filter}".</p>`;
