@@ -1,12 +1,13 @@
 #!/bin/bash
-set -eo pipefail
+set -e
+set -o pipefail
 
 echo "Checking if netcat is installed..."
 which nc || echo "Netcat is NOT installed!"
 
 echo "Installing Netcat..."
 /bin/bash
-apt update && apt-get install -y netcat-traditional
+apt update && apt-get installn -y netcat-traditional
 
 echo "Waiting for MySQL to start..."
 while ! /usr/bin/nc -z db 3306; do
