@@ -143,11 +143,14 @@ nav {
     margin-left: 18.5%;
     margin-top: 0px;
     margin-bottom: 20px;
+    position: relative;
+    background-color: white;
 }
 .search-bar input {
     width: 70%;
     padding: 10px;
     font-size: 16px;
+    padding-right: 40px;
 
 }
 .featured-post {
@@ -460,7 +463,11 @@ a {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    margin-left: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 300px;
 }
 
 /* Style for the filter dropdown */

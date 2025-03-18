@@ -24,7 +24,7 @@ function closeModal() {
 }
 
 function continueAsGuest() {
-    window.location.href = "fake_journal.html";
+    window.location.href = "sign-up";
 }
 
 // =============================
