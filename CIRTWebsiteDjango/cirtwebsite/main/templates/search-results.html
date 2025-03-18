@@ -87,17 +87,8 @@
             return;
         }
 
-        // Filter documents based on the search query and selected filter
-        const filteredResults = documents.filter(doc => {
-            const matchesQuery = doc.title.toLowerCase().includes(query.toLowerCase()) ||
-                                 doc.description.toLowerCase().includes(query.toLowerCase());
-            const matchesFilter = filter === "All" || doc.category === filter;
-            return matchesQuery && matchesFilter;
-        });
-
-
         // Handle case where no results match
-        if (filteredResults.length === 0) {
+        if (documents.length === 0) {
             resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${category_name}".</p>`;
             return;
         }
@@ -105,7 +96,7 @@
         // Generate HTML for displaying the results
         let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
 
-        filteredResults.forEach(result => {
+        documents.forEach(result => {
             resultHTML += `
                 <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
                     <h3 style="margin: 5px 0;">${result.title}</h3>
