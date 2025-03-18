@@ -33,21 +33,38 @@ def pdf_view(request):
 #
 
 def search_results(request):
-    qry = request.GET.get("query", None  )
+    query = request.GET.get("query", None  )
     filter_category = request.GET.get("filter", None )
-    documents = Document.objects.all()
+    documents = Document.objects.select_related('category').all()
 
-    if qry:
+    if query:
         documents = documents.filter(
-            Q(title__contains=qry) |
-            Q(description__contains=qry) |
-            Q(author__contains=qry))
+            Q(title__contains=query) |
+            Q(description__contains=query) |
+            Q(author__contains=query))
 
-    if filter_category:
-        if filter_category and filter_category != "All":
-            documents = documents.filter(category__iexact=filter_category)
+    if filter_category and filter_category != "All":
+        documents = documents.filter(category__id=filter_category)
 
-    documents_json = json.dumps(list(documents.values("id", "title", "description", "author", "category_id")))
+    documents_data = [
+        {
+            "id": doc.id,
+            "title": doc.title,
+            "description": doc.description,
+            "author": doc.author,
+            "category_id": doc.category.id if doc.category else None,  # Avoid null reference error
+            "category_name": doc.category.name if doc.category else "Unknown"  # Fetch category name
+        }
+        for doc in documents
+    ]
 
-    return render(request, "search-results.html", {"documents": documents_json, "filter": filter, "qry": qry})
+    documents_json = json.dumps(documents_data)
 
+    # Debugging
+    print("Documents JSON:", documents_json)
+
+    return render(request, "search-results.html", {
+        "documents_json": documents_json,
+        "filter": filter_category,
+        "qry": query
+    })

@@ -51,59 +51,76 @@
     </div>
 
     <!-- Search Results Script -->
-    <script>
-        // Function to extract query parameters from URL
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                query: params.get("query"),
-                filter: params.get("filter")
-            };
-        }
+   <!-- Search Results Script -->
+<script>
+    // Function to extract query parameters from the URL
+    function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            query: params.get("query"),
+            filter: params.get("filter")
+        };
+    }
 
-        // Display search results
-        function displaySearchResults() {
-            const { query, filter } = getQueryParams();
-            const resultsContainer = document.getElementById("search-results-container");
+    // Display search results
+    function displaySearchResults() {
+        const { query, filter } = getQueryParams();
+        const resultsContainer = document.getElementById("search-results-container");
 
-           if (!query) {
+        // Handle no query provided
+        if (!query) {
             resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
             return;
         }
 
-        // Get search results from Django context
-        console.log("Raw documents_json:", "{{ documents_json|escapejs }}");
+        // Get documents from Django context (already passed as a JSON string)
+        const rawDocumentsJson = "{{ documents_json|escapejs }}";
+        let documents = [];
+        console.log("Raw documents_json:", rawDocumentsJson);
+        try {
+            // Parse the JSON data from Django
+            documents = JSON.parse(rawDocumentsJson);
+            console.log("Parsed documents:", documents);  // Debugging output
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            resultsContainer.innerHTML = "<p style='text-align: center;'>Error loading documents.</p>";
+            return;
+        }
 
-        const results = JSON.parse("{{ documents_json|escapejs }}");
+        // Filter documents based on the search query and selected filter
+        const filteredResults = documents.filter(doc => {
+            const matchesQuery = doc.title.toLowerCase().includes(query.toLowerCase()) ||
+                                 doc.description.toLowerCase().includes(query.toLowerCase());
+            const matchesFilter = filter === "All" || doc.category === filter;
+            return matchesQuery && matchesFilter;
+        });
 
-        // Apply filter (if not 'All')
-        const filteredResults = filter === "All" ? results : results.filter(r => r.category === filter);
-            // Handle case where no results match
-            if (filteredResults.length === 0) {
-                resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${filter}".</p>`;
-                return;
-            }
 
-            // Generate results HTML
-            let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
-            filteredResults.forEach(result => {
-                resultHTML += `
+        // Handle case where no results match
+        if (filteredResults.length === 0) {
+            resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${category_name}".</p>`;
+            return;
+        }
+
+        // Generate HTML for displaying the results
+        let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
+
+        filteredResults.forEach(result => {
+            resultHTML += `
                 <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
                     <h3 style="margin: 5px 0;">${result.title}</h3>
                     <p><strong>Author:</strong> ${result.author}</p>
-                    <p><strong>Category:</strong> ${result.category}</p>
+                    <p><strong>Category:</strong> ${result.category_name}</p>
                     <p>${result.description}</p>
                     <a class="read-more" onclick="openModal('${result.title}', '${result.description}')">Continue Reading</a>
                 </li>`;
-            });
-            resultHTML += `</ul>`;
+        });
+   resultHTML += `</ul>`;
+        resultsContainer.innerHTML = resultHTML;
+    }
 
-            resultsContainer.innerHTML = resultHTML;
-        }
-
-        // Run function when the page loads
-        document.addEventListener("DOMContentLoaded", displaySearchResults);
-    </script>
-
+    // Run function when the page loads
+    document.addEventListener("DOMContentLoaded", displaySearchResults);
+</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8
-    container_name: cirtwebsite-db-1
+    container_name: db
     environment:
       MYSQL_DATABASE: criminology_db
       MYSQL_USER: admin
