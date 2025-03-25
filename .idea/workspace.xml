@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2d0ecca6-7aee-42ba-9437-6f6e7f2d3b75" name="Changes" comment="Merging Base">
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frontend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/High Level Design Document.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Requirements.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/authors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/detailedDesign.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/document-results.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drawing.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fake_journal-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/filter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/journals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdf.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdfviewer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/search-results.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skylinee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampalogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teamAgreement.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teamRequirements.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/technicalWork.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/terms-and-conditions.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Jays-TestBranch" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Jvnbell&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mayaschroeder04/CIRTWebsite.git&quot;,
+    &quot;accountId&quot;: &quot;576dd414-572e-4b77-9d7c-1d82b11ad6b2&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2uYvd1SeN2uvWfdpV76S6KzyYb9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.search-results.html.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jvnbe\Desktop\CIRTWebsite_whole" />
+      <recent name="C:\Users\jvnbe\Desktop\CIRTWebsite_whole\CIRTWebsiteDjango\cirtwebsite\main\templates" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2d0ecca6-7aee-42ba-9437-6f6e7f2d3b75" name="Changes" comment="" />
+      <created>1742438405366</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742438405366</updated>
+      <workItem from="1742438406455" duration="5562000" />
+      <workItem from="1742488469712" duration="9000" />
+      <workItem from="1742829375800" duration="1517000" />
+      <workItem from="1742914023464" duration="2055000" />
+    </task>
+    <task id="LOCAL-00001" summary="Updating">
+      <option name="closed" value="true" />
+      <created>1742439841048</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1742439841048</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updating">
+      <option name="closed" value="true" />
+      <created>1742457390817</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742457390817</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updating">
+      <option name="closed" value="true" />
+      <created>1742915657770</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1742915657770</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Merging Base">
+      <option name="closed" value="true" />
+      <created>1742916253853</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1742916253853</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/parkers_branch" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updating" />
+    <MESSAGE value="Merging Base" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merging Base" />
+  </component>
+</project>
