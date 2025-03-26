@@ -1,0 +1,72 @@
+Index: CIRTWebsiteDjango/cirtwebsite/entrypoint.sh
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/bin/bash\r\nset -e\r\nset -o pipefail\r\n\r\necho \"Checking if netcat is installed...\"\r\nwhich nc || echo \"Netcat is NOT installed!\"\r\n\r\necho \"Installing Netcat...\"\r\n/bin/bash\r\napt update && apt-get install -y netcat-traditional\r\n\r\necho \"Waiting for MySQL to start...\"\r\nwhile ! /usr/bin/nc -z db 3306; do\r\n  echo \"Waiting for MySQL...\"\r\n  sleep 1\r\ndone\r\necho \"MySQL is up!\"\r\n\r\necho \"Applying database migrations...\"\r\npython manage.py migrate\r\n\r\n#echo \"Collecting static files...\"\r\n#python manage.py collectstatic --noinput\r\n\r\necho \"Starting Gunicorn...\"\r\nexec gunicorn --bind 0.0.0.0:8000 --workers 3 cirtwebsite.wsgi:application
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CIRTWebsiteDjango/cirtwebsite/entrypoint.sh b/CIRTWebsiteDjango/cirtwebsite/entrypoint.sh
+--- a/CIRTWebsiteDjango/cirtwebsite/entrypoint.sh	(revision 33ed30c1dfd7bf8476d90eb99932410899f722fc)
++++ b/CIRTWebsiteDjango/cirtwebsite/entrypoint.sh	(date 1742946711034)
+@@ -1,6 +1,6 @@
+ #!/bin/bash
+ set -e
+-set -o pipefail
++set -eo pipefail
+ 
+ echo "Checking if netcat is installed..."
+ which nc || echo "Netcat is NOT installed!"
+Index: .idea/frontend.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"WEB_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/.tmp\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/temp\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/tmp\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/frontend.iml b/.idea/frontend.iml
+--- a/.idea/frontend.iml	(revision 33ed30c1dfd7bf8476d90eb99932410899f722fc)
++++ b/.idea/frontend.iml	(date 1742946728302)
+@@ -9,4 +9,12 @@
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
++  <component name="TemplatesService">
++    <option name="TEMPLATE_CONFIGURATION" value="Django" />
++    <option name="TEMPLATE_FOLDERS">
++      <list>
++        <option value="$MODULE_DIR$/CIRTWebsiteDjango/cirtwebsite/main/templates" />
++      </list>
++    </option>
++  </component>
+ </module>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"InspectionProjectProfileManager\">\r\n  <profile version=\"1.0\">\r\n    <option name=\"myName\" value=\"Project Default\" />\r\n    <inspection_tool class=\"PyUnresolvedReferencesInspection\" enabled=\"true\" level=\"WARNING\" enabled_by_default=\"true\">\r\n      <option name=\"ignoredIdentifiers\">\r\n        <list>\r\n          <option value=\"int.input\" />\r\n        </list>\r\n      </option>\r\n    </inspection_tool>\r\n  </profile>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+--- a/.idea/inspectionProfiles/Project_Default.xml	(revision 33ed30c1dfd7bf8476d90eb99932410899f722fc)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1742946728195)
+@@ -1,10 +1,18 @@
+ <component name="InspectionProjectProfileManager">
+   <profile version="1.0">
+     <option name="myName" value="Project Default" />
++    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
++    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
++      <option name="ignoredErrors">
++        <list>
++          <option value="N802" />
++        </list>
++      </option>
++    </inspection_tool>
+     <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+       <option name="ignoredIdentifiers">
+         <list>
+-          <option value="int.input" />
++          <option value="str.*" />
+         </list>
+       </option>
+     </inspection_tool>

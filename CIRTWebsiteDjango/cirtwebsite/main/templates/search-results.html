@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - University of Tampa CIRT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}" defer></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <a href="{% url 'homepage' %}">
+                <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+            </a>
+            <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+        </div>
+        <div class="header-right">
+            <div class="header-tabs">
+                <a href="{% url 'journals' %}" class="tab">Journals</a>
+                <a href="{% url 'images' %}" class="tab">Images</a>
+                <a href="{% url 'authors' %}" class="tab">Authors</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="spacer"></div>
+
+    <!-- Search Results Section -->
+    <h2 style="text-align: center;">Search Results</h2>
+    <div id="search-results-container" style="width: 60%; margin: auto;"></div>
+
+    <div class="spacer"></div>
+
+    <!-- Footer -->
+    <div class="footer-container">
+        <div class="footer-inner">
+            <div class="main-title">
+                <h1>EXPLORE CIRT</h1>
+            </div>
+            <!-- hard coded homepage.html -->
+            <button onclick="window.location.href='/'"
+                style="display: block; margin: 20px auto; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+                Back to Home
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Results Script -->
+   <!-- Search Results Script -->
+<script>
+    // Function to extract query parameters from the URL
+    function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            query: params.get("query"),
+            filter: params.get("filter")
+        };
+    }
+
+    // Display search results
+    function displaySearchResults() {
+        const { query, filter } = getQueryParams();
+        const resultsContainer = document.getElementById("search-results-container");
+
+        // Handle no query provided
+        if (!query) {
+            resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
+            return;
+        }
+
+        // Get documents from Django context (already passed as a JSON string)
+        const rawDocumentsJson = "{{ documents_json|escapejs }}";
+        let documents = [];
+        console.log("Raw documents_json:", rawDocumentsJson);
+        try {
+            // Parse the JSON data from Django
+            documents = JSON.parse(rawDocumentsJson);
+            console.log("Parsed documents:", documents);  // Debugging output
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            resultsContainer.innerHTML = "<p style='text-align: center;'>Error loading documents.</p>";
+            return;
+        }
+
+        // Handle case where no results match
+        if (documents.length === 0) {
+            resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${category_name}".</p>`;
+            return;
+        }
+
+        // Generate HTML for displaying the results
+        let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
+
+        documents.forEach(result => {
+            resultHTML += `
+                <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin: 5px 0;">${result.title}</h3>
+                    <p><strong>Author:</strong> ${result.author}</p>
+                    <p><strong>Category:</strong> ${result.category_name}</p>
+                    <p>${result.description}</p>
+                    <!--<a class="read-more" onclick="openModal('${result.title}', '${result.description}')">Continue Reading</a>-->
+                    <a class="read-more" href="/document/${result.id}/">Continue Reading</a>
+
+                </li>`;
+        });
+   resultHTML += `</ul>`;
+        resultsContainer.innerHTML = resultHTML;
+    }
+
+    // Run function when the page loads
+    document.addEventListener("DOMContentLoaded", displaySearchResults);
+</script>
+</body>
+</html>
