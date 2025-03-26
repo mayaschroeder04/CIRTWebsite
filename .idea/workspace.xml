@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d0ecca6-7aee-42ba-9437-6f6e7f2d3b75" name="Changes" comment="Merging Base">
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/frontend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/High Level Design Document.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Requirements.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/authors.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/detailedDesign.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/document-results.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/drawing.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fake_journal-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/filter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/journals.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdf.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfviewer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/search-results.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skylinee.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tampalogo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teamAgreement.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/teamRequirements.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/technicalWork.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/terms-and-conditions.html" beforeDir="false" />
-    </list>
+    <list default="true" id="2b10497e-7bad-49ac-8c87-ec1e214214e0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,7 +49,6 @@
   "keyToString": {
     "JavaScript Debug.search-results.html.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
