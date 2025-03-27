@@ -4,12 +4,17 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.db.models import Q
 from .models import Document
 from .forms import CustomUserCreationForm
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 def homepage(request):
     return render(request, "homepage.html")
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def fake_journal(request):
     return render(request, "fake_journal-2.html")
@@ -19,6 +24,7 @@ def toc(request):
     return render(request, "terms-and-conditions.html")
 
 
+@login_required
 def journals_view(request):
     return render(request, "journals.html")
 

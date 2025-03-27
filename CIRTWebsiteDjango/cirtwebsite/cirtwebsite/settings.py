@@ -29,6 +29,7 @@ DEBUG = bool(os.environ.get("DEBUG", default=1))
 
 ALLOWED_HOSTS = ("*").split(",")
 
+LOGIN_URL = '/login/'
 
 # Application definition
 
