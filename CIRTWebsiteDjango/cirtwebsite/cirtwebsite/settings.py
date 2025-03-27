@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from decouple import config
+from decouple import config  # type: ignore
 from pathlib import Path
 import os
 
@@ -55,11 +55,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "cirtwebsite.urls"
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'main/static')
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "main/static")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static'),
-    ]# Replace your_app_name
+    os.path.join(BASE_DIR, "static"),
+]  # Replace your_app_name
 
 TEMPLATES = [
     {
@@ -84,13 +84,17 @@ WSGI_APPLICATION = "cirtwebsite.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DATABASE_NAME', default='criminology_db'),  # Default to criminology_db if not set
-        'USER': config('DATABASE_USERNAME', default='admin'),
-        'PASSWORD': config('DATABASE_PASSWORD', default='adminpassword'),
-        'HOST': config('DATABASE_HOST', default='db'),  # Default to 'db' (or the service name in Docker Compose)
-        'PORT': config('DATABASE_PORT', default='3306'),
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": config(
+            "DATABASE_NAME", default="criminology_db"
+        ),  # Default to criminology_db if not set
+        "USER": config("DATABASE_USERNAME", default="admin"),
+        "PASSWORD": config("DATABASE_PASSWORD", default="adminpassword"),
+        "HOST": config(
+            "DATABASE_HOST", default="db"
+        ),  # Default to 'db' (or the service name in Docker Compose)
+        "PORT": config("DATABASE_PORT", default="3306"),
     }
 }
 
@@ -127,7 +131,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 
 
 # Default primary key field type
