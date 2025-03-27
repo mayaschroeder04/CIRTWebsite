@@ -143,14 +143,11 @@ nav {
     margin-left: 18.5%;
     margin-top: 0px;
     margin-bottom: 20px;
-    position: relative;
-    background-color: white;
 }
 .search-bar input {
     width: 70%;
     padding: 10px;
     font-size: 16px;
-    padding-right: 40px;
 
 }
 .featured-post {
@@ -210,6 +207,10 @@ nav {
     height: 250px; /* Adds extra white space before the footer */
 }
 
+.search_results_spacer{
+    height: 50px; /* Spacer in the search results html */
+}
+
 /* Main title: EXPLORE CIRT */
 .main-title {
     text-align: left; /* Align the title to the left */
@@ -228,7 +229,7 @@ nav {
 .modal-content {
     background: white;
     padding: 30px;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     text-align: center;
     position: relative;
     width: 500px; /* Increase width */
@@ -254,7 +255,7 @@ button {
     width: 80%;
     margin: 8px 0;
     font-size: 18px;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
 }
 
 .primary-btn {
@@ -442,7 +443,7 @@ a {
     padding: 0 1rem;
     padding-left: 2.5rem;
     border: 2px solid transparent;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
     outline: none;
     background-color: #f3f3f4;
     color: #0d0c22;
@@ -463,11 +464,7 @@ a {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-right: 300px;
+    margin-left: 10px;
 }
 
 /* Style for the filter dropdown */
@@ -503,4 +500,53 @@ a {
 
 .input::-webkit-search-cancel-button {
     filter: invert(0%) grayscale(100%);
+}
+
+.red-bar {
+    width: 100%;
+    height: 4px; /* Thin height for the red bar */
+    background-color: #8b141f; /* Red color */
+    margin-top: 10px; /* Optional, to give space between the header and the bar */
+}
+
+.filter-sidebar {
+    width: 250px; /* Adjust the width of the sidebar */
+    padding: 20px;
+    background-color: #f4f4f4;
+    position: absolute;
+    top: 123px; /* height of header */
+    left: 0;
+    height: calc(100vh - 123px); /* calc the height of the filter bar */
+    overflow-y: auto;
+}
+
+.filter-sidebar h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.filter-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.filter-sidebar ul li {
+    margin-bottom: 8px;
+}
+
+.filter-sidebar select, .filter-sidebar button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.filter-sidebar button {
+    background-color: #a6192e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-sidebar button:hover {
+    background-color: #800f18;
 }

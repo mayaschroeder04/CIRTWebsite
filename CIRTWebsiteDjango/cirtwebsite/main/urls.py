@@ -11,7 +11,4 @@ urlpatterns = [
     path("authors/", views.authors_view, name="authors"),
     path("pdfviewer/", views.pdf_view, name="pdfviewer"),
     path("search-results/", views.search_results, name="search_results"),
-    path("login/", views.login_view, name="login"),
-    path("sign-up/", views.signup_view, name="sign-up"),
-    path("document/<int:doc_id>/", views.document_detail, name="document_detail"),
 ]
