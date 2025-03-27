@@ -11,4 +11,6 @@ urlpatterns = [
     path("authors/", views.authors_view, name="authors"),
     path("pdfviewer/", views.pdf_view, name="pdfviewer"),
     path("search-results/", views.search_results, name="search_results"),
+    path("login/", views.login_view, name="login"),
+    path("register/", views.register_view, name="register"),
 ]

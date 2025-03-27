@@ -27,8 +27,8 @@
             <a href="{% url 'authors' %}" class="tab">Authors</a>
         </div>
         <div class="login-buttons">
-            <button class="register-btn" onclick="openModal()">Register</button>
-            <button class="login-btn" onclick="openModal()">Log In</button>
+            <button class="register-btn" onclick="redirectToRegister()">Register</button> <!-- This is where it calls the function to create a login within the window -->
+            <button class="login-btn" onclick="redirectToLogin()">Log In</button>
         </div>
     </div>
 </header>
@@ -180,11 +180,15 @@
     }
 
     function redirectToLogin() {
-        alert("Redirecting to login page... (Placeholder Action)");
+        window.location.href = "login/";
+    }
+
+    function redirectToRegister() {
+        window.location.href = "register/";
     }
 
     function continueAsGuest() {
-        alert("Continuing as guest... (Placeholder Action)");
+        window.location.href = "homepage";
     }
     </script>
 
