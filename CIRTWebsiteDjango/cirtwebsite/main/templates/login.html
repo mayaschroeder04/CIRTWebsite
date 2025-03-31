@@ -1,18 +1,55 @@
+<!DOCTYPE html>
 <html lang="en">
-    <!-- Header -->
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journals - University of Tampa CIRT</title>
+    <title>Login - University of Tampa CIRT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
-    <link rel="stylesheet" text = "text/css" href="{% static 'pdf.css' %}">
-    <script src="{%static 'homepage.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'pdf.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+        .form-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .form-box h2 {
+            margin-bottom: 20px;
+        }
+        .form-box input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-box button {
+            width: 100%;
+            padding: 10px;
+            background: #d00000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-box button:hover {
+            background: #a00000;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Header -->
 <header>
     <div class="header-left">
         <a href="{% url 'homepage' %}">
@@ -22,7 +59,6 @@
     </div>
     <div class="header-right">
         <div class="header-tabs">
-            {% load static %}
             <a href="{% url 'journals' %}" class="tab">Journals</a>
             <a href="{% url 'images' %}" class="tab">Images</a>
             <a href="{% url 'authors' %}" class="tab">Authors</a>
@@ -33,8 +69,8 @@
         </div>
     </div>
 </header>
-<!-- Login and Signup Form -->
- <div class="form-container">
+
+<div class="form-container">
     <div class="form-box">
         <h2>Login</h2>
         <form method="post" action="{% url 'login' %}">
@@ -49,7 +85,7 @@
             <p style="color: red;">{{ error }}</p>
         {% endif %}
     </div>
- </div>
+</div>
 
  <div class="spacer"></div>
 

@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- Header -->
+    
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journals - University of Tampa CIRT</title>
+    <title>Register - University of Tampa CIRT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
-    <link rel="stylesheet" text = "text/css" href="{% static 'pdf.css' %}">
-    <script src="{%static 'homepage.js' %}"></script>
+    <link rel="stylesheet" text="text/css" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" text="text/css" href="{% static 'pdf.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        .form-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        .form-box h2 {
+            margin-bottom: 15px;
+        }
+        .form-box input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-box button {
+            background: #d90429;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .form-box button:hover {
+            background: #9c041d;
+        }
+    </style>
 </head>
 <body>
 
@@ -23,19 +61,19 @@
     </div>
     <div class="header-right">
         <div class="header-tabs">
-            {% load static %}
             <a href="{% url 'journals' %}" class="tab">Journals</a>
             <a href="{% url 'images' %}" class="tab">Images</a>
             <a href="{% url 'authors' %}" class="tab">Authors</a>
         </div>
         <div class="login-buttons">
-            <button class="register-btn" onclick="window.location.href = '{% url 'register' %}'">Register</button>
-            <button class="login-btn" onclick="window.location.href = '{% url 'login' %}'">Log In</button>
+            <a class="register-btn" href="{% url 'register' %}">Register</a>
+            <a class="login-btn" href="{% url 'login' %}">Log In</a>
         </div>
     </div>
 </header>
-<!-- Login and Signup Form -->
- <div class="form-container">
+
+<!-- Registration Form -->
+<div class="form-container">
     <div class="form-box">
         <h2>Register</h2>
         <form method="post" action="{% url 'register' %}">
@@ -47,7 +85,7 @@
             <label for="confirm_password">Confirm Password</label>
             <input type="password" id="password2" name="password2" required>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required> 
+            <input type="email" id="email" name="email" required>
             <button type="submit">Register</button>
         </form>
         {% if error %}
@@ -65,7 +103,8 @@
                 {% endfor %}
             </ul>
         {% endif %}
- </div>
+    </div>
+</div>
 
  <div class="spacer"></div>
 
