@@ -7,7 +7,7 @@
     <title>Journals - University of Tampa CIRT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" text="text/css" href="{% static 'homepage.js' %}">
-    <link rel="stylesheet" text = "text/css" href="{% static 'pdf.css' %}">
+    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
     <script src="{% static 'homepage.js' %}"></script>
 </head>
 <body>
@@ -27,8 +27,8 @@
             <a href="{% url 'authors' %}" class="tab">Authors</a>
         </div>
         <div class="login-buttons">
-            <button class="register-btn" onclick="openModal()">Register</button>
-            <button class="login-btn" onclick="openModal()">Log In</button>
+            <button class="register-btn" onclick="redirectToRegister()">Register</button>
+            <button class="login-btn" onclick="redirectToLogin()">Log In</button>
         </div>
     </div>
 </header>

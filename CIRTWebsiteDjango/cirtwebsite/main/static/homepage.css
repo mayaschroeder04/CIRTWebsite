@@ -550,3 +550,29 @@ a {
 .filter-sidebar button:hover {
     background-color: #800f18;
 }
+
+/* FAQ CSS */
+.faq-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.faq-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.faq-item {
+    margin-bottom: 20px;
+}
+.faq-item h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #d90429;
+}
+.faq-item p {
+    margin: 5px 0 0;
+    font-size: 16px;
+}

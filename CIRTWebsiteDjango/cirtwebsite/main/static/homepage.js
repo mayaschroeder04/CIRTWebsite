@@ -19,6 +19,14 @@ function showRegister() {
         `;
 }
 
+function redirectToLogin() {
+    window.location.href = "/login/";
+}
+
+function redirectToRegister() {
+    window.location.href = "/register/";
+}
+
 function closeModal() {
     document.getElementById("modal").style.display = "none";
 }

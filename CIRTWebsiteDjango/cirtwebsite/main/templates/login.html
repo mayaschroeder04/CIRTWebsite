@@ -64,8 +64,8 @@
             <a href="{% url 'authors' %}" class="tab">Authors</a>
         </div>
         <div class="login-buttons">
-            <button class="register-btn" onclick="window.location.href = '{% url 'register' %}'">Register</button>
-            <button class="login-btn" onclick="window.location.href = '{% url 'login' %}'">Log In</button>
+            <button class="register-btn" onclick="redirectToRegister()">Register</button>
+            <button class="login-btn" onclick="redirectToLogin()">Log In</button>
         </div>
     </div>
 </header>
