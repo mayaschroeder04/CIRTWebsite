@@ -12,9 +12,11 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
     return render(request, "homepage.html")
 
+
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")
+
 
 def fake_journal(request):
     return render(request, "fake_journal-2.html")
@@ -119,3 +121,7 @@ def search_results(request):
         "search-results.html",
         {"documents_json": documents_json, "filter": filter_category, "qry": query},
     )
+
+
+def faq_view(request):
+    return render(request, "faq.html")

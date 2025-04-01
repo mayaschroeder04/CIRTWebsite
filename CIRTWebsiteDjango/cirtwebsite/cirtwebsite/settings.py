@@ -29,7 +29,7 @@ DEBUG = bool(os.environ.get("DEBUG", default=1))
 
 ALLOWED_HOSTS = ("*").split(",")
 
-LOGIN_URL = '/login/'
+LOGIN_URL = "/login/"
 
 # Application definition
 
@@ -115,6 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# Email Settings
 
 
 # Internationalization
