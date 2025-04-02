@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eo pipefail
+set -o pipefail
 
 echo "Checking if netcat is installed..."
 which nc || echo "Netcat is NOT installed!"
@@ -14,6 +14,8 @@ while ! /usr/bin/nc -z db 3306; do
   sleep 1
 done
 echo "MySQL is up!"
+
+python manage.py seed_users  # Seeds users to auth_users
 
 echo "Applying database migrations..."
 python manage.py migrate

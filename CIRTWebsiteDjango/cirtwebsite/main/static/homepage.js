@@ -27,10 +27,6 @@ function continueAsGuest() {
     window.location.href = "fake_journal.html";
 }
 
-// =============================
-// 🔽 ADD THE NEW FILTER FUNCTIONS BELOW 🔽
-// =============================
-
 // Toggle the filter dropdown
 function toggleFilter() {
     const filterDropdown = document.getElementById("filter-options");
@@ -73,6 +69,31 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     } else {
-        console.error("❌ ERROR: Search input field not found in DOM");
+        console.error("ERROR: Search input field not found in DOM");
     }
 });
+
+function uploadImages() {
+    window.location.href = "upload-documents.html";
+}
+
+function viewPastUploads() {
+    window.location.href = "past-uploads.html";
+}
+
+function checkStatus() {
+    window.location.href = "check-status.html";
+}
+
+function awaitingreview() {
+    window.location.href = "awaiting-review.html";
+}
+function pastreviews() {
+    window.location.href = "past-reviews.html";
+}
+function button2() {
+    window.location.href = "button-two.html";
+}
+function button4() {
+    window.location.href = "button-four.html";
+}

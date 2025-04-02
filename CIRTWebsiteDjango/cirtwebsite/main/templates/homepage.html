@@ -19,18 +19,39 @@
         <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
         <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
     </div>
-    <div class="header-right">
-        <div class="header-tabs">
-            {% load static %}
-            <a href="{% url 'journals' %}" class="tab">Journals</a>
-            <a href="{% url 'images' %}" class="tab">Images</a>
-            <a href="{% url 'authors' %}" class="tab">Authors</a>
+        <div class="header-right">
+            <div class="header-tabs">
+                {% load static %}
+                <a href="{% url 'journals' %}" class="tab">Journals</a>
+                <a href="{% url 'images' %}" class="tab">Images</a>
+                <a href="{% url 'authors' %}" class="tab">Authors</a>
+            </div>
+            {% if user.is_authenticated %}
+                  <div class="login-buttons">
+                      {
+                      <p>Welcome, {{ user.username }}!</p>
+                     {% load static %}
+                      {% if user.is_staff %}
+                           <a href="{% url 'editor_dashboard' %}">
+                               <button class="register-btn">Admin</button>
+                           </a>
+                      {% else %}
+                      <a href="{% url 'student_dashboard' %}">
+                         <button class="register-btn">Account</button>
+                      </a>
+                      {% endif %}
+                     <form action="{% url 'logout' %}" method="POST">
+                         {% csrf_token %}
+                         <button class="login-btn" type="submit">Log Out</button>
+                     </form>
+                  </div>
+            {% else %}
+                <div class="login-buttons">
+                    <button class="register-btn" onclick="openModal()">Register</button>
+                    <button class="login-btn" onclick="openModal()">Log In</button>
+                </div>
+            {% endif %}
         </div>
-        <div class="login-buttons">
-            <button class="register-btn" onclick="openModal()">Register</button>
-            <button class="login-btn" onclick="openModal()">Log In</button>
-        </div>
-    </div>
 </header>
 
 <div class="background-section">
@@ -53,18 +74,22 @@
     </svg>
     {% load static %}
     <input id="search-input" placeholder="Search" type="search" class="input">
-    <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
+    <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon"  onclick="toggleFilter()">
 </div>
 
 <!-- Filter options -->
 <div id="filter-options" class="filter-dropdown">
     <label><input type="radio" name="filter" value="All" checked> All</label>
-    <label><input type="radio" name="filter" value="1"> Court Records</label>
-    <label><input type="radio" name="filter" value="2"> Academic Papers</label>
-    <label><input type="radio" name="filter" value="3"> Forensic Reports</label>
-    <label><input type="radio" name="filter" value="4"> Government Documents</label>
-    <label><input type="radio" name="filter" value="5"> Case Studies</label>
-    <label><input type="radio" name="filter" value="6"> Victimology and Sociology Reports</label>
+    {% for category in categories %}
+    <label><input type="radio" name="filter" value="{{ category.id }}">{{ category.name }}</label>
+    {% endfor %}
+<!--    <label><input type="radio" name="filter" value="All" checked> All</label>-->
+<!--    <label><input type="radio" name="filter" value="1"> Court Records</label>-->
+<!--    <label><input type="radio" name="filter" value="2"> Academic Papers</label>-->
+<!--    <label><input type="radio" name="filter" value="3"> Forensic Reports</label>-->
+<!--    <label><input type="radio" name="filter" value="4"> Government Documents</label>-->
+<!--    <label><input type="radio" name="filter" value="5"> Case Studies</label>-->
+<!--    <label><input type="radio" name="filter" value="6"> Victimology and Sociology Reports</label>-->
 </div>
 </div>
 
@@ -74,7 +99,6 @@
 </div>
 
 <div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
-    <!-- The posts will be dynamically inserted here -->
 </div>
 
 
@@ -98,9 +122,9 @@
                 <div class="featured-post">
                     <h2>${document.title}</h2>
                     <p><strong>Author:</strong> ${document.author}</p>
-                    <p><strong>Category:</strong> ${document.category}</p>
+                    <p><strong>Category:</strong> ${document.category_name}</p>
                     <p>${document.description}</p>
-                    <a class="read-more" onclick="openModal('${title}', '${description}')">Continue Reading</a>
+                    <a class="read-more" onclick="window.location.href='${document.file_url}'">Continue Reading</a>
                 </div>
             `;
         })
@@ -163,8 +187,13 @@
                 <div class="modal-content">
                     <h2><strong>Log in to continue reading</strong></h2>
                     <p>${title}</p>
-                    <button onclick="redirectToLogin()">Sign Up / Log In</button>
-                    <button onclick="continueAsGuest()">Continue as Guest</button>
+                    <a href="{% url 'login' %}">
+                        <button>Sign Up / Log In</button>
+                    </a>
+                    <a href="{% url 'student_dashboard' %}">
+                        <button>Continue as guest</button>
+                    </a>
+                    <button href="{% url 'homepage' %}">Continue as Guest</button>
                     <button onclick="closeModal()">Close</button>
                 </div>
             `;

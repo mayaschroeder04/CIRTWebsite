@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journals - University of Tampa CIRT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pdf.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <script src="{% static 'auth.js' %}"></script>
+
+</head>
+<body class="no-scroll">
+
+    <div class="header-login">
+        CRIMINOLOGY INSTITUTE OF RESEARCH TECHNOLOGY
+    </div>
+
+    <div class="background-section_login"></div> <!-- Background image -->
+
+    <!-- You can add main content here -->
+    <div class="login-container">
+        <div class="login-box">
+            {% load static %}
+            <a href="{% url 'homepage' %}">
+                <img src="{% static 'utampa_logo.png' %}" alt="CIRT Logo" class="login-logo">
+            </a>
+
+            <div class="thin-bar-login"></div>
+            <h2 class="login-sub-title" id="form-title">Login</h2>
+            <form id="auth-form" data-action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+<!--                <input type="hidden" id="csrf-token" value="{{ csrf_token }}">-->
+                <div id="response-message" style="color:red;"></div>
+            </form>
+            <div id="auth-links">
+                <a href="#" class="login-sub-info" onclick="switchForm('signup')" id="signup-link" data-url="{% url 'sign_up' %}">Sign Up</a>
+                <b class="login-sub-info">|</b>
+                <a href="#" class="login-sub-info" onclick="switchForm('reset')" id="reset-link" data-url="{% url 'reset_password' %}">Reset Password</a>
+                <b class="login-sub-info">|</b>
+                <a href="#" class="login-sub-info" onclick="switchForm('forgot')" id="forgot-link" data-url="{% url 'forgot_username' %}">Reset Username</a>
+            </div>
+        </div>
+        <div id="notification" style="display: none; padding: 10px; margin-top: 10px; background-color: #e0f7fa; color: #00796b;"></div>
+
+    </div>
+
+</body>
+</html>
