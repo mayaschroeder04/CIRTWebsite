@@ -24,7 +24,7 @@
                 {% load static %}
                 <a href="{% url 'journals' %}" class="tab">Journals</a>
                 <a href="{% url 'images' %}" class="tab">Images</a>
-                <a href="{% url 'authors' %}" class="tab">Authors</a>
+                <a href="{% url 'upload_journal' %}" class="tab">Upload</a>
             </div>
             {% if user.is_authenticated %}
                   <div class="login-buttons">

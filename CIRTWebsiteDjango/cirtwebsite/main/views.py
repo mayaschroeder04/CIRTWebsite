@@ -227,3 +227,15 @@ def forgot_username(request):
                 'success': True,
                 'message': 'Instructions sent'
             })
+
+
+
+def terms_conditions(request):
+    # logic is here
+    return render(request, "terms_and_conditions.html")
+
+def upload_journal(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+
+    return render(request, "upload_a_journal.html")
