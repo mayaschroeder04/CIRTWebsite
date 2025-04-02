@@ -29,7 +29,7 @@
             {% if user.is_authenticated %}
                   <div class="login-buttons">
                       {
-                      <p>Welcome, {{ user.username }}!</p>
+                      <p>Welcome, {{ user.first_name }}!</p>
                      {% load static %}
                       {% if user.is_staff %}
                            <a href="{% url 'editor_dashboard' %}">
