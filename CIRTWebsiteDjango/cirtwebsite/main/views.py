@@ -24,8 +24,8 @@ def fake_journal(request):
 
 
 
-def toc(request):
-    return render(request, "terms-and-conditions.html")
+#def toc(request):
+   # return render(request, "terms-and-conditions.html")
 
 def journals_view(request):
     return render(request, "journals.html")
@@ -230,12 +230,27 @@ def forgot_username(request):
 
 
 
-def terms_conditions(request):
+#def terms_conditions(request):
     # logic is here
-    return render(request, "terms_and_conditions.html")
+    #return render(request, "terms_and_conditions.html")
+
+def terms_and_conditions_view(request):
+    return render(request, 'terms_and_conditions.html')
 
 def upload_journal(request):
     if request.method == "POST":
         username = request.POST.get("username")
 
     return render(request, "upload_a_journal.html")
+
+def privacy_policy_view(request):
+   return render(request, "privacy-policy.html")
+
+def faq_view(request):
+    return render(request, "faq.html")
+
+def cookie_policy_view(request):
+    return render(request, 'cookie-policy.html')
+
+def contact_view(request):
+    return render(request, 'contact.html')

@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Terms and Conditions - University of Tampa CIRT</title>
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-   {% load static %}
-   <link rel="stylesheet" href="{% static 'homepage.css' %}">
-   <script src="{% static 'homepage.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - University of Tampa CIRT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
 </head>
 <body>
 
-
 <!-- Header -->
 <header>
-   <div class="header-left">
-       <a href="{% url 'homepage' %}">
-           <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-       </a>
-       <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
-   </div>
-   <div class="header-right">
-       <div class="header-tabs">
-           <a href="{% url 'journals' %}" class="tab">Journals</a>
-           <a href="{% url 'images' %}" class="tab">Images</a>
-           <a href="{% url 'authors' %}" class="tab">Authors</a>
-       </div>
-       <div class="login-buttons">
-           <button class="register-btn" onclick="redirectToRegister()">Register</button>
-           <button class="login-btn" onclick="redirectToLogin()">Log In</button>
-       </div>
-   </div>
+    <div class="header-left">
+        <a href="{% url 'homepage' %}">
+            <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+        </a>
+        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+    </div>
+    <div class="header-right">
+        <div class="header-tabs">
+            <a href="{% url 'journals' %}" class="tab">Journals</a>
+            <a href="{% url 'images' %}" class="tab">Images</a>
+            <a href="{% url 'authors' %}" class="tab">Authors</a>
+        </div>
+        <div class="login-buttons">
+            <button class="register-btn" onclick="redirectToRegister()">Register</button>
+            <button class="login-btn" onclick="redirectToLogin()">Log In</button>
+        </div>
+    </div>
 </header>
-
 
 <!-- Main Content -->
 <main>
-   <h1>Terms and Conditions</h1>
-   <p>Welcome to the Criminology Institute of Research and Training website. By accessing or using this website, you agree to be bound by the following terms and conditions:</p>
-   <ul>
-       <li><strong>Use of Content:</strong> All content provided is for educational and informational purposes only.</li>
-       <li><strong>Privacy:</strong> we hate ur privacy and will sell your data to tiktok.</li>
-       <li><strong>Access:</strong> dont boof up our website plz.</li>
-       <li><strong>Copyright:</strong> Copyright and we sue.</li>
-       <li><strong>Modifications:</strong> We reserve the right to update these terms at any time without prior notice.</li>
-   </ul>
-   <p>If you do not agree to these terms, then dip bruh.</p>
+    <h1>Contact Us</h1>
+    <p>If you have any questions or would like to get in touch with the CIRT team, please feel free to reach out to us. We'd love to hear from you!</p>
+
+    <h2>Contact Information</h2>
+    <ul>
+        <li><strong>Email:</strong> <a href="mailto:cirt@ut.edu">thisemaildoesntexist@gmail.com</a></li>
+        <li><strong>Phone:</strong> 911</li>
+        <li><strong>Address:</strong> University of Tampa, 401 W Kennedy Blvd, Tampa, FL 33606</li>
+    </ul>
+
+    <h2>Send Us a Message</h2>
+    <form action="#" method="POST">
+        <label for="name">Your Name</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Your Email</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">Your Message</label><br>
+        <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+        <button type="submit">Send Message</button>
+    </form>
 </main>
 
-
 <div class="spacer"></div>
-
 
 <!-- left and right black boxes in the footer -->
 <div class="footer-container">

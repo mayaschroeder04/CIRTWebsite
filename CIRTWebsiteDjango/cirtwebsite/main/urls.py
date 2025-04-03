@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("fake_journal/", views.fake_journal, name="fake_journal"),
-    path("terms-and-conditions/", views.toc, name="terms-and-conditions"),
+    #path("terms-and-conditions/", views.toc, name="terms-and-conditions"),
     path("journals/", views.journals_view, name="journals"),
     # path("contact-us/", views.contact, name="contact-us"), #  Need a contact us
     path("images/", views.images_view, name="images"),
@@ -29,8 +29,11 @@ urlpatterns = [
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
     path("sign-up/", views.sign_up, name="sign_up"),
-
-    path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
-
+    path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
+    path("faq/", views.faq_view, name="faq"),
+    #path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
+    path('terms_and_conditions/', views.terms_and_conditions_view, name='terms_and_conditions'),
+    path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
+    path("contact/", views.contact_view, name="contact"),
     path("upload-journal/", views.upload_journal, name="upload_journal"),
 ]
