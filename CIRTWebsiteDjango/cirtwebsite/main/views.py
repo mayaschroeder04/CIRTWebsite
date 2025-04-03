@@ -7,6 +7,7 @@ from django.db.models import Q
 from .models import Category, Document, SubCategory
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import UserManager, User
+from django.core.files.storage import FileSystemStorage
 
 # from ..mysql.connector.utils import print_buffer
 
@@ -235,7 +236,19 @@ def terms_conditions(request):
     return render(request, "terms_and_conditions.html")
 
 def upload_journal(request):
-    if request.method == "POST":
+    if request.method == "POST" and request.FILES.get("journal"):
         username = request.POST.get("username")
+        journal = request.FILES["journal"]  # Get the uploaded file
+
+        # Save the file using Django's FileSystemStorage
+        fs = FileSystemStorage(location="uploads/")  # Ensure this folder exists
+        filename = fs.save(journal.name, journal)
+        file_url = fs.url(filename)
+
+        return render(request, "upload_a_journal.html", {
+            "message": "Upload successful!",
+            "file_url": file_url
+        })
 
     return render(request, "upload_a_journal.html")
+

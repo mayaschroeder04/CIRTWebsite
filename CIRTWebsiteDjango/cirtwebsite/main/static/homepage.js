@@ -97,3 +97,30 @@ function button2() {
 function button4() {
     window.location.href = "button-four.html";
 }
+
+// upload tab
+function uploadFile() {
+    const fileInput = document.getElementById('pdfFile');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        document.getElementById('message').innerText = "Please select a file.";
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("pdf", file);
+
+    fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').innerText = data.message;
+        })
+        .catch(error => {
+            console.error("Error uploading file:", error);
+            document.getElementById('message').innerText = "Upload failed.";
+        });
+}

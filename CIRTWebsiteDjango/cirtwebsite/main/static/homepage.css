@@ -775,7 +775,7 @@ html, body {
     margin-left: 200px;
     width: 200px;
     height: 100px;
-    background-color: antiquewhite;
+    background-color: white;
     padding: 300px;
     border: #1a1a1a;
 
@@ -786,4 +786,32 @@ html, body {
     padding: 20px;
     border: #1a1a1a;
     border-style: solid;
+}
+form {
+    max-width: 400px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+
+}
+
+input, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+button {
+    background: #a6192e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #e4405f;
+
 }

@@ -29,20 +29,24 @@
     </header>
 
     <!-- actual content , can replace with an act header or sum  -->
-{#    <div class="content" style="margin-bottom: 500px; text-align: center;">#}
-{#        <h2>Welcome to the Editor Dashboard</h2>#}
-{#        <p>Not sure what to have here as the view yet/buttons.</p>#}
-{#    </div>#}
 
-    <!-- buttons below caption -->
-{#    <div class="dashboard-buttons">#}
-{#        <button onclick="awaitingreview()">Awaiting Review</button>#}
-{#        <button onclick="button2()">button 2</button>#}
-{#        <button onclick="pastreviews()">Past Reviews</button>#}
-{#        <button onclick="button4()">button 4</button>#}
-{#    </div>#}
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <H2>Upload a Journal</H2>
 
-    <div class="upload-journal">Uplaod a JOURNAL with Maya!</div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="journal">Upload PDF:</label>
+        <input type="file" id="journal" name="journal" accept="application/pdf" required>
+
+        <button type="submit">Upload</button>
+
+        <p id="statusMessage"></p> <!-- Placeholder for messages -->
+    </form>
 
 
     <!-- Footer  -->
