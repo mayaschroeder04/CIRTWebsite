@@ -1,138 +1,41 @@
-{% extends 'base.html' %}
-{% block title %}Login - University of Tampa CIRT{% endblock %}
-
-{% comment %} <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - University of Tampa CIRT</title>
+    <title>{% block title %}University of Tampa CIRT Website{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    {% load static %}
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
-    <link rel="stylesheet" href="{% static 'pdf.css' %}">
     <script src="{% static 'homepage.js' %}"></script>
-    <style>
-        .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 70vh;
-        }
-        .form-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        .form-box h2 {
-            margin-bottom: 20px;
-        }
-        .form-box input {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-box button {
-            width: 100%;
-            padding: 10px;
-            background: #d00000;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .form-box button:hover {
-            background: #a00000;
-        }
-    </style>
 </head>
 <body>
 
+<!-- top of the page -->
 <header>
     <div class="header-left">
-        <a href="{% url 'homepage' %}">
-            <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-        </a>
+        {% load static %}
+        <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
         <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
     </div>
     <div class="header-right">
         <div class="header-tabs">
+            {% load static %}
             <a href="{% url 'journals' %}" class="tab">Journals</a>
             <a href="{% url 'images' %}" class="tab">Images</a>
             <a href="{% url 'authors' %}" class="tab">Authors</a>
         </div>
         <div class="login-buttons">
-            <button class="register-btn" onclick="redirectToRegister()">Register</button>
+            <button class="register-btn" onclick="redirectToRegister()">Register</button> <!-- This is where it calls the function to create a login within the window -->
             <button class="login-btn" onclick="redirectToLogin()">Log In</button>
         </div>
     </div>
-</header> {% endcomment %}
+</header>
 
 {% block content %}
-    <!-- Main Content -->
-    <div class="form-container">
-        <div class="form-box">
-            <h2>Login</h2>
-            <form method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit">Login</button>
-                <style>
-                    .form-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 70vh;
-                }
-                .form-box {
-                    background: white;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    text-align: center;
-                    width: 300px;
-                }
-                .form-box h2 {
-                    margin-bottom: 20px;
-                }
-                .form-box input {
-                    width: 100%;
-                    padding: 8px;
-                    margin: 10px 0;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                }
-                .form-box button {
-                    width: 100%;
-                    padding: 10px;
-                    background: #d00000;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
-                .form-box button:hover {
-                    background: #a00000;
-                }
-                </style>
-            </form>
-            {% if error %}
-                <p style="color: red;">{{ error }}</p>
-            {% endif %}
-        </div>
-    </div>
-
 {% endblock %}
 
-{% comment %} <!-- left and right black boxes in the footer -->
+<!-- left and right black boxes in the footer -->
 <div class="footer-container">
     <!-- Left and right "blocked out" areas -->
     <div class="footer-buffer footer-buffer-left"></div>
@@ -211,4 +114,4 @@
 </div>
 
 </body>
-</html> {% endcomment %}
+</html>

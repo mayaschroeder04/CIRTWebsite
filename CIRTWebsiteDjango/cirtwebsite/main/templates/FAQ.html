@@ -1,4 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}FAQ - University of Tampa CIRT{% endblock %}
 
+
+{% comment %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,33 +35,34 @@
             <button class="login-btn" onclick="redirectToLogin()">Log In</button>
         </div>
     </div>
-</header>
+</header> {% endcomment %}
 
+{% block content %}
+    <!-- Content -->
+    <div class="faq-container">
+        <h1>FAQs</h1>
+        <div class="faq-item">
+            <h3>What is CIRT?</h3>
+            <p>The Criminology Institute of Research Technology (CIRT) is a platform for academic research and collaboration in criminology and criminal justice.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I register for an account?</h3>
+            <p>You can register by clicking the "Register" button on the homepage and filling out the registration form.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How can I access journals and research materials?</h3>
+            <p>Once logged in, you can navigate to the "Journals" section to explore available research materials.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Who can I contact for support?</h3>
+            <p>If you need assistance, please contact our support team at support@cirt.utampa.edu.</p>
+        </div>
+    </div>
 
-<div class="faq-container">
-    <h1>FAQs</h1>
-    <div class="faq-item">
-        <h3>What is CIRT?</h3>
-        <p>The Criminology Institute of Research Technology (CIRT) is a platform for academic research and collaboration in criminology and criminal justice.</p>
-    </div>
-    <div class="faq-item">
-        <h3>How do I register for an account?</h3>
-        <p>You can register by clicking the "Register" button on the homepage and filling out the registration form.</p>
-    </div>
-    <div class="faq-item">
-        <h3>How can I access journals and research materials?</h3>
-        <p>Once logged in, you can navigate to the "Journals" section to explore available research materials.</p>
-    </div>
-    <div class="faq-item">
-        <h3>Who can I contact for support?</h3>
-        <p>If you need assistance, please contact our support team at support@cirt.utampa.edu.</p>
-    </div>
-</div>
-
-<!-- space between the footer and the featured post box -->
-<div class="spacer"></div>
-
-<!-- left and right black boxes in the footer -->
+    <!-- space between the footer and the featured post box -->
+    <div class="spacer"></div>
+{% endblock %}
+{% comment %} <!-- left and right black boxes in the footer -->
 <div class="footer-container">
     <!-- Left and right "blocked out" areas -->
     <div class="footer-buffer footer-buffer-left"></div>
@@ -136,4 +141,4 @@
 </div>
 
 </body>
-</html>
+</html> {% endcomment %}

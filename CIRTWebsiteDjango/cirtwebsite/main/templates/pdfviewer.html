@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html'%}
+{% block title %}PDF Viewer - University of Tampa CIRT{% endblock %}
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     {% load static %}
@@ -34,14 +37,15 @@
 </header>
 
 
-<body>
+<body> {% endcomment %}
 
-<div class="pdf-container">
-    <embed src="example.pdf" type="application/pdf" />
-</div>
+{% block content %}
+    <div class="pdf-container">
+        <embed src="example.pdf" type="application/pdf" />
+    </div>
+{% endblock %}
 
-
-<div style="height: 700px;"></div>
+{% comment %} <div style="height: 700px;"></div>
 <!-- Footer -->
 <div class="footer-container">
     <div class="footer-buffer footer-buffer-left"></div>
@@ -113,4 +117,4 @@
 </div>
 
 </body>
-</html>
+</html> {% endcomment %}
