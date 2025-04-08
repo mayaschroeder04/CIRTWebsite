@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title %}Search Results - University of Tampa CIRT{% endblock %}
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     {% load static %}
@@ -32,11 +35,13 @@
             <button class="login-btn" onclick="openModal()">Log In</button>
         </div>
     </div>
-</header>
+</header> {% endcomment %}
+
+{% block content %}
 
     <div class="red-bar"></div>
 
- <div class="main-container">
+    <div class="main-container">
     <!-- Sidebar for Filters -->
     <div class="filter-sidebar">
         <h4>Filter by Category</h4>
@@ -171,9 +176,9 @@
         document.addEventListener("DOMContentLoaded", displaySearchResults);
     </script>
 
+{% endblock %}
 
-
-    <!-- Footer -->
+    {% comment %} <!-- Footer -->
     <div class="footer-container">
         <div class="footer-inner">
             <div class="main-title">
@@ -187,4 +192,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> {% endcomment %}
