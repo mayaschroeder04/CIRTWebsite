@@ -23,6 +23,8 @@ class Command(BaseCommand):
             ('sayedali', 'bobdoe@example.com', 'password789', '0', 'Sayed', 'Ali'),
             ('abc', 'abc@example.com', 'abc', '0', 'Adam', 'Cobb', )
         ]
+        if not User.objects.filter(username='parker').exists():
+            user = User.objects.create_user(username='parker', password='pass', is_active=False)
 
         for username, email, password, is_staff, first_name, last_name in users:
             if not User.objects.filter(username=username).exists():  # Check if the user exists

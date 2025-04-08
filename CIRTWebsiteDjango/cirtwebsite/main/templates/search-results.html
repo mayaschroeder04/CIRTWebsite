@@ -17,7 +17,9 @@
     <header>
     <div class="header-left">
         {% load static %}
-        <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+        <a href="{% url 'homepage' %}">
+            <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+        </a>
         <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
     </div>
     <div class="header-right">
@@ -86,7 +88,7 @@
 
 
         <!-- Search Results Section -->
-        <div id="search-results-container" style="width: 100%; overflow-y: auto;">
+        <div id="search-results-container" style="width: 100%; overflow-y: auto; font-family: 'Times New Roman', Times, 'Serif'; ">
             <h2>Search Results</h2>
             <div id="search-results">
                 <!-- Search results will be dynamically inserted here -->
@@ -103,20 +105,49 @@
         }
 
         function applyFilters() {
-            const params = new URLSearchParams();
-            document.querySelectorAll('.subcategory-item').forEach(item => {
-                if (item.classList.contains('selected')) {
-                    params.append('filter', item.innerText);
-                }
+            const selectedCategories = [];
+            const selectedSubcategories = [];
+
+            document.querySelectorAll('input[name="category"]:checked').forEach(checkbox => {
+                selectedCategories.push(checkbox.value);
             });
-            window.location.search = params.toString();
+
+
+            document.querySelectorAll('input[name="subcategory"]:checked').forEach( checkbox => {
+                selectedSubcategories.push(checkbox.value)
+            });
+
+            const data = {
+                selected_categories: selectedCategories,
+                selected_subcategories: selectedSubcategories
+                };
+
+            fetch('/search-results/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken() // Token
+                },
+                 body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Filtered Documents:", data);
+                updateDocuments(data);
+            })
+            .catch(error => console.error('Error:', error));
+
         }
 
-        document.querySelectorAll('.subcategory-item').forEach(item => {
-            item.addEventListener('click', () => {
-                item.classList.toggle('selected');
-            });
-        });
+
+
+
+        function getCSRFToken() {
+            const cookieValue = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+            return cookieValue ? cookieValue.split('=')[1] : '';
+        }
+
+
 
         // Display search results
         function displaySearchResults() {
@@ -148,17 +179,54 @@
             documents.forEach(result => {
                 resultHTML += `
                     <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
-                        <h3 style="margin: 5px 0;">${result.title}</h3>
-                        <p><strong>Author:</strong> ${result.author}</p>
+                        <h3 style="margin: 5px 0;">
+                            <a href="${result.file_url}" style="text-decoration: none; color: inherit;">${result.title}</a>
+                        </h3>
+                        <p><strong></strong> ${result.author}</p>
                         <p><strong>Category:</strong> ${result.category_name}</p>
                         <p>${result.description}</p>
                         <a class="read-more" onclick="window.location.href='${result.url}'">Continue Reading</a>
+
                     </li>`;
             });
 
             resultHTML += `</ul>`;
             resultsContainer.innerHTML = resultHTML;
         }
+
+        function updateDocuments(rawdocuments) {
+            const documentListContainer = document.getElementById("search-results-container");
+
+            console.log(rawdocuments); // This is already a JS object, no need for JSON.parse()
+
+            // Ensure it's an array
+            if (!Array.isArray(rawdocuments.documents)) {
+                console.error("Expected an array but got:", rawdocuments.documents);
+                return;
+            }
+
+            documentListContainer.innerHTML = '';  // Clear existing content
+
+            if (rawdocuments.documents.length === 0) {
+                documentListContainer.innerHTML = '<p>No results found based on the filters.</p>';
+                return;
+            }
+
+            rawdocuments.documents.forEach(doc => {
+                const documentItem = document.createElement("div");
+                documentItem.classList.add("document-item");
+                documentItem.innerHTML = `
+                    <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin: 5px 0;">${doc.title}</h3>
+                        <p><strong>Author:</strong> ${doc.author}</p>
+                        <p><strong>Category:</strong> ${doc.category_name}</p>
+                        <p>${doc.description}</p>
+                        <a class="read-more" onclick="window.location.href='${doc.url}'">Continue Reading</a>
+                    </li>`;
+                documentListContainer.appendChild(documentItem);
+            });
+        }
+
 
         function getQueryParams() {
             const params = new URLSearchParams(window.location.search);
