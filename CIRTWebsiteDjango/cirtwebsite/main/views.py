@@ -349,15 +349,20 @@ def login_view(request):
 
         user = authenticate(request, username=username, password=password)
 
+        otp_on_off = False
         if user is not None:
 
-            otp = generate_otp_for_user(user)
-            send_otp_email(user.email, otp)
+            if(otp_on_off):
+                otp = generate_otp_for_user(user)
+                send_otp_email(user.email, otp)
 
-            request.session['otp_user'] = user.username
+                request.session['otp_user'] = user.username
 
-            # Return a JSON response instead of redirecting immediately
-            return JsonResponse({"success": True, "redirect_url": "verify_otp?username=" + username})
+                # Return a JSON response instead of redirecting immediately
+                return JsonResponse({"success": True, "redirect_url": "verify_otp?username=" + username})
+            else:
+                login(request, user)
+                return JsonResponse({"success": True, "message": "Logging in...", "redirect_url": "/"})
 
         else:
             return JsonResponse({"success": False, "message": "Invalid username or password."})
