@@ -1,79 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journals - University of Tampa CIRT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
-    <link rel="stylesheet" text = "text/css" href="{% static 'pdf.css' %}">
-    <script src="{%static 'homepage.js' %}"></script>
+    <title>Past Uploads</title>
+    <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
 
 <!-- Header -->
 <header>
     <div class="header-left">
-        <a href="{% url 'homepage' %}">
-            <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+        <a href="homepage.html">
+            <img src="tampalogo.png" alt="CIRT Logo">
         </a>
         <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
     </div>
-   </div>
-            {% if user.is_authenticated %}
-                  <div class="login-buttons">
-                      <p>Welcome, {{ user.username }}!</p>
-                     {% load static %}
-                      <a href="{% url 'student_dashboard' %}">
-                         <button class="register-btn">Account</button>
-                      </a>
-                     <form action="{% url 'logout' %}" method="POST">
-                         {% csrf_token %}
-                         <button class="login-btn" type="submit">Log Out</button>
-                     </form>
-                  </div>
-            {% else %}
-                <div class="login-buttons">
-                    <button class="register-btn" onclick="openModal()">Register</button>
-                    <button class="login-btn" onclick="openModal()">Log In</button>
-                </div>
-            {% endif %}
+    <div class="header-right">
+        <div class="header-tabs">
+            <a href="journals.html" class="tab">Journals</a>
+            <a href="images.html" class="tab">Images</a>
+            <a href="authors.html" class="tab">Authors</a>
         </div>
+    </div>
 </header>
 
-<!-- Main Content -->
-<div style="text-align: center; margin-top: 50px;">
-
-<div style="text-align: left; margin-top: 50px;">
-
-    <h2>Journals Tab</h2>
-
-    <!-- Search Bar (Copied from homepage) -->
-    <div class="group">
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-            <g>
-                <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-            </g>
-        </svg>
-        <input placeholder="Search for journals" type="search" class="input">
-    </div>
+<!-- Content Section -->
+<div class="content" style="margin-bottom: 500px; text-align: center;">
+    <h2>BUTTON 2 SECTION  </h2>
+    <p>not yet sure wgat to put here</p>
 </div>
 
-<div class="pdf-box">
-    <a href="{% url 'pdfviewer' %}" target="_blank">
-        <div class="pdf-title">Example PDF Title</div>
-        <div class="pdf-author">Author Name</div>
-    </a>
-</div>
-
-<div style="height: 700px;"></div>
-
-
-
-
-
-<!-- Footer -->
+<!-- Footer  -->
 <div class="footer-container">
     <div class="footer-buffer footer-buffer-left"></div>
     <div class="footer-buffer footer-buffer-right"></div>
@@ -101,7 +59,7 @@
             <div class="footer-section">
                 <h3>Terms & Policies</h3>
                 <ul>
-                    <li><a href="{% url 'terms-and-conditions' %}">Terms and Conditions</a></li>
+                    <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Cookie Policy</a></li>
                 </ul>
@@ -139,9 +97,10 @@
                 <span>utamapcrm</span>
             </a>
         </div>
-
     </div>
 </div>
-
+<script src="homepage.js"></script>
+</body>
+</html>
 </body>
 </html>

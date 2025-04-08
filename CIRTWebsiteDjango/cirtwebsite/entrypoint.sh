@@ -15,6 +15,8 @@ while ! /usr/bin/nc -z db 3306; do
 done
 echo "MySQL is up!"
 
+python manage.py seed_users  # Seeds users to auth_users
+
 echo "Applying database migrations..."
 python manage.py migrate
 

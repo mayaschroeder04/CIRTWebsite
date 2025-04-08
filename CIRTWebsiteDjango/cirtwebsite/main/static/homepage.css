@@ -12,6 +12,8 @@ header {
     padding: 20px;
 }
 
+
+
 .header-left {
     display: flex;
     align-items: center;
@@ -207,10 +209,6 @@ nav {
     height: 250px; /* Adds extra white space before the footer */
 }
 
-.search_results_spacer{
-    height: 50px; /* Spacer in the search results html */
-}
-
 /* Main title: EXPLORE CIRT */
 .main-title {
     text-align: left; /* Align the title to the left */
@@ -229,7 +227,7 @@ nav {
 .modal-content {
     background: white;
     padding: 30px;
-    /*border-radius: 10px;*/
+    border-radius: 10px;
     text-align: center;
     position: relative;
     width: 500px; /* Increase width */
@@ -255,7 +253,7 @@ button {
     width: 80%;
     margin: 8px 0;
     font-size: 18px;
-    /*border-radius: 8px;*/
+    border-radius: 8px;
 }
 
 .primary-btn {
@@ -443,7 +441,7 @@ a {
     padding: 0 1rem;
     padding-left: 2.5rem;
     border: 2px solid transparent;
-    /*border-radius: 8px;*/
+    border-radius: 8px;
     outline: none;
     background-color: #f3f3f4;
     color: #0d0c22;
@@ -465,6 +463,7 @@ a {
     height: 24px;
     cursor: pointer;
     margin-left: 10px;
+    filter: invert(100%) ;
 }
 
 /* Style for the filter dropdown */
@@ -502,39 +501,101 @@ a {
     filter: invert(0%) grayscale(100%);
 }
 
+
+
+/* Red Bar Styling */
 .red-bar {
     width: 100%;
-    height: 4px; /* Thin height for the red bar */
-    background-color: #8b141f; /* Red color */
-    margin-top: 10px; /* Optional, to give space between the header and the bar */
+    height: 4px;
+    background-color: #8b141f;
+    margin-top: 10px;
 }
 
+/* Layout for Sidebar and Results */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Filter Sidebar Styling */
 .filter-sidebar {
-    width: 250px; /* Adjust the width of the sidebar */
+    width: 300px;
     padding: 20px;
-    background-color: #f4f4f4;
-    position: absolute;
-    top: 123px; /* height of header */
-    left: 0;
-    height: calc(100vh - 123px); /* calc the height of the filter bar */
+    background-color: #f9f9f9;
+    position: sticky;
+    top: 0;
+    height: 100vh;
     overflow-y: auto;
+    border-right: 2px solid #666;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .filter-sidebar h4 {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+/* Category Styling */
+.category {
     margin-bottom: 10px;
 }
 
-.filter-sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.filter-sidebar ul li {
+.category-label {
+    font-size: 1.2rem;
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    padding: 5px;
     margin-bottom: 8px;
+    transition: color 0.3s ease;
 }
 
-.filter-sidebar select, .filter-sidebar button {
+.category-label:hover {
+    color: #0056b3;
+}
+
+/* Subcategory Styling */
+.subcategory-container {
+    display: none;
+    margin-left: 24px;
+    border-left: 2px solid #e0e0e0;
+    padding-left: 12px;
+}
+
+.subcategory-container.show {
+    display: block;
+}
+
+.subcategory-item {
+    padding: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+.subcategory-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #007bff;
+}
+
+input[type="checkbox"] + label {
+    font-size: 1rem;
+    color: #555;
+    margin-left: 8px;
+}
+
+/* Buttons and Selects */
+.filter-sidebar button, .filter-sidebar select {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -545,34 +606,184 @@ a {
     color: white;
     border: none;
     cursor: pointer;
+    padding: 5%;
+    width: 95%;
+    margin-left: 5px;
 }
 
-.filter-sidebar button:hover {
-    background-color: #800f18;
+/* Full height of the page, no margin */
+html, body {
+    height: 100%; /* Full viewport height */
+    margin: 0; /* Remove default margin */
 }
 
-/* FAQ CSS */
-.faq-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Disable scrolling only when the page has the 'no-scroll' class */
+.no-scroll html, .no-scroll body {
+    overflow: hidden; /* Prevent scrolling */
 }
-.faq-container h1 {
+
+/* Header styling */
+.header-login {
+    background-color: rgba(26, 26, 26, 0.4); /* Semi-transparent dark background */
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
     text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    position: fixed;
+    transform: scale(1.2); /* Adjust the scale value as needed */
+    top: 0;
+    z-index: 100;
+    color: white; /* Ensure the text is white for visibility */
+    line-height: 50px; /* Vertically center the text */
+}
+
+/* Background image */
+.background-section_login {
+    background-image: url("skyline.jpg");
+    background-size: cover;
+    background-position: center top;
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+    position: fixed; /* Fix the background */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Place the background image behind other content */
+}
+
+/* Centered login section */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.login-box {
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px; /* Set width for the login box */
+}
+
+.login-box h2 {
     margin-bottom: 20px;
+    font-family: "Arial", sans-serif;
 }
-.faq-item {
-    margin-bottom: 20px;
+
+.login-box input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
 }
-.faq-item h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #d90429;
-}
-.faq-item p {
-    margin: 5px 0 0;
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     font-size: 16px;
+}
+
+.login-box button:hover {
+    background-color: #333;
+}
+
+.thin-bar-login{
+    width: 300px;
+    height: 1px;
+    background-color: rgb(36, 36, 36, 0.6);
+    margin: 15px 0;
+}
+
+.login-logo{
+    width: 200px;
+    height: 66px;
+}
+
+.login-sub-title{
+    font-size: 20px;
+    color: rgb(26, 26, 26, 0.9);
+}
+
+.login-sub-info{
+    font-size: 12px;
+    color: rgb(128, 128, 128);
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.login-sub-info:hover{
+    color: rgba(227, 15, 15, 0.9);
+}
+
+
+.upload-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.upload-container input {
+    margin-top: 10px;
+}
+
+.upload-container button {
+    background-color: #a6192e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.upload-container button:hover {
+    background-color: #8d1526;
+}
+
+.response-message {
+        margin: 15px 0;
+        min-height: 20px;
+    }
+.response-message .success {
+        color: green;
+        padding: 10px;
+        background: #e8f5e9;
+        border-left: 3px solid green;
+    }
+.response-message .error {
+    color: red;
+    padding: 10px;
+    background: #ffebee;
+    border-left: 3px solid red;
+}
+
+.upload-journal{
+    margin-left: 200px;
+    width: 200px;
+    height: 100px;
+    background-color: antiquewhite;
+    padding: 300px;
+    border: #1a1a1a;
+
+}
+
+.input_a_journal{
+    margin-top: 10px;
+    padding: 20px;
+    border: #1a1a1a;
+    border-style: solid;
 }
