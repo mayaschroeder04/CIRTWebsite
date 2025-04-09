@@ -18,6 +18,7 @@ urlpatterns = [
     path("search-results/", views.search_results, name="search_results"),
     path("search-results/", views.filter_buttons, name="filter_buttons"),
     path("upload-images/", views.upload_images, name="upload_images"),
+
     path("student-dashboard/", views.student_dashboard, name="student_dashboard"),
     path("past-uploads/", views.past_uploads, name="past_uploads"),
     path("past-reviews/", views.past_reviews, name="past_reviews"),

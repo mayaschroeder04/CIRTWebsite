@@ -167,7 +167,9 @@ def upload_images(request):
     return render(request, "upload-images.html")
 
 def student_dashboard(request):
-    return render(request, "student-dashboard.html")
+    documents = Document.objects.all().order_by('-created_at')
+    return render(request, 'student-dashboard.html', {'documents': documents})
+
 
 def past_uploads(request):
     return render(request, "past-uploads.html")
@@ -192,6 +194,8 @@ def awaiting_review(request):
 
 def sign_up(request):
     if request.method == "POST":
+        # firstname = request.POST.get("firstname")
+        # lastname = request.POST.get("lastname")
         username = request.POST.get("username")
         password = request.POST.get("password")
         email = request.POST.get("email")
