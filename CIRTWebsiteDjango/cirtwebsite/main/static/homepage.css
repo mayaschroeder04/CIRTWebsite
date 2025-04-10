@@ -821,3 +821,886 @@ button:hover {
     background: #e4405f;
 
 }
+body {
+    overflow-x:hidden;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left img {
+    height: 60px; /* Adjust size as needed */
+    margin-right: 15px;
+}
+
+.header-left h1 {
+    text-align: left;
+    font-size: 30px;
+    font-weight: lighter;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+
+/* under the logo */
+.cirt-text {
+    font-family: 'Poppins', sans-serif; /* Matches header font */
+    color: black;
+    font-size: 20px;
+    margin-top: 1px;
+    margin-bottom: 0;
+    margin-left: 20px;
+}
+
+.login-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Register button (outlined) */
+.register-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    background-color: black;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Log In button (red background) */
+.login-btn {
+    background-color: #a6192e; /* Deep red */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+    margin-right: 5px
+}
+
+.login-btn:hover {
+    background-color: #8b141f;
+    transform: scale(1.02);
+
+}
+
+.background-section {
+    background-image: url("skyline.jpg");
+    background-size: cover;
+    background-position: center top;
+    padding-bottom: 200px; /* Adjust as needed */
+    height: 250px;
+    padding-top: 50px;
+
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust spacing between tabs and buttons */
+}
+
+.header-tabs {
+    display: flex;
+    gap: 15px; /* Space between tabs */
+}
+
+.tab {
+    color: #a6192e;
+    padding: 10px 15px;
+    transition: 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: none;
+
+}
+
+#upload-tab {
+    color: black;
+    font-weight: bold;
+}
+
+.tab:hover {
+    color: #e4405f; /* Highlight effect on hover */
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+nav {
+    margin-left: 18.5%;
+    margin-top: -70px;
+    margin-bottom: -40px;
+    font-size: 60px;
+    font-style: italic;
+    color: white;
+    font-family: 'Poppins', sans-serif; /* Modernized font */
+    text-shadow:
+            0 0 10px rgba(0, 0, 0, 1),
+            0 0 50px rgba(25, 25, 112, 1);
+}
+
+
+.search-bar {
+    display: flex;
+    justify-content: left;
+    margin-left: 18.5%;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.search-bar input {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+
+}
+.featured-post {
+    background: white;
+    margin: 20px auto;
+    width: 60%;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.featured-post h2 {
+    margin: 0;
+    color: #a6192e;
+}
+.featured-post .author {
+    color: #555;
+}
+.read-more {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    transition: 0.3s;
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 15px;
+}
+.read-more:hover {
+    background-color: #a6192e;
+    transform: scale(1.02);
+
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.modal button {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+.spacer {
+    height: 250px; /* Adds extra white space before the footer */
+}
+
+/* Main title: EXPLORE CIRT */
+.main-title {
+    text-align: left; /* Align the title to the left */
+    padding-left: 50px;
+    margin-top: 20px;
+}
+
+.main-title h1 {
+    color: white; /* White text for the "EXPLORE CIRT" title */
+    font-size: 30px; /* Font size for main title */
+    margin: 0; /* Remove default margins */
+}
+
+/* login page */
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 500px; /* Increase width */
+    height: auto; /* Adjust height dynamically */
+    max-width: 90%; /* Ensure it doesn't exceed the screen */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.switch-link {
+    color: #8b141f;
+    text-decoration: underline;
+    cursor: pointer;
+
+}
+/* Button improvements */
+.button-container {
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: 80%;
+    margin: 8px 0;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.primary-btn {
+    background-color: #007BFF;
+    color: white;
+}
+
+.secondary-btn {
+    background-color: #ddd;
+    color: black;
+}
+
+
+.footer-container {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    background-color: #1a1a1a; /* Dark background for the footer */
+}
+
+/* Add overlay sections for blocking out the sides */
+.footer-buffer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px; /* Adjust width of blocked areas as needed */
+    background-color: #1a1a1a; /* Color for blocked-out areas */
+    z-index: 10;
+}
+
+/* Left buffer (block out the left side of the footer) */
+.footer-buffer-left {
+    left: 0;
+}
+
+/* Right buffer (block out the right side of the footer) */
+.footer-buffer-right {
+    right: 0;
+}
+
+/* Inner content for the footer */
+.footer-inner {
+    position: relative; /* Keeps content away from the buffer areas */
+    z-index: 5; /* Content sits above the background */
+    padding: 0 60px; /* Prevents overlapping with blocked areas (adjust margin/padding to match buffers) */
+}
+
+/* Footer sections layout */
+.footer-sections {
+    display: flex; /* Use Flexbox layout */
+    justify-content: space-between; /* Distribute space between items */
+    flex-wrap: wrap; /* Ensure responsiveness for narrower screens */
+    padding-left: 40px;
+}
+
+/* Individual footer section */
+.footer-section {
+    flex: 1; /* Equal width for all sections */
+    text-align: left; /* Align all content inside to the left */
+    padding: 10px; /* Add padding inside each section */
+}
+
+/* Header styling */
+.footer-section h3 {
+    color: white; /* White text for headers */
+    font-size: 18px; /* Font size for headers */
+    margin-top: 0;
+    margin-bottom: 20px; /* Add space below headers */
+    text-transform: uppercase; /* Capitalize headers */
+}
+
+/* Remove list styles */
+.footer-section ul {
+    list-style: none; /* Remove bullet points */
+    padding-left: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+/* Add space between list items */
+.footer-section li {
+    margin-bottom: 8px;
+}
+
+/* Link styles */
+.footer-section a {
+    color: white; /* White links */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px;
+}
+
+.footer-section a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
+
+
+/* social media icons */
+/* From Uiverse.io by Pradeepsaranbishnoi */
+.social-links,.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right:50px;
+}
+
+.social-btn {
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    font-family: 'Titillium Web', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
+    background: white;
+    margin: 5px;
+    transition: 0.3s;
+    justify-content: center;
+}
+
+.social-btn svg {
+    height: 24px;
+    width: 24px;
+}
+
+.social-btn span {
+    width: 0px;
+    overflow: hidden;
+    transition: 0.3s;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.social-btn:hover {
+    width: 150px;
+    border-radius: 5px;
+}
+
+.social-btn:hover span {
+    padding: 2px;
+    width: 80px;
+}
+
+#instagram svg {
+    fill: #e4405f; /* Instagram color */
+}
+
+#linkedin svg {
+    fill: #0e76a8;
+}
+
+#facebook svg {
+    fill: #1877f2; /* Facebook blue */
+}
+
+#instagram span {
+    color: #e4405f; /* Instagram text color */
+}
+
+#linkedin span {
+    color: #0e76a8; /* LinkedIn text color */
+}
+
+#facebook span {
+    color: #1877f2; /* Facebook text color */
+}
+
+
+a {
+    text-decoration: none;
+}
+
+/* search bar */
+.group {
+    display: flex;
+    justify-content: center;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+}
+
+.input {
+    width: 900px;
+    height: 50px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: .3s ease;
+}
+
+.input::placeholder {
+    color: #9e9ea7;
+}
+
+.input:focus, input:hover {
+    outline: none;
+    border-color: rgb(31, 32, 35);
+    background-color: #fff;
+}
+/* Style for the filter button */
+.filter-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-left: 10px;
+    filter: invert(100%) ;
+}
+
+/* Style for the filter dropdown */
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    width: 200px;
+    right: 0;
+    margin-top: 5px;
+}
+
+.filter-dropdown label {
+    display: block;
+    margin: 5px 0;
+}
+
+.filter-dropdown input[type="radio"] {
+    margin-right: 8px;
+}
+
+.icon {
+    position: absolute;
+    margin-right: 860px;
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
+}
+
+.input::-webkit-search-cancel-button {
+    filter: invert(0%) grayscale(100%);
+}
+
+
+
+/* Red Bar Styling */
+.red-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #8b141f;
+    margin-top: 10px;
+}
+
+/* Layout for Sidebar and Results */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Filter Sidebar Styling */
+.filter-sidebar {
+    width: 300px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 2px solid #666;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.filter-sidebar h4 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+/* Category Styling */
+.category {
+    margin-bottom: 10px;
+}
+
+.category-label {
+    font-size: 1.2rem;
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    padding: 5px;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.category-label:hover {
+    color: #0056b3;
+}
+
+/* Subcategory Styling */
+.subcategory-container {
+    display: none;
+    margin-left: 24px;
+    border-left: 2px solid #e0e0e0;
+    padding-left: 12px;
+}
+
+.subcategory-container.show {
+    display: block;
+}
+
+.subcategory-item {
+    padding: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+.subcategory-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    transform: scale(1.2);
+    accent-color: #007bff;
+}
+
+input[type="checkbox"] + label {
+    font-size: 1rem;
+    color: #555;
+    margin-left: 8px;
+}
+
+/* Buttons and Selects */
+.filter-sidebar button, .filter-sidebar select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.filter-sidebar button {
+    background-color: #a6192e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5%;
+    width: 95%;
+    margin-left: 5px;
+}
+
+/* Full height of the page, no margin */
+html, body {
+    height: 100%; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+}
+
+/* Disable scrolling only when the page has the 'no-scroll' class */
+.no-scroll html, .no-scroll body {
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Header styling */
+.header-login {
+    background-color: rgba(26, 26, 26, 0.4); /* Semi-transparent dark background */
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    position: fixed;
+    transform: scale(1.2); /* Adjust the scale value as needed */
+    top: 0;
+    z-index: 100;
+    color: white; /* Ensure the text is white for visibility */
+    line-height: 50px; /* Vertically center the text */
+}
+
+/* Background image */
+.background-section_login {
+    background-image: url("skyline.jpg");
+    background-size: cover;
+    background-position: center top;
+    height: 100vh; /* Full viewport height */
+    width: 100%;
+    position: fixed; /* Fix the background */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Place the background image behind other content */
+}
+
+/* Centered login section */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.login-box {
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px; /* Set width for the login box */
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    font-family: "Arial", sans-serif;
+}
+
+.login-box input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-box button:hover {
+    background-color: #333;
+}
+
+.thin-bar-login{
+    width: 300px;
+    height: 1px;
+    background-color: rgb(36, 36, 36, 0.6);
+    margin: 15px 0;
+}
+
+.login-logo{
+    width: 200px;
+    height: 66px;
+}
+
+.login-sub-title{
+    font-size: 20px;
+    color: rgb(26, 26, 26, 0.9);
+}
+
+.login-sub-info{
+    font-size: 12px;
+    color: rgb(128, 128, 128);
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.login-sub-info:hover{
+    color: rgba(227, 15, 15, 0.9);
+}
+
+
+.upload-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.upload-container input {
+    margin-top: 10px;
+}
+
+.upload-container button {
+    background-color: #a6192e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.upload-container button:hover {
+    background-color: #8d1526;
+}
+
+.response-message {
+    margin: 15px 0;
+    min-height: 20px;
+}
+.response-message .success {
+    color: green;
+    padding: 10px;
+    background: #e8f5e9;
+    border-left: 3px solid green;
+}
+.response-message .error {
+    color: red;
+    padding: 10px;
+    background: #ffebee;
+    border-left: 3px solid red;
+}
+
+.upload-journal{
+    margin-left: 200px;
+    width: 200px;
+    height: 100px;
+    background-color: white;
+    padding: 300px;
+    border: #1a1a1a;
+
+}
+
+.input_a_journal{
+    margin-top: 10px;
+    padding: 100px;
+    border: #1a1a1a;
+    border-style: solid;
+}
+form {
+    max-width: 400px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+input, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+button {
+    background: #a6192e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #e4405f;
+
+}
+
+.dashboard-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+.upload-btn {
+    padding: 0.6rem 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+.status {
+    font-weight: bold;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.approved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+

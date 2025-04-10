@@ -40,6 +40,7 @@ class Document(models.Model):
     def __str__(self):
         return self.title
 
+
 # class CustomeUser(AbstractBaseUser):
 #     email = models.EmailField(unique=True)
 #     first_name = models.CharField(max_length=255)

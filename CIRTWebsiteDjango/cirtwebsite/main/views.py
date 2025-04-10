@@ -239,7 +239,7 @@ def terms_conditions(request):
     # logic is here
     return render(request, "terms_and_conditions.html")
 
-def upload_journal(request):
+def upload_a_journal(request):
     if request.method == "POST" and request.FILES.get("journal"):
         username = request.POST.get("username")
         journal = request.FILES["journal"]  # Get the uploaded file

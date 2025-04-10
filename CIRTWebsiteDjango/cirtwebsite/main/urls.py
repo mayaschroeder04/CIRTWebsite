@@ -33,5 +33,7 @@ urlpatterns = [
 
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
 
-    path("upload-journal/", views.upload_journal, name="upload_journal"),
+    #path("upload-journal/", views.upload_journal, name="upload_journal"),
+    path("upload-a-journal/", views.upload_a_journal, name="upload_a_journal")
+
 ]
