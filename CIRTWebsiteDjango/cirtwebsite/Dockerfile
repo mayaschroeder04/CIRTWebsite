@@ -51,7 +51,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Switch to non-root user
 # Collect static files for production
-RUN python manage.py collectstatic --noinput
+#RUN python manage.py collectstatic --noinput
 
 # Expose the application port
 EXPOSE 8000

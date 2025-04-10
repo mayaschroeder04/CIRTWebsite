@@ -11,7 +11,7 @@ apt update && apt-get install -y netcat-traditional
 echo "Waiting for MySQL to start..."
 while ! /usr/bin/nc -z db 3306; do
   echo "Waiting for MySQL..."
-  sleep 1
+  sleep 2  # Increase delay if necessary
 done
 echo "MySQL is up!"
 
@@ -20,7 +20,7 @@ python manage.py seed_users  # Seeds users to auth_users
 echo "Applying database migrations..."
 python manage.py migrate
 
-#echo "Collecting static files..."
+echo "Collecting static files..."
 #python manage.py collectstatic --noinput
 
 echo "Starting Gunicorn..."

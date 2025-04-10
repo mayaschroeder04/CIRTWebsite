@@ -1,5 +1,5 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from . import views, admin
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
@@ -40,4 +40,14 @@ urlpatterns = [
     path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
     path("contact/", views.contact_view, name="contact"),
     path("upload-journal/", views.upload_journal, name="upload_journal"),
+
+    path('accounts/', include('allauth.urls')),
+
+    path('verify_email/<uidb64>/<token>/', views.verify_email, name="verify_email"),
+
+    path('login-otp/', views.login_otp, name="login_otp"),
+
+
+
+    path('set-password/', views.set_password, name="set_password"),
 ]

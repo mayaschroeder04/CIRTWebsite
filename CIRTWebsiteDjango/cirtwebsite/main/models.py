@@ -15,7 +15,7 @@ class SubCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     id = models.AutoField(primary_key=True)
     # cat_id = models.IntegerField()
-    cat_id = models.ForeignKey(Category, related_name="subcategories", on_delete=models.CASCADE, db_column='cat_id')
+    category_id = models.ForeignKey(Category, related_name="subcategories", on_delete=models.CASCADE, db_column='category_id')
 
 
     class Meta:
