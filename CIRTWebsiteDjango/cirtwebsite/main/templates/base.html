@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% load static %}
     {% block stylesheet %}<link rel="stylesheet" href="{% static 'homepage.css' %}">{% endblock %}
-    <script src="{% static 'homepage.js' %}"></script>
+    <script id="documents-data" type="application/json">{{ documents_json|safe }}</script>
+    <script src="{% static 'homepage.js' %}?v=7" defer></script>
 </head>
 <body>
 
