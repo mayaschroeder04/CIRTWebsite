@@ -1,44 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Search Results - University of Tampa CIRT{% endblock %}
 
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results - University of Tampa CIRT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
-    <script src="{% static 'homepage.js' %}" defer></script>
-</head>
-
-
-<body>
-
-    <!-- Header -->
-    <header>
-    <div class="header-left">
-        {% load static %}
-        <a href="{% url 'homepage' %}">
-            <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-        </a>
-        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
-    </div>
-    <div class="header-right">
-        <div class="header-tabs">
-            {% load static %}
-            <a href="{% url 'journals' %}" class="tab">Journals</a>
-            <a href="{% url 'images' %}" class="tab">Images</a>
-            <a href="{% url 'authors' %}" class="tab">Authors</a>
-        </div>
-        <div class="login-buttons">
-            <button class="register-btn" onclick="openModal()">Register</button>
-            <button class="login-btn" onclick="openModal()">Log In</button>
-        </div>
-    </div>
-</header> {% endcomment %}
-
 {% block content %}
 
     <div class="red-bar"></div>
