@@ -6,7 +6,7 @@
     <title>{% block title %}University of Tampa CIRT Website{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% load static %}
-    {% block stylesheet %}<link rel="stylesheet" href="{% static 'homepage.css' %}">{% endblock %}
+    {% block stylesheet %}<link rel="stylesheet" href="{% static 'homepage.css' %}?v=5">{% endblock %}
     <script id="documents-data" type="application/json">{{ documents_json|safe }}</script>
     <script src="{% static 'homepage.js' %}?v=7" defer></script>
 </head>
@@ -14,6 +14,12 @@
 
 <!-- top of the page -->
 <header>
+    <!-- Modal (shared across all pages) -->
+    <div id="modal" class="modal" style="display: none;">
+        <div id="modal-content" class="modal-content">
+            <!-- Modal content will be injected here -->
+        </div>
+    </div>
     <div class="header-left">
         {% load static %}
         <a href="{% url 'homepage' %}"><img src="{% static 'tampalogo.png' %}" alt="CIRT Logo"></a>
