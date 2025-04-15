@@ -33,6 +33,7 @@ from urllib.parse import urljoin, urlparse, parse_qs, urlencode
 # from ..mysql.connector.utils import print_buffer
 user = get_user_model()  #  For using auth in verifcication email
 
+
 # from React import catch
 
 
@@ -523,15 +524,15 @@ def upload_journal(request):
 
     return render(request, "upload_a_journal.html")
 
-def autocomplete(request):
 
+def autocomplete(request):
     query = request.GET.get("query", "")
     documents = Document.objects.select_related("category").filter(
-        Q(title__icontains=query) |
-        Q(description__icontains=query) |
-        Q(author__icontains=query)
+        Q(title__istartswith=query)
     )[:10]  # Limit suggestions for performance
-
+    #Q(title__icontains=query) |
+    #Q(description__icontains=query) |
+    #Q(author__icontains=query)
     suggestions = [doc.title for doc in documents]
     return JsonResponse(suggestions, safe=False)
 

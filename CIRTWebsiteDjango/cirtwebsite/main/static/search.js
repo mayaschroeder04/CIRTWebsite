@@ -53,7 +53,7 @@ function showSuggestions(inputElement, suggestions) {
                 item.innerHTML = title;
             }
             item.addEventListener("click", function () {
-                inputElement.value = this.getElementsByTagName("input")[0].value;
+                inputElement.value = title;
                 closeAllLists();
             });
             container.appendChild(item);
