@@ -120,7 +120,6 @@ def search_results(request):
     filter_category = request.GET.get("filter", None)
     documents = Document.objects.select_related("category").all()
     cat = Category.objects.all()
-    print("Category:", cat)
 
     category_name = "All Categories"
 
@@ -143,9 +142,6 @@ def search_results(request):
         selected_categories = data.get("selected_categories", [])
         selected_subcategories = data.get("selected_subcategories", [])
 
-        print("Selected Categories:", selected_categories)
-        print("Selected Subcategories:", selected_subcategories)
-
         # Filter documents first, then use `.values()`
         documents = Document.objects.all()
 
@@ -167,9 +163,6 @@ def search_results(request):
             )
         )
 
-        print(type(documents_filtered))  # Should print <class 'list'>
-        print(documents_filtered)
-
         return JsonResponse({"documents": documents_filtered}, safe=False)
 
     documents_data = [
@@ -190,9 +183,6 @@ def search_results(request):
     ]
 
     documents_json = json.dumps(documents_data)
-
-    # Debugging
-    print("Documents JSON:", documents_json)
 
     return render(
         request,

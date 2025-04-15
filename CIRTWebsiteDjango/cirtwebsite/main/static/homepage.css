@@ -515,10 +515,12 @@ a {
 
 .icon {
     position: absolute;
-    margin-right: 860px;
+    margin-right: 800px;
     fill: #9e9ea7;
     width: 1rem;
     height: 1rem;
+    margin-top: 17px;
+    margin-left: 20px;
 }
 
 .input::-webkit-search-cancel-button {
