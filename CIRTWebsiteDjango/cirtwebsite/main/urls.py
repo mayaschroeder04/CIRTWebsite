@@ -31,6 +31,7 @@ urlpatterns = [
     path("signup/", views.sign_up, name="signup"),
     path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
     path("faq/", views.faq_view, name="faq"),
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
     # path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
     path(
         "terms-and-conditions/",

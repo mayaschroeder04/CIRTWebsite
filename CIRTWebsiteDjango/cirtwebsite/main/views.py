@@ -9,6 +9,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
+from .models import Document
+from .forms import CustomUserCreationForm
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from .models import Category, Document, SubCategory
 from django.contrib.auth import (
     authenticate,
@@ -185,6 +190,9 @@ def search_results(request):
     ]
 
     documents_json = json.dumps(documents_data)
+
+    # Debugging
+    print("Documents JSON:", documents_json)
 
     return render(
         request,
@@ -524,3 +532,23 @@ def upload_journal(request):
         username = request.POST.get("username")
 
     return render(request, "upload_a_journal.html")
+
+def autocomplete(request):
+
+    query = request.GET.get("query", "")
+    documents = Document.objects.select_related("category").filter(
+        Q(title__icontains=query) |
+        Q(description__icontains=query) |
+        Q(author__icontains=query)
+    )[:10]  # Limit suggestions for performance
+
+    suggestions = [doc.title for doc in documents]
+    return JsonResponse(suggestions, safe=False)
+
+    # Debugging
+    print("Documents JSON:", documents_json)
+
+    return render(
+        request,
+        {"documents_json": documents_json},
+    )
