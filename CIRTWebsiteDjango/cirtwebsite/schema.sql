@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS documents (
     review_date TIMESTAMP NULL,
     description TEXT,
     user_id INT,
+    submitted_user INT,
     visibility ENUM('public', 'restricted', 'admin-only') DEFAULT 'admin-only',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL,

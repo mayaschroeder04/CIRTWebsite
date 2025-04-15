@@ -1,6 +1,10 @@
 from django.urls import path, include
 from . import views, admin
 
+
+
+
+
 urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("fake_journal/", views.fake_journal, name="fake_journal"),
@@ -32,7 +36,7 @@ urlpatterns = [
 
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
 
-    path("upload-journal/", views.upload_journal, name="upload_journal"),
+    path("upload-journal/", views.upload_journal, name="upload_a_journal"),
 
     path('accounts/', include('allauth.urls')),
 
@@ -40,7 +44,7 @@ urlpatterns = [
 
     path('login-otp/', views.login_otp, name="login_otp"),
 
-
+    path('generate_presigned_url/<path:file_path>/', views.generate_presigned_url, name='generate_presigned_url'),
 
     path('set-password/', views.set_password, name="set_password"),
 ]

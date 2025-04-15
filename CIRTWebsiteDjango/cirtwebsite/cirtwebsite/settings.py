@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth",
     "allauth.account",
+    "storages",
+    "corsheaders",
     "main",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -163,3 +166,33 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DELETE WEHN DELPOYEED
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DELETE WHEN DEPLOYED
+
+# allow all origins
+CORS_ALLOW_ALL_ORIGINS = True
+
+#using credentials like cookies
+CORS_ALLOW_CREDENTIALS = True
+
+
+# S3 defualt storage for media
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# AWS credentials
+AWS_ACCESS_KEY_ID = "AKIAW3MECIULRXSDHJNK"
+AWS_SECRET_ACCESS_KEY = "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"
+
+# region and bucket
+AWS_STORAGE_BUCKET_NAME = "criminology-db-bucket"
+AWS_S3_REGION_NAME = "us-east-1"
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+AWS_QUERYSTRING_AUTH = False
+AWS_DEFAULT_ACL = 'public-read'
+
+MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DELETE WEHN DELPOYEED
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DELETE WHEN DEPLOYED
+

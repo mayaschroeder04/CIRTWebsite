@@ -1,0 +1,62 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+}
+
+form {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    text-align: center;
+    color: #a6192e;
+    margin-bottom: 25px;
+}
+
+label {
+    margin-bottom: 5px;
+    display: block;
+    font-weight: 500;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+input[type="file"] {
+    padding: 8px;
+    background-color: #fff;
+}
+
+button {
+    background-color: #a6192e;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e4405f;
+    cursor: pointer;
+}
+
+#statusMessage {
+    text-align: center;
+    font-size: 14px;
+    color: green;
+}

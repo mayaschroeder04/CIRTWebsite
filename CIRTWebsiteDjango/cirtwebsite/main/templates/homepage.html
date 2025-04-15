@@ -24,7 +24,7 @@
                 {% load static %}
                 <a href="{% url 'journals' %}" class="tab">Journals</a>
                 <a href="{% url 'images' %}" class="tab">Images</a>
-                <a href="{% url 'upload_journal' %}" class="tab">Upload</a>
+                <a href="{% url 'upload_a_journal' %}" class="tab">Upload</a>
             </div>
             {% if user.is_authenticated %}
                   <div class="login-buttons">
@@ -83,13 +83,6 @@
     {% for category in categories %}
     <label><input type="radio" name="filter" value="{{ category.id }}">{{ category.name }}</label>
     {% endfor %}
-<!--    <label><input type="radio" name="filter" value="All" checked> All</label>-->
-<!--    <label><input type="radio" name="filter" value="1"> Court Records</label>-->
-<!--    <label><input type="radio" name="filter" value="2"> Academic Papers</label>-->
-<!--    <label><input type="radio" name="filter" value="3"> Forensic Reports</label>-->
-<!--    <label><input type="radio" name="filter" value="4"> Government Documents</label>-->
-<!--    <label><input type="radio" name="filter" value="5"> Case Studies</label>-->
-<!--    <label><input type="radio" name="filter" value="6"> Victimology and Sociology Reports</label>-->
 </div>
 </div>
 
@@ -101,13 +94,29 @@
 <div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
 </div>
 
-
+<script>
+    function fetchPresignedUrl(documentId) {
+        fetch(`/generate_presigned_url/${documentId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    window.open(data.url, '_blank');
+                } else {
+                    alert('Failed to generate download link.');
+                    console.error(data.error);
+                }
+            })
+            .catch(error => {
+                alert('Error fetching document.');
+                console.error(error);
+            });
+    }
+</script>
 <script>
     console.log("Display Latest Posts Function is Loaded");
 
     function displayLatestPosts() {
         const rawDocumentsJson = "{{ documents_json|escapejs }}";
-
         const documents = JSON.parse(rawDocumentsJson);
         console.log(documents);
 
@@ -117,6 +126,7 @@
             // Use encodeURIComponent to safely pass data into JavaScript function
             const title = encodeURIComponent(document.title);
             const description = encodeURIComponent(document.description);
+            const fileUrl = encodeURIComponent(document.file_url); // Add this line
 
             resultHTML += `
                 <div class="featured-post">
@@ -124,7 +134,7 @@
                     <p><strong>Author:</strong> ${document.author}</p>
                     <p><strong>Category:</strong> ${document.category_name}</p>
                     <p>${document.description}</p>
-                    <a class="read-more" onclick="window.location.href='${document.file_url}'">Continue Reading</a>
+                    <a class="read-more" onclick="fetchPresignedUrl('${fileUrl}')">Continue Reading</a>
                 </div>
             `;
         })
@@ -139,31 +149,6 @@
 <script>
     console.log("Documents JSON:", "{{ documents_json|escapejs }}");
 </script>
-
-<!--&lt;!&ndash; Featured Post 1 &ndash;&gt;-->
-<!--<section class="featured-post">-->
-<!--    <h2>AI in Criminal Justice</h2>-->
-<!--    <p class="author">John Doe</p>-->
-<!--    <p>A groundbreaking study exploring the impact of AI in criminal justice.</p>-->
-<!--    <a class="read-more" onclick="openModal('Journal Title 1', 'A groundbreaking study exploring the impact of AI in criminal justice.')">Continue Reading</a>-->
-<!--</section>-->
-
-<!--&lt;!&ndash; Featured Post 2 &ndash;&gt;-->
-<!--<section class="featured-post">-->
-<!--    <h2>Crime Pattern Studies</h2>-->
-<!--    <p class="author">Jack Brown</p>-->
-<!--    <p>An in-depth analysis of crime patterns in urban areas over the past decade.</p>-->
-<!--    <a class="read-more" onclick="openModal('Journal Title 2', 'An in-depth analysis of crime patterns in urban areas over the past decade.')">Continue Reading</a>-->
-<!--</section>-->
-
-<!--&lt;!&ndash; Featured Post 3 &ndash;&gt;-->
-<!--<section class="featured-post">-->
-<!--    <h2>Random title 3</h2>-->
-<!--    <p class="author">Andy Miller</p>-->
-<!--    <p>Examining the effectiveness of rehabilitation programs for non-violent offenders.</p>-->
-<!--    <a class="read-more" onclick="openModal('Journal Title 3', 'Examining the effectiveness of rehabilitation programs for non-violent offenders.')">Continue Reading</a>-->
-<!--</section>-->
-
 <!-- Modal (for all featured posts) -->
 <div id="modal" class="modal" style="display: none;">
     <div id="modal-content" class="modal-content">
