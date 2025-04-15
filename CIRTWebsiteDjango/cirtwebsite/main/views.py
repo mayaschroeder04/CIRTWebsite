@@ -6,11 +6,28 @@ from .models import Document
 from .forms import CustomUserCreationForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 # Create your views here.
 def homepage(request):
-    return render(request, "homepage.html")
+    documents = Document.objects.select_related("category").all()[:20]  # Limit if needed
+
+    documents_data = [
+        {
+            "id": doc.id,
+            "title": doc.title,
+            "description": doc.description,
+            "author": doc.author,
+            "category_id": doc.category.id if doc.category else None,
+            "category_name": doc.category.name if doc.category else "Unknown",
+        }
+        for doc in documents
+    ]
+
+    documents_json = json.dumps(documents_data)
+
+    return render(request, "homepage.html", {"documents_json": documents_json})
 
 
 def logout_view(request):
@@ -125,3 +142,23 @@ def search_results(request):
 
 def faq_view(request):
     return render(request, "faq.html")
+
+def autocomplete(request):
+
+    query = request.GET.get("query", "")
+    documents = Document.objects.select_related("category").filter(
+        Q(title__icontains=query) |
+        Q(description__icontains=query) |
+        Q(author__icontains=query)
+    )[:10]  # Limit suggestions for performance
+
+    suggestions = [doc.title for doc in documents]
+    return JsonResponse(suggestions, safe=False)
+
+    # Debugging
+    print("Documents JSON:", documents_json)
+
+    return render(
+        request,
+        {"documents_json": documents_json},
+    )

@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
     <script src="{% static 'homepage.js' %}"></script>
 </head>
-<body>
+<>
 
 <!-- top of the page -->
 <header>
@@ -56,16 +56,19 @@
 
         </nav>
         <!-- search bar with filter button -->
-    <div class="group">
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-            <g>
-                <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-            </g>
-        </svg>
-        {% load static %}
-        <input id="search-input" placeholder="Search" type="search" class="input">
-        <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
-    </div>
+            <div class="group">
+                <div class="autocomplete">
+                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                    <g>
+                        <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                    </g>
+                </svg>
+                {% load static %}
+                    <input id="search-input" placeholder="Search" type="search" class="input" autocomplete="off" oninput="showSuggestions()">
+                    <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
+                    <script src="{% static 'search.js' %}"></script>
+                </div>
+        </div>
 
     <!-- Filter options -->
     <div id="filter-options" class="filter-dropdown">
@@ -84,49 +87,70 @@
         <hr style="background-color: #a6192e; height: 3px; border: none;">
     </div>
 
-    <div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
+    <div id="latest-posts" type="application/json" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
         <!-- The posts will be dynamically inserted here -->
     </div>
+    <script id="documentsJson" type="application/json" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
+      {{ documents_json|safe }}
+     </script>
 
 
     <script>
         console.log("Display Latest Posts Function is Loaded");
-
         function displayLatestPosts() {
-            const rawDocumentsJson = "{{ documents_json|escapejs }}";
+            const rawElement = document.getElementById("documentsJson");
 
-            const documents = JSON.parse(rawDocumentsJson);
-            console.log(documents);
+            if (!rawElement) {
+                console.error("❌ #documentsJson script tag not found.");
+                return;
+            }
 
-            let resultHTML = "";
+            const rawDocumentsJson = rawElement.textContent.trim();
+            let documents = [];
 
-            documents.forEach(document => {
-                // Use encodeURIComponent to safely pass data into JavaScript function
-                const title = encodeURIComponent(document.title);
-                const description = encodeURIComponent(document.description);
+            try {
+                documents = JSON.parse(rawDocumentsJson);
+                console.log("✅ Parsed documents:", documents);
+            } catch (error) {
+                console.error("❌ Error parsing JSON:", error);
+                return;
+            }
 
-                resultHTML += `
-                    <div class="featured-post">
-                        <h2>${document.title}</h2>
-                        <p><strong>Author:</strong> ${document.author}</p>
-                        <p><strong>Category:</strong> ${document.category}</p>
-                        <p>${document.description}</p>
-                        <a class="read-more" onclick="openModal('${title}', '${description}')">Continue Reading</a>
-                    </div>
+            const postContainer = document.getElementById("latest-posts");
+
+            if (!postContainer) {
+                console.warn("⚠️ #latest-posts container not found.");
+                return;
+            }
+
+            // Clear any existing content
+            postContainer.innerHTML = "";
+
+            if (documents.length === 0) {
+                postContainer.innerHTML = "<p>No recent posts available.</p>";
+                return;
+            }
+
+            documents.slice(0, 6).forEach((doc) => {
+                const postCard = document.createElement("div");
+                postCard.classList.add("post-card");
+                postCard.innerHTML = `
+                    <h3>${doc.title}</h3>
+                    <p><strong>Author:</strong> ${doc.author}</p>
+                    <p>${doc.description}</p>
                 `;
-            })
-            document.getElementById("latest-posts").innerHTML = resultHTML;
+                postContainer.appendChild(postCard);
+            });
         }
+
+        // Run on page load
         document.addEventListener("DOMContentLoaded", displayLatestPosts);
-        console.log("DOM content loaded, calling displayLatestPosts...");
-        displayLatestPosts();
 
     </script>
 
     <script>
         console.log("Documents JSON:", "{{ documents_json|escapejs }}");
     </script>
-
     <!--&lt;!&ndash; Featured Post 1 &ndash;&gt;-->
     <!--<section class="featured-post">-->
     <!--    <h2>AI in Criminal Justice</h2>-->
@@ -285,6 +309,10 @@
 
     </div>
 </div>
+
+<script id="documentsJson" type="application/json">
+  {{ documents_json|safe }}
+</script>
 
 </body>
 </html> {% endcomment %}

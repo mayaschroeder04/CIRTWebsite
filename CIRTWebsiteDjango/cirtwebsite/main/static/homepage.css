@@ -459,6 +459,26 @@ a {
     border-color: rgb(31, 32, 35);
     background-color: #fff;
 }
+
+.autocomplete_wrapper {
+    justify-content: center;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    width: 400px;
+    height: 150px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-color: rgb(31, 32, 35);
+    /*border-radius: 8px;*/
+    outline: none;
+    background-color: #f3f3f4;
+    color: #0d0c22;
+    transition: .3s ease;
+    display: none;
+    }
+
 /* Style for the filter button */
 .filter-icon {
     width: 24px;
