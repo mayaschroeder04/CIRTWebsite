@@ -68,3 +68,14 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class Journal(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    category_name = models.CharField(max_length=255)
+    description = models.TextField()
+    file_url = models.URLField()  # Or FileField if you're uploading actual files
+
+    def __str__(self):
+        return self.title

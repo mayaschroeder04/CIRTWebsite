@@ -445,3 +445,11 @@ def generate_presigned_url(request, file_path):
         return JsonResponse({"url": url})
     except ClientError as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+
+def journals_view(request):
+    # Get all documents (which you might be using as journals)
+    journals = Document.objects.all().order_by("title")  # Use Document instead of Journal
+    
+    # Pass journals as a context variable to the template
+    return render(request, 'journals.html', {'journals': journals})
