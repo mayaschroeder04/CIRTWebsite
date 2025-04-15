@@ -8,7 +8,7 @@ from . import views, admin
 urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("fake_journal/", views.fake_journal, name="fake_journal"),
-    path("terms-and-conditions/", views.toc, name="terms-and-conditions"),
+    # path("terms-and-conditions/", views.toc, name="terms-and-conditions"),
     path("journals/", views.journals_view, name="journals"),
     # path("contact-us/", views.contact, name="contact-us"), #  Need a contact us
     path("images/", views.images_view, name="images"),
@@ -27,8 +27,8 @@ urlpatterns = [
     path("past-reviews/", views.past_reviews, name="past_reviews"),
     path("editor-dashboard/", views.editor_dashboard, name="editor_dashboard"),
     path("check-status/", views.check_status, name="check_status"),
-    path("button-two", views.button_two, name="button_two"),
-    path("button-four", views.button_four, name="button_four"),
+    path("button-two/", views.button_two, name="button_two"),
+    path("button-four/", views.button_four, name="button_four"),
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
@@ -36,7 +36,7 @@ urlpatterns = [
 
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
 
-    path("upload-journal/", views.upload_journal, name="upload_a_journal"),
+    path("upload-journal/", views.upload_journal, name="upload_journal"),
 
     path('accounts/', include('allauth.urls')),
 
