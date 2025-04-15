@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -10,6 +11,18 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class SubCategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    id = models.AutoField(primary_key=True)
+    # cat_id = models.IntegerField()
+    category_id = models.ForeignKey(Category, related_name="subcategories", on_delete=models.CASCADE, db_column='category_id')
+
+
+    class Meta:
+        db_table = 'subcategories'
+
+    def __str__(self):
+        return self.name
 
 class Document(models.Model):
     title = models.CharField(max_length=255)
@@ -26,3 +39,10 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+# class CustomeUser(AbstractBaseUser):
+#     email = models.EmailField(unique=True)
+#     first_name = models.CharField(max_length=255)
+#     last_name = models.CharField(max_length=255)
+#     is_active = models.BooleanField(default=True)
+#     is_staff = models.BooleanField(default=False)

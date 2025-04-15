@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Editor Dashboard{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+    {% comment %} <body> {% endcomment %}
+
+    <!-- actual content , can replace with an act header or sum  -->
+    <div class="content" style="margin-bottom: 500px; text-align: center;">
+        <h2>Welcome to the Editor Dashboard</h2>
+        <p>Not sure what to have here as the view yet/buttons.</p>
+    </div>
+
+    <!-- buttons below caption -->
+    <div class="dashboard-buttons">
+        <button onclick="awaitingreview()">Awaiting Review</button>
+        <button onclick="button2()">button 2</button>
+        <button onclick="pastreviews()">Past Reviews</button>
+        <button onclick="button4()">button 4</button>
+    </div>
+{% endif %}
+    <div class="dashboard-buttons">Not authorized to visit this page</div>
+{% endblock%}

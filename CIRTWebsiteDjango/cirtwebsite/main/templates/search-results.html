@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Search Results - University of Tampa CIRT{% endblock %}
 
-
 {% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,66 +12,239 @@
     <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
     <script src="{% static 'homepage.js' %}" defer></script>
 </head>
+
+
 <body>
 
     <!-- Header -->
     <header>
-        <div class="header-left">
-            <a href="{% url 'homepage' %}">
-                <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-            </a>
-            <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+    <div class="header-left">
+        {% load static %}
+        <a href="{% url 'homepage' %}">
+            <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
+        </a>
+        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+    </div>
+    <div class="header-right">
+        <div class="header-tabs">
+            {% load static %}
+            <a href="{% url 'journals' %}" class="tab">Journals</a>
+            <a href="{% url 'images' %}" class="tab">Images</a>
+            <a href="{% url 'authors' %}" class="tab">Authors</a>
         </div>
-        <div class="header-right">
-            <div class="header-tabs">
-                <a href="{% url 'journals' %}" class="tab">Journals</a>
-                <a href="{% url 'images' %}" class="tab">Images</a>
-                <a href="{% url 'authors' %}" class="tab">Authors</a>
-            </div>
+        <div class="login-buttons">
+            <button class="register-btn" onclick="openModal()">Register</button>
+            <button class="login-btn" onclick="openModal()">Log In</button>
         </div>
-    </header> {% endcomment %}
+    </div>
+</header> {% endcomment %}
 
 {% block content %}
 
     <div class="red-bar"></div>
 
-    <div class="search_results_spacer"></div>
-
+    <div class="main-container">
+    <!-- Sidebar for Filters -->
     <div class="filter-sidebar">
-    <h2>Filter by Category</h2>
-    <ul>
-        <li>
-            <input type="checkbox" id="filter1" name="category" value="Technology">
-            <label for="filter1">Technology</label>
-        </li>
-        <li>
-            <input type="checkbox" id="filter2" name="category" value="Science">
-            <label for="filter2">Science</label>
-        </li>
-        <li>
-            <input type="checkbox" id="filter3" name="category" value="Health">
-            <label for="filter3">Health</label>
-        </li>
-    </ul>
+        <h4>Filter by Category</h4>
 
-    <h2>Filter by Date</h2>
-    <select id="date-filter">
-        <option value="all">All Dates</option>
-        <option value="last-week">Last Week</option>
-        <option value="last-month">Last Month</option>
-        <option value="last-year">Last Year</option>
-    </select>
+        <!-- Category and Subcategory Dropdowns -->
+        {% for category in categories %}
 
-    <button onclick="applyFilters()">Apply Filters</button>
-</div>
+        <div class="category">
+            <!-- Category Checkbox -->
+            <input type="checkbox" id="category-{{ category.id }}" name="category" value="{{ category.id }}">
+            <label for="category-{{ category.id }}" class="category-label" onclick="toggleSubcategories('subcategory-{{ category.id }}')">
+                {{ category.name }}
+            </label>
+
+            <!-- Subcategories with Checkboxes -->
+            <ul id="subcategory-{{ category.id }}" class="subcategory-container">
+                {% for subcategory in category.subcategories.all %}
+                <li class="subcategory-item">
+                    <input type="checkbox" id="subcategory-{{ subcategory.id }}" name="subcategory" value="{{ subcategory.id }}">
+                    <label for="subcategory-{{ subcategory.id }}">{{ subcategory.name }}</label>
+                </li>
+                {% empty %}
+                <li class="subcategory-item">No subcategories available</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
+        <!-- js for Toggle -->
+        <script>
+            function toggleSubcategories(categoryId) {
+                const element = document.getElementById(categoryId);
+                if (element) {
+                    element.classList.toggle('show');
+                } else {
+                    console.error('Element not found for ID:', categoryId);
+                }
+            }
+
+        </script>
+
+        <!-- Filter Button -->
+        <button onclick="applyFilters()">Apply Filters</button>
+    </div>
 
 
 
-    <!-- Search Results Section -->
-    <h2 style="text-align: center; margin-left: 20%;">Search Results</h2>
-    <div id="search-results-container" style="width: 60%; margin-left: 30%;"></div>
 
-    <div class="spacer"></div>
+        <!-- Search Results Section -->
+        <div id="search-results-container" style="width: 100%; overflow-y: auto; font-family: 'Times New Roman', Times, 'Serif'; ">
+            <h2>Search Results</h2>
+            <div id="search-results">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSubcategories(categoryId) {
+            const subcategories = document.getElementById(categoryId);
+            if (subcategories) {
+                subcategories.style.display = subcategories.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        function applyFilters() {
+            const selectedCategories = [];
+            const selectedSubcategories = [];
+
+            document.querySelectorAll('input[name="category"]:checked').forEach(checkbox => {
+                selectedCategories.push(checkbox.value);
+            });
+
+
+            document.querySelectorAll('input[name="subcategory"]:checked').forEach( checkbox => {
+                selectedSubcategories.push(checkbox.value)
+            });
+
+            const data = {
+                selected_categories: selectedCategories,
+                selected_subcategories: selectedSubcategories
+                };
+
+            fetch('/search-results/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken() // Token
+                },
+                 body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Filtered Documents:", data);
+                updateDocuments(data);
+            })
+            .catch(error => console.error('Error:', error));
+
+        }
+
+
+
+
+        function getCSRFToken() {
+            const cookieValue = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+            return cookieValue ? cookieValue.split('=')[1] : '';
+        }
+
+
+
+        // Display search results
+        function displaySearchResults() {
+            const { query, filter } = getQueryParams();
+            const resultsContainer = document.getElementById("search-results-container");
+
+            if (!query) {
+                resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
+                return;
+            }
+
+            const rawDocumentsJson = "{{ documents_json|escapejs }}";
+            let documents = [];
+            try {
+                documents = JSON.parse(rawDocumentsJson);
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+                resultsContainer.innerHTML = "<p style='text-align: center;'>Error loading documents.</p>";
+                return;
+            }
+
+            if (documents.length === 0) {
+                resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}".</p>`;
+                return;
+            }
+
+            let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
+
+            documents.forEach(result => {
+                resultHTML += `
+                    <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin: 5px 0;">
+                            <a href="${result.file_url}" style="text-decoration: none; color: inherit;">${result.title}</a>
+                        </h3>
+                        <p><strong></strong> ${result.author}</p>
+                        <p><strong>Category:</strong> ${result.category_name}</p>
+                        <p>${result.description}</p>
+                        <a class="read-more" onclick="window.location.href='${result.url}'">Continue Reading</a>
+
+                    </li>`;
+            });
+
+            resultHTML += `</ul>`;
+            resultsContainer.innerHTML = resultHTML;
+        }
+
+        function updateDocuments(rawdocuments) {
+            const documentListContainer = document.getElementById("search-results-container");
+
+            console.log(rawdocuments); // This is already a JS object, no need for JSON.parse()
+
+            // Ensure it's an array
+            if (!Array.isArray(rawdocuments.documents)) {
+                console.error("Expected an array but got:", rawdocuments.documents);
+                return;
+            }
+
+            documentListContainer.innerHTML = '';  // Clear existing content
+
+            if (rawdocuments.documents.length === 0) {
+                documentListContainer.innerHTML = '<p>No results found based on the filters.</p>';
+                return;
+            }
+
+            rawdocuments.documents.forEach(doc => {
+                const documentItem = document.createElement("div");
+                documentItem.classList.add("document-item");
+                documentItem.innerHTML = `
+                    <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin: 5px 0;">${doc.title}</h3>
+                        <p><strong>Author:</strong> ${doc.author}</p>
+                        <p><strong>Category:</strong> ${doc.category_name}</p>
+                        <p>${doc.description}</p>
+                        <a class="read-more" onclick="window.location.href='${doc.url}'">Continue Reading</a>
+                    </li>`;
+                documentListContainer.appendChild(documentItem);
+            });
+        }
+
+
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                query: params.get("query"),
+                filter: params.get("filter")
+            };
+        }
+
+        document.addEventListener("DOMContentLoaded", displaySearchResults);
+    </script>
+
+{% endblock %}
 
     {% comment %} <!-- Footer -->
     <div class="footer-container">
@@ -87,78 +259,5 @@
             </button>
         </div>
     </div>
-
-    <!-- Search Results Script -->
-   <!-- Search Results Script --> {% endcomment %}
-    <script>
-        // Function to extract query parameters from the URL
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                query: params.get("query"),
-                filter: params.get("filter"),
-                // category_name: params.get("category_name")
-            };
-        }
-
-        // Display search results
-        function displaySearchResults() {
-            const { query, filter } = getQueryParams();
-            const resultsContainer = document.getElementById("search-results-container");
-            let categoryName = "{{ category_name|escapejs }}";
-
-            // Now you can use categoryName in your JavaScript code
-            console.log(categoryName);  // This will output the category_name from Django
-
-            // Handle no query provided
-            if (!query) {
-                resultsContainer.innerHTML = "<p style='text-align: center;'>No search term provided.</p>";
-                return;
-            }
-
-            // Get documents from Django context (already passed as a JSON string)
-            const rawDocumentsJson = "{{ documents_json|escapejs }}";
-            let documents = [];
-            console.log("Raw documents_json:", rawDocumentsJson);
-            try {
-                // Parse the JSON data from Django
-                documents = JSON.parse(rawDocumentsJson);
-                console.log("Parsed documents:", documents);  // Debugging output
-            } catch (error) {
-                console.error("Error parsing JSON:", error);
-                resultsContainer.innerHTML = "<p style='text-align: center;'>Error loading documents.</p>";
-                return;
-            }
-
-            // Handle case where no results match
-            if (documents.length === 0) {
-                resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}" in category "${categoryName}".</p>`;
-                return;
-            }
-
-            // Generate HTML for displaying the results
-            let resultHTML = `<h3 style="text-align: center;">Results for: "${query}" in "${categoryName}"</h3><ul style="list-style-type: none; padding: 0;">`;
-
-            documents.forEach(result => {
-                resultHTML += `
-                    <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
-                        <h3 style="margin: 5px 0;">${result.title}</h3>
-                        <p><strong>Author:</strong> ${result.author}</p>
-                        <p><strong>Category:</strong> ${result.category_name}</p>
-                        <p>${result.description}</p>
-                        <a class="read-more" onclick="openModal('${result.title}', '${result.description}')">Continue Reading</a>
-                    </li>`;
-            });
-    resultHTML += `</ul>`;
-            resultsContainer.innerHTML = resultHTML;
-        }
-
-        // Run function when the page loads
-        document.addEventListener("DOMContentLoaded", displaySearchResults);
-    </script>
-
-{% endblock %}
-
-
-{% comment %} </body>
+</body>
 </html> {% endcomment %}

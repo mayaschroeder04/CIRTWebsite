@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard - University of Tampa CIRT{% endblock %}
+
+{% block content %}
+    <!-- actual content , can replace with an act header or sum  -->
+    <div class="content" style="margin-bottom: 100px; text-align: center;">
+        <h2>Welcome to the Student Dashboard</h2>
+        <p>Not sure what to have here as the view yet.</p>
+    </div>
+
+    <!-- buttons below caption -->
+    <div class="dashboard-buttons">
+        <a href="{% url 'upload_images' %}">
+                <button class="login-box">Upload Journals</button>
+        </a>
+        <a href="{% url 'past_uploads' %}">
+            <button class="login-box">View Past Uploads</button>
+        </a>
+        <a href="{% url 'check_status' %}">
+            <button onclick="checkStatus()">Check Status</button>
+        </a>
+    </div>
+{% endblock %}

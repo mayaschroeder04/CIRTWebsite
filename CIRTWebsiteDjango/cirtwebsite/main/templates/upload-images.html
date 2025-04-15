@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Upload Images - University of Tampa CIRT{% endblock %}
+
+{% block content %}
+    <!-- portion for uploading shi -->
+    <div class="content" style="margin-bottom: 500px; text-align: center;">
+        <h2>Upload a Journal</h2>
+        <p>Select a journal file to upload:</p>
+
+        <input type="file" id="journalFile" accept=".pdf,.docx">
+        <button onclick="uploadJournal()">Upload</button>
+
+        <p id="uploadMessage"></p>
+    </div>
+{% endblock %}

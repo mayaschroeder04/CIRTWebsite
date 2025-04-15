@@ -1,47 +1,6 @@
-{% extends 'base.html' %}
-{% block title %} University of Tampa CIRT Website{% endblock %}
-
-
-
-{% comment %} 
-    The following line is used to pass the documents data from Django to JavaScript.
-    It uses the escapejs filter to ensure that the JSON data is safely encoded for use in JavaScript.
-{% endcomment %}
-{% comment %} 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University of Tampa CIRT Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'homepage.css' %}">
-    <script src="{% static 'homepage.js' %}"></script>
-</head>
-<>
-
-<!-- top of the page -->
-<header>
-    <div class="header-left">
-        {% load static %}
-        <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
-    </div>
-    <div class="header-right">
-        <div class="header-tabs">
-            {% load static %}
-            <a href="{% url 'journals' %}" class="tab">Journals</a>
-            <a href="{% url 'images' %}" class="tab">Images</a>
-            <a href="{% url 'authors' %}" class="tab">Authors</a>
-        </div>
-        <div class="login-buttons">
-            <button class="register-btn" onclick="redirectToRegister()">Register</button> <!-- This is where it calls the function to create a login within the window -->
-            <button class="login-btn" onclick="redirectToLogin()">Log In</button>
-        </div>
-    </div>
-</header> {% endcomment %}
-
+{% extends 'base.html' %}
+{% block title %}University of Tampa CIRT Website{% endblock %}
 
 {% block content %}
     <div class="background-section">
@@ -73,12 +32,16 @@
     <!-- Filter options -->
     <div id="filter-options" class="filter-dropdown">
         <label><input type="radio" name="filter" value="All" checked> All</label>
-        <label><input type="radio" name="filter" value="1"> Court Records</label>
-        <label><input type="radio" name="filter" value="2"> Academic Papers</label>
-        <label><input type="radio" name="filter" value="3"> Forensic Reports</label>
-        <label><input type="radio" name="filter" value="4"> Government Documents</label>
-        <label><input type="radio" name="filter" value="5"> Case Studies</label>
-        <label><input type="radio" name="filter" value="6"> Victimology and Sociology Reports</label>
+        {% for category in categories %}
+        <label><input type="radio" name="filter" value="{{ category.id }}">{{ category.name }}</label>
+        {% endfor %}
+    <!--    <label><input type="radio" name="filter" value="All" checked> All</label>-->
+    <!--    <label><input type="radio" name="filter" value="1"> Court Records</label>-->
+    <!--    <label><input type="radio" name="filter" value="2"> Academic Papers</label>-->
+    <!--    <label><input type="radio" name="filter" value="3"> Forensic Reports</label>-->
+    <!--    <label><input type="radio" name="filter" value="4"> Government Documents</label>-->
+    <!--    <label><input type="radio" name="filter" value="5"> Case Studies</label>-->
+    <!--    <label><input type="radio" name="filter" value="6"> Victimology and Sociology Reports</label>-->
     </div>
     </div>
 
@@ -87,93 +50,47 @@
         <hr style="background-color: #a6192e; height: 3px; border: none;">
     </div>
 
-    <div id="latest-posts" type="application/json" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
-        <!-- The posts will be dynamically inserted here -->
+    <div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
     </div>
-    <script id="documentsJson" type="application/json" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
-      {{ documents_json|safe }}
-     </script>
 
 
     <script>
         console.log("Display Latest Posts Function is Loaded");
+
         function displayLatestPosts() {
-            const rawElement = document.getElementById("documentsJson");
+            const rawDocumentsJson = "{{ documents_json|escapejs }}";
 
-            if (!rawElement) {
-                console.error("❌ #documentsJson script tag not found.");
-                return;
-            }
+            const documents = JSON.parse(rawDocumentsJson);
+            console.log(documents);
 
-            const rawDocumentsJson = rawElement.textContent.trim();
-            let documents = [];
+            let resultHTML = "";
 
-            try {
-                documents = JSON.parse(rawDocumentsJson);
-                console.log("✅ Parsed documents:", documents);
-            } catch (error) {
-                console.error("❌ Error parsing JSON:", error);
-                return;
-            }
+            documents.forEach(document => {
+                // Use encodeURIComponent to safely pass data into JavaScript function
+                const title = encodeURIComponent(document.title);
+                const description = encodeURIComponent(document.description);
 
-            const postContainer = document.getElementById("latest-posts");
-
-            if (!postContainer) {
-                console.warn("⚠️ #latest-posts container not found.");
-                return;
-            }
-
-            // Clear any existing content
-            postContainer.innerHTML = "";
-
-            if (documents.length === 0) {
-                postContainer.innerHTML = "<p>No recent posts available.</p>";
-                return;
-            }
-
-            documents.slice(0, 6).forEach((doc) => {
-                const postCard = document.createElement("div");
-                postCard.classList.add("post-card");
-                postCard.innerHTML = `
-                    <h3>${doc.title}</h3>
-                    <p><strong>Author:</strong> ${doc.author}</p>
-                    <p>${doc.description}</p>
+                resultHTML += `
+                    <div class="featured-post">
+                        <h2>${document.title}</h2>
+                        <p><strong>Author:</strong> ${document.author}</p>
+                        <p><strong>Category:</strong> ${document.category_name}</p>
+                        <p>${document.description}</p>
+                        <a class="read-more" onclick="window.location.href='${document.file_url}'">Continue Reading</a>
+                    </div>
                 `;
-                postContainer.appendChild(postCard);
-            });
+            })
+            document.getElementById("latest-posts").innerHTML = resultHTML;
         }
-
-        // Run on page load
         document.addEventListener("DOMContentLoaded", displayLatestPosts);
+        console.log("DOM content loaded, calling displayLatestPosts...");
+        displayLatestPosts();
 
     </script>
 
     <script>
         console.log("Documents JSON:", "{{ documents_json|escapejs }}");
     </script>
-    <!--&lt;!&ndash; Featured Post 1 &ndash;&gt;-->
-    <!--<section class="featured-post">-->
-    <!--    <h2>AI in Criminal Justice</h2>-->
-    <!--    <p class="author">John Doe</p>-->
-    <!--    <p>A groundbreaking study exploring the impact of AI in criminal justice.</p>-->
-    <!--    <a class="read-more" onclick="openModal('Journal Title 1', 'A groundbreaking study exploring the impact of AI in criminal justice.')">Continue Reading</a>-->
-    <!--</section>-->
-
-    <!--&lt;!&ndash; Featured Post 2 &ndash;&gt;-->
-    <!--<section class="featured-post">-->
-    <!--    <h2>Crime Pattern Studies</h2>-->
-    <!--    <p class="author">Jack Brown</p>-->
-    <!--    <p>An in-depth analysis of crime patterns in urban areas over the past decade.</p>-->
-    <!--    <a class="read-more" onclick="openModal('Journal Title 2', 'An in-depth analysis of crime patterns in urban areas over the past decade.')">Continue Reading</a>-->
-    <!--</section>-->
-
-    <!--&lt;!&ndash; Featured Post 3 &ndash;&gt;-->
-    <!--<section class="featured-post">-->
-    <!--    <h2>Random title 3</h2>-->
-    <!--    <p class="author">Andy Miller</p>-->
-    <!--    <p>Examining the effectiveness of rehabilitation programs for non-violent offenders.</p>-->
-    <!--    <a class="read-more" onclick="openModal('Journal Title 3', 'Examining the effectiveness of rehabilitation programs for non-violent offenders.')">Continue Reading</a>-->
-    <!--</section>-->
 
     <!-- Modal (for all featured posts) -->
     <div id="modal" class="modal" style="display: none;">
@@ -183,136 +100,50 @@
     </div>
 
     <script>
-        function openModal(title) {
+    function openModal(title) {
 
-            let modal = document.getElementById("modal");
-            let modalContent = document.getElementById("modal-content");
+        let modal = document.getElementById("modal");
+        let modalContent = document.getElementById("modal-content");
 
-            console.log('Opening modal with title:', title); // Check if this gets logged
+        console.log('Opening modal with title:', title); // Check if this gets logged
 
 
-            // Ensure modal elements exist before modifying them
-            if (modal && modalContent) {
-                modal.style.display = "block";
-                modalContent.innerHTML = `
-                    <div class="modal-content">
-                        <h2><strong>Log in to continue reading</strong></h2>
-                        <p>${title}</p>
-                        <button onclick="redirectToLogin()">Sign Up / Log In</button>
-                        <button onclick="continueAsGuest()">Continue as Guest</button>
-                        <button onclick="closeModal()">Close</button>
-                    </div>
-                `;
-            }
+        // Ensure modal elements exist before modifying them
+        if (modal && modalContent) {
+            modal.style.display = "block";
+            modalContent.innerHTML = `
+                <div class="modal-content">
+                    <h2><strong>Log in to continue reading</strong></h2>
+                    <p>${title}</p>
+                    <a href="{% url 'login' %}">
+                        <button>Sign Up / Log In</button>
+                    </a>
+                    <a href="{% url 'student_dashboard' %}">
+                        <button>Continue as guest</button>
+                    </a>
+                    <button href="{% url 'homepage' %}">Continue as Guest</button>
+                    <button onclick="closeModal()">Close</button>
+                </div>
+            `;
         }
+    }
 
 
-        function closeModal() {
-            let modal = document.getElementById("modal");
-            if (modal) {
-                modal.style.display = "none";
-            }
+    function closeModal() {
+        let modal = document.getElementById("modal");
+        if (modal) {
+            modal.style.display = "none";
         }
+    }
 
-        function redirectToLogin() {
-            window.location.href = "login/";
-        }
+    function redirectToLogin() {
+        alert("Redirecting to login page... (Placeholder Action)");
+    }
 
-        function redirectToRegister() {
-            window.location.href = "register/";
-        }
-
-        function continueAsGuest() {
-            window.location.href = "homepage";
-        }
-        </script>
-
-    <!-- space between the footer and the featured post box -->
-    <div class="spacer"></div>
+    function continueAsGuest() {
+        alert("Continuing as guest... (Placeholder Action)");
+    }
+    </script>
 
 {% endblock %}
 
-{% comment %} <!-- left and right black boxes in the footer -->
-<div class="footer-container">
-    <!-- Left and right "blocked out" areas -->
-    <div class="footer-buffer footer-buffer-left"></div>
-    <div class="footer-buffer footer-buffer-right"></div>
-
-    <!-- footer main content -->
-    <div class="footer-inner">
-        <!-- main title -->
-        <div class="main-title">
-            <h1>EXPLORE CIRT</h1>
-        </div>
-
-        <!-- footer sections -->
-        <div class="footer-sections">
-            <div class="footer-section">
-                <!-- first section -->
-                <h3>About Us</h3>
-                <ul>
-                    <li><a href="#">CIRT</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <!-- second section -->
-                <h3>Explore Content</h3>
-                <ul>
-                    <li><a href="#">Explore CIRT</a></li>
-                    <li><a href="{% url 'faq' %}">FAQ</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <!-- third section -->
-                <h3>Terms & Policies</h3>
-                <ul>
-                    <li><a href="{% url 'terms-and-conditions' %}">Terms and Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <!-- fourth section -->
-                <h3>Description</h3>
-                <p style="color:white"> Organized in 2023, the CIRT is designed to offer a variety of academic pursuits including: education for students and training for criminal justice professionals; engaging in local, regional, and nationwide criminal justice research and policy events; publishing and promoting high-level multidisciplinary research; expanding faculty and student reach in grant and funding opportunities; and coordinating further collaboration with local criminal justice agencies.
-                </p>
-            </div>
-        </div>
-
-        <!-- Social media icons at the bottom -->
-        <!-- From Uiverse.io by Pradeepsaranbishnoi -->
-        <div class="social-links">
-            <a id="instagram" class="social-btn flex-center" href="https://www.instagram.com/utampacrm/" target="_blank">
-                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0-2A7.5 7.5 0 0 0 0 7.5v9A7.5 7.5 0 0 0 7.5 24h9A7.5 7.5 0 0 0 24 16.5v-9A7.5 7.5 0 0 0 16.5 0h-9zM12 6.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2A3.5 3.5 0 1 0 12 16a3.5 3.5 0 0 0 0-7zm6-1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
-                </svg>
-                <span>utampacrm</span>
-            </a>
-
-            <a id="linkedin" class="social-btn flex-center" href="https://www.linkedin.com/company/utampa-criminology-criminal-justice/" target="_blank">
-                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"></path>
-                </svg>
-                <span>utampacrm</span>
-            </a>
-
-            <a id="facebook" class="social-btn flex-center" href="https://www.facebook.com/utampacrm" target="_blank">
-                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.41c0-3.1 1.892-4.79 4.656-4.79 1.324 0 2.464.098 2.794.143v3.24h-1.916c-1.504 0-1.794.716-1.794 1.764v2.31h3.59l-.467 3.622h-3.123V24h6.116C23.403 24 24 23.403 24 22.675V1.325C24 .597 23.403 0 22.675 0z"/>
-                </svg>
-                <span>utamapcrm</span>
-            </a>
-        </div>
-
-    </div>
-</div>
-
-<script id="documentsJson" type="application/json">
-  {{ documents_json|safe }}
-</script>
-
-</body>
-</html> {% endcomment %}
