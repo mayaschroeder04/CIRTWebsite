@@ -54,7 +54,7 @@
     </div>
 
 
-    <script>
+    {% comment %} <script>
         console.log("Display Latest Posts Function is Loaded");
 
         function displayLatestPosts() {
@@ -90,7 +90,7 @@
 
     <script>
         console.log("Documents JSON:", "{{ documents_json|escapejs }}");
-    </script>
+    </script> {% endcomment %}
 
     <!-- Modal (for all featured posts) -->
     <div id="modal" class="modal" style="display: none;">
@@ -98,7 +98,7 @@
             <!-- Modal content will be injected here -->
         </div>
     </div>
-
+{% comment %} 
     <script>
     function openModal(title) {
 
@@ -143,7 +143,7 @@
     function continueAsGuest() {
         alert("Continuing as guest... (Placeholder Action)");
     }
-    </script>
+    </script> {% endcomment %}
 
 {% endblock %}
 
