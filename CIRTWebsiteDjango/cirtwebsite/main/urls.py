@@ -32,7 +32,7 @@ urlpatterns = [
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
-    path("sign-up/", views.sign_up, name="sign_up"),
+    path("sign_up/", views.sign_up, name="sign_up"),
 
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
 
