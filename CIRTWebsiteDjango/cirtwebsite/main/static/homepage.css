@@ -191,6 +191,7 @@ nav {
 .modal {
     display: none;
     position: fixed;
+    z-index: 1000;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -440,6 +441,7 @@ a {
 .input {
     width: 900px;
     height: 50px;
+    z-index: 10;
     line-height: 25px;
     padding: 0 1rem;
     padding-left: 3rem;
