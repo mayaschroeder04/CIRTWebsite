@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results - University of Tampa CIRT</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search-results.css' %}">
     <script src="{% static 'homepage.js' %}" defer></script>
 </head>
 
@@ -183,15 +184,18 @@
 
             documents.forEach(result => {
                 resultHTML += `
-                    <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
-                        <h3 style="margin: 5px 0;">
-                            <a href="${result.file_url}" style="text-decoration: none; color: inherit;">${result.title}</a>
-                        </h3>
-                        <p><strong></strong> ${result.author}</p>
-                        <p><strong>Category:</strong> ${result.category_name}</p>
-                        <p>${result.description}</p>
-                        <a class="read-more" onclick="window.location.href='${result.url}'">Continue Reading</a>
-
+                    <li class="search-result-item">
+                        <div class="result-meta">
+                            <div class="result-type">RESEARCH REPORT</div>
+                            <a href="${result.file_url}" class="result-title">${result.title}</a>
+                            <p class="result-author">${result.author}</p>
+                            <p class="result-org">${result.category_name}</p>
+                        </div>
+                        <div class="result-actions">
+                            <button onclick="window.location.href='${result.file_url}'">Download</button>
+                            <button>Save</button>
+                            <button>Cite</button>
+                        </div>
                     </li>`;
             });
 
@@ -221,12 +225,18 @@
                 const documentItem = document.createElement("div");
                 documentItem.classList.add("document-item");
                 documentItem.innerHTML = `
-                    <li style="padding: 15px; border-bottom: 1px solid #ddd; background: white; margin: 10px 0; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);">
-                        <h3 style="margin: 5px 0;">${doc.title}</h3>
-                        <p><strong>Author:</strong> ${doc.author}</p>
-                        <p><strong>Category:</strong> ${doc.category_name}</p>
-                        <p>${doc.description}</p>
-                        <a class="read-more" onclick="window.location.href='${doc.url}'">Continue Reading</a>
+                    <li class="search-result-item">
+                        <div class="result-meta">
+                            <div class="result-type">RESEARCH REPORT</div>
+                            <a href="${doc.file_url}" class="result-title">${doc.title}</a>
+                            <p class="result-author">${doc.author}</p>
+                            <p class="result-org">${doc.category_name}</p>
+                        </div>
+                        <div class="result-actions">
+                            <button onclick="window.location.href='${doc.file_url}'">Download</button>
+                            <button>Save</button>
+                            <button>Cite</button>
+                        </div>
                     </li>`;
                 documentListContainer.appendChild(documentItem);
             });
