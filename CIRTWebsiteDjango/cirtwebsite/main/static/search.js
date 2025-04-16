@@ -1,14 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
-
+    const selectedFilter = getSelectedFilter();
     searchInput.addEventListener("input", function () {
         const query = this.value.trim();
         if (!query) {
             closeAllLists();
             return;
         }
-
-        fetch(`/autocomplete/?query=${encodeURIComponent(query)}`)
+        fetch(`/autocomplete/?query=${encodeURIComponent(query)}&filter=${encodeURIComponent(selectedFilter)}`)
             .then(response => response.json())
             .then(data => {
                 showSuggestions(this, data);

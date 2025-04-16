@@ -528,7 +528,7 @@ def upload_journal(request):
 def autocomplete(request):
     query = request.GET.get("query", "")
     documents = Document.objects.select_related("category").filter(
-        Q(title__istartswith=query)
+        Q(title__startswith=query)
     )[:10]  # Limit suggestions for performance
     #Q(title__icontains=query) |
     #Q(description__icontains=query) |
