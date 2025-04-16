@@ -7,6 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/5.1/topics/settings/
 
 For the full list of settings and their values, see
+For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
@@ -34,6 +35,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#  User model
+
+AUTH_USER_MODEL= 'main.CustomUser'
 
 # Application definition
 
