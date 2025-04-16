@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% block title %}Search Results - University of Tampa CIRT{% endblock %}
-
-{% comment %} <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     {% load static %}
@@ -11,10 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
     <link rel="stylesheet" href="{% static 'css/search-results.css' %}">
-    <script src="{% static 'homepage.js' %}" defer></script>
-</head>
-
-
+</head> 
 <body>
 
     <!-- Header -->
@@ -38,15 +32,13 @@
             <button class="login-btn" onclick="openModal()">Log In</button>
         </div>
     </div>
-</header> {% endcomment %}
-
-{% block content %}
+</header>
 
     <div class="red-bar"></div>
 
-    <div class="main-container">
+ <div class="main-container">
     <!-- Sidebar for Filters -->
-    <div class="filter-sidebar">
+    <div class="filter-sidebar" style="width: 280px;">
         <h4>Filter by Category</h4>
 
         <!-- Category and Subcategory Dropdowns -->
@@ -55,8 +47,9 @@
         <div class="category">
             <!-- Category Checkbox -->
             <input type="checkbox" id="category-{{ category.id }}" name="category" value="{{ category.id }}">
-            <label for="category-{{ category.id }}" class="category-label" onclick="toggleSubcategories('subcategory-{{ category.id }}')">
+            <label for="category-{{ category.id }}" class="category-label" style="white-space: nowrap;">
                 {{ category.name }}
+                <span class="dropdown-arrow" onclick="toggleSubcategories('subcategory-{{ category.id }}')">&#9660;</span>
             </label>
 
             <!-- Subcategories with Checkboxes -->
@@ -90,15 +83,12 @@
         <button onclick="applyFilters()">Apply Filters</button>
     </div>
 
-
-
-
         <!-- Search Results Section -->
-        <div id="search-results-container" style="width: 100%; overflow-y: auto; font-family: 'Times New Roman', Times, 'Serif'; ">
+        <div id="search-results-container" class="search-results-container">
             <h2>Search Results</h2>
-            <div id="search-results">
+            <ul id="search-results" class="results-list">
                 <!-- Search results will be dynamically inserted here -->
-            </div>
+            </ul>
         </div>
     </div>
 
@@ -117,7 +107,6 @@
             document.querySelectorAll('input[name="category"]:checked').forEach(checkbox => {
                 selectedCategories.push(checkbox.value);
             });
-
 
             document.querySelectorAll('input[name="subcategory"]:checked').forEach( checkbox => {
                 selectedSubcategories.push(checkbox.value)
@@ -145,15 +134,10 @@
 
         }
 
-
-
-
         function getCSRFToken() {
             const cookieValue = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
             return cookieValue ? cookieValue.split('=')[1] : '';
         }
-
-
 
         // Display search results
         function displaySearchResults() {
@@ -176,30 +160,30 @@
             }
 
             if (documents.length === 0) {
-                resultsContainer.innerHTML = `<p style='text-align: center;'>No results found for "${query}".</p>`;
+                resultsContainer.innerHTML = "<p style='text-align: center;'>No results found for '${query}'.</p>";
                 return;
             }
 
-            let resultHTML = `<h3 style="text-align: center;">Results for: "${query}"</h3><ul style="list-style-type: none; padding: 0;">`;
-
+            let resultHTML = `<h3 style='text-align: center;'>Results for: "${query}"</h3><ul class='results-list'>`;
             documents.forEach(result => {
-                resultHTML += `
-                    <li class="search-result-item">
+                resultHTML += 
+                    `<li class="search-result-item">
                         <div class="result-meta">
-                            <div class="result-type">RESEARCH REPORT</div>
-                            <a href="${result.file_url}" class="result-title">${result.title}</a>
+                            <p class="result-type">RESEARCH REPORT</p>
+                            <h3><a href="${result.file_url}" class="result-title" style="color: inherit; text-decoration: none;">${result.title}</a></h3>
                             <p class="result-author">${result.author}</p>
-                            <p class="result-org">${result.category_name}</p>
+                            <p class="result-org">${result.organization || ''}</p>
+                            <p class="open-access">${result.category_name}</p>
                         </div>
                         <div class="result-actions">
-                            <button onclick="window.location.href='${result.file_url}'">Download</button>
-                            <button>Save</button>
-                            <button>Cite</button>
+                            <button class="download-btn">Download</button>
+                            <button class="save-btn">Save</button>
+                            <button class="cite-btn">Cite</button>
                         </div>
                     </li>`;
             });
 
-            resultHTML += `</ul>`;
+            resultHTML += "</ul>";
             resultsContainer.innerHTML = resultHTML;
         }
 
@@ -224,24 +208,19 @@
             rawdocuments.documents.forEach(doc => {
                 const documentItem = document.createElement("div");
                 documentItem.classList.add("document-item");
-                documentItem.innerHTML = `
-                    <li class="search-result-item">
+                documentItem.innerHTML = 
+                    `<li class="search-result-item">
                         <div class="result-meta">
-                            <div class="result-type">RESEARCH REPORT</div>
-                            <a href="${doc.file_url}" class="result-title">${doc.title}</a>
+                            <h3 class="result-title">${doc.title}</h3>
                             <p class="result-author">${doc.author}</p>
                             <p class="result-org">${doc.category_name}</p>
-                        </div>
-                        <div class="result-actions">
-                            <button onclick="window.location.href='${doc.file_url}'">Download</button>
-                            <button>Save</button>
-                            <button>Cite</button>
+                            <p>${doc.description}</p>
+                            <a class="read-more" onclick="window.location.href='${doc.url}'">Continue Reading</a>
                         </div>
                     </li>`;
                 documentListContainer.appendChild(documentItem);
             });
         }
-
 
         function getQueryParams() {
             const params = new URLSearchParams(window.location.search);
@@ -254,9 +233,7 @@
         document.addEventListener("DOMContentLoaded", displaySearchResults);
     </script>
 
-{% endblock %}
-
-    {% comment %} <!-- Footer -->
+    <!-- Footer -->
     <div class="footer-container">
         <div class="footer-inner">
             <div class="main-title">
@@ -270,4 +247,4 @@
         </div>
     </div>
 </body>
-</html> {% endcomment %}
+</html>
