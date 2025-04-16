@@ -156,15 +156,23 @@ nav {
 
 }
 .featured-post {
-    background: white;
-    margin: 20px auto;
-    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 20px auto;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+    width: 90%;
 }
 .featured-post h2 {
+    font-size: 1.2rem;
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
     margin: 0;
-    color: #a6192e;
 }
 .featured-post .author {
     color: #555;
@@ -881,4 +889,106 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+}
+/* New styles for homepage cards similar to search results page */
+.search-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.result-meta {
+    max-width: 75%;
+}
+
+.result-type {
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.result-title {
+    font-size: 1.2rem;
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.result-title:hover {
+    text-decoration: underline;
+}
+
+.result-author,
+.result-org {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.result-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.result-actions button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    min-width: 100px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.featured-post .result-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.featured-post .result-actions button {
+    background-color: #a6192e;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    min-width: 100px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.read-more,
+.continue-reading {
+    background-color: #8b141f;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.read-more:hover,
+.continue-reading:hover {
+    background-color: #a6192e;
 }
