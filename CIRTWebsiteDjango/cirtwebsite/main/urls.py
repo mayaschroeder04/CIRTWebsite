@@ -1,10 +1,14 @@
 from django.urls import path, include
 from . import views, admin
 
+
+
+
+
 urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("fake_journal/", views.fake_journal, name="fake_journal"),
-    # path("terms-and-conditions/", views.toc, name="terms-and-conditions"),
+    path("terms-and-conditions/", views.toc, name="terms-and-conditions"),
     path("journals/", views.journals_view, name="journals"),
     # path("contact-us/", views.contact, name="contact-us"), #  Need a contact us
     path("images/", views.images_view, name="images"),
@@ -23,24 +27,16 @@ urlpatterns = [
     path("past-reviews/", views.past_reviews, name="past_reviews"),
     path("editor-dashboard/", views.editor_dashboard, name="editor_dashboard"),
     path("check-status/", views.check_status, name="check_status"),
-    path("button-two/", views.button_two, name="button_two"),
-    path("button-four/", views.button_four, name="button_four"),
+    path("button-two", views.button_two, name="button_two"),
+    path("button-four", views.button_four, name="button_four"),
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
-    path("signup/", views.sign_up, name="signup"),
-    path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
-    path("faq/", views.faq_view, name="faq"),
-    path('autocomplete/', views.autocomplete, name='autocomplete'),
-    # path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
-    path(
-        "terms-and-conditions/",
-        views.terms_and_conditions_view,
-        name="terms-and-conditions",
-    ),
-    path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
-    path("contact/", views.contact_view, name="contact"),
-    path("upload-journal/", views.upload_journal, name="upload_journal"),
+    path("sign-up/", views.sign_up, name="sign_up"),
+
+    path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
+
+    path("upload-journal/", views.upload_journal, name="upload_a_journal"),
 
     path('accounts/', include('allauth.urls')),
 
@@ -48,7 +44,19 @@ urlpatterns = [
 
     path('login-otp/', views.login_otp, name="login_otp"),
 
-
+    path('generate_presigned_url/<path:file_path>/', views.generate_presigned_url, name='generate_presigned_url'),
 
     path('set-password/', views.set_password, name="set_password"),
+
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
+
+    path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
+
+    path("faq/", views.faq_view, name="faq"),
+
+    path("terms-and-conditions/",views.terms_and_conditions_view,name="terms-and-conditions",),
+
+    path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
+    
+    path("contact/", views.contact_view, name="contact"),
 ]

@@ -7,3 +7,6 @@ mysqlclient==2.2.0
 python-decouple
 django-allauth==65.7.0
 django_otp
+boto3
+django-storages
+django-cors-headers>=4.0
