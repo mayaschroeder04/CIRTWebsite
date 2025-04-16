@@ -8,7 +8,7 @@
     {% load static %}
     {% block stylesheet %}<link rel="stylesheet" href="{% static 'homepage.css' %}">{% endblock %}
     <script id="documents-data" type="application/json">{{ documents_json|safe }}</script>
-    <script src="{% static 'homepage.js' %}"></script>
+    {% block script %}<script src="{% static 'homepage.js' %}"></script>{% endblock %}
 </head>
 <body>
 

@@ -128,7 +128,7 @@
         const documents = JSON.parse(rawDocumentsJson);
         console.log(documents);
 
-        let resultHTML = "";
+        let resultHTML = "<ul class='results-list'>";
 
         documents.forEach(document => {
             // Use encodeURIComponent to safely pass data into JavaScript function
@@ -137,15 +137,23 @@
             const fileUrl = encodeURIComponent(document.file_url); // Add this line
 
             resultHTML += `
-                <div class="featured-post">
-                    <h2>${document.title}</h2>
-                    <p><strong>Author:</strong> ${document.author}</p>
-                    <p><strong>Category:</strong> ${document.category_name}</p>
-                    <p>${document.description}</p>
-                    <a class="read-more" onclick="fetchPresignedUrl('${fileUrl}')">Continue Reading</a>
-                </div>
+                <li class="search-result-item">
+                    <div class="result-meta">
+                        <p class="result-type">RESEARCH REPORT</p>
+                        <h3 class="result-title">${document.title}</h3>
+                        <p class="result-author">${document.author}</p>
+                        <p class="result-org">${document.category_name}</p>
+                        <p>${document.description}</p>
+                    </div>
+                    <div class="result-actions">
+                        <button class="download-btn" onclick="fetchPresignedUrl('${fileUrl}')">Download</button>
+                        <button class="save-btn">Save</button>
+                        <button class="cite-btn">Cite</button>
+                    </div>
+                </li>
             `;
         })
+        resultHTML += "</ul>";
         document.getElementById("latest-posts").innerHTML = resultHTML;
     }
     document.addEventListener("DOMContentLoaded", displayLatestPosts);
