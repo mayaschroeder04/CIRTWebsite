@@ -47,4 +47,16 @@ urlpatterns = [
     path('generate_presigned_url/<path:file_path>/', views.generate_presigned_url, name='generate_presigned_url'),
 
     path('set-password/', views.set_password, name="set_password"),
+
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
+
+    path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
+
+    path("faq/", views.faq_view, name="faq"),
+
+    path("terms-and-conditions/",views.terms_and_conditions_view,name="terms-and-conditions",),
+
+    path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
+    
+    path("contact/", views.contact_view, name="contact"),
 ]

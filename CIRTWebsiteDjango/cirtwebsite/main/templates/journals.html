@@ -1,37 +1,114 @@
-{% extends 'base.html' %}
-{% block title %}Journals - University of Tampa CIRT{% endblock %}
-
-{% block stylesheet %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
     {% load static %}
-    <link rel="stylesheet" text = "text/css" href="{% static 'homepage.css' %}">
-    <link rel="stylesheet" text = "text/css" href="{% static 'pdf.css' %}">
-{% endblock %}
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <script src="{% static 'homepage.js' %}"></script>
+    <meta charset="UTF-8">
+    <title>All Journals</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-{% block content %}
-    <!-- Main Content -->
-    <div style="text-align: center; margin-top: 50px;">
+        #journals-list {
+            margin: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            grid-auto-rows: auto;
+        }
 
-    <div style="text-align: left; margin-top: 50px;">
+        .journal-post {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-        <h2>Journals Tab</h2>
+        .journal-post h3 {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
 
-        <!-- Search Bar (Copied from homepage) -->
-        <div class="group">
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                <g>
-                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-                </g>
-            </svg>
-            <input placeholder="Search for journals" type="search" class="input">
-        </div>
+        .journal-post p {
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .read-more {
+            text-decoration: none;
+            color: #fff;
+            background-color: #a6192e;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .read-more:hover {
+            background-color: #d02d41;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .step-links a {
+            margin: 0 5px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .step-links .current {
+            font-weight: bold;
+        }
+
+        @media (max-width: 1024px) {
+            #journals-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #journals-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+
+    <h1>All Journals</h1>
+
+    <div id="journals-list">
+        {% for journal in journals %}
+            <div class="journal-post">
+                <h3>{{ journal.title }}</h3>
+                <p><strong>Author:</strong> {{ journal.author }}</p>
+                <p><strong>Category:</strong> {{ journal.category_name }}</p>
+                <p>{{ journal.description }}</p>
+                <a class="read-more" href="{{ journal.file_url }}">Continue Reading</a>
+            </div>
+        {% endfor %}
     </div>
 
-    <div class="pdf-box">
-        <a href="{% url 'pdfviewer' %}" target="_blank">
-            <div class="pdf-title">Example PDF Title</div>
-            <div class="pdf-author">Author Name</div>
-        </a>
-    </div>
+   
+</body>
+</html>
 
-    <div style="height: 700px;"></div>
-{% endblock %}

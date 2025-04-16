@@ -14,6 +14,12 @@
 
 <!-- top of the page -->
 <header>
+    <!-- Modal (shared across all pages) -->
+    <div id="modal" class="modal" style="display: none;">
+        <div id="modal-content" class="modal-content">
+            <!-- Modal content will be injected here -->
+        </div>
+    </div>
     <div class="header-left">
         {% load static %}
         <a href="{% url 'homepage' %}"><img src="{% static 'tampalogo.png' %}" alt="CIRT Logo"></a>
@@ -24,11 +30,10 @@
                 {% load static %}
                 <a href="{% url 'journals' %}" class="tab">Journals</a>
                 <a href="{% url 'images' %}" class="tab">Images</a>
-                <a href="{% url 'upload_journal' %}" class="tab">Upload</a>
+                <a href="{% url 'upload_a_journal' %}" class="tab">Upload</a>
             </div>
             {% if user.is_authenticated %}
                 <div class="login-buttons">
-                    {
                     <p>Welcome, {{ user.first_name }}!</p>
                     {% load static %}
                     {% if user.is_staff %}
@@ -52,6 +57,7 @@
                 </div>
             {% endif %}
         </div>
+        {% block extra_css %}{% endblock %}
 </header>
 
 <!-- Content block holder -->
