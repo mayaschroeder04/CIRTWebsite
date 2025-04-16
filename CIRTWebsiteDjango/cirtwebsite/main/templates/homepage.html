@@ -28,12 +28,15 @@
             </div>
             {% if user.is_authenticated %}
                   <div class="login-buttons">
-                      {
                       <p>Welcome, {{ user.first_name }}!</p>
                      {% load static %}
-                      {% if user.is_staff %}
-                           <a href="{% url 'editor_dashboard' %}">
-                               <button class="register-btn">Admin</button>
+                      {% if user.is_superuser %}
+                      <a href="{% url 'editor_dashboard' %}">
+                          <button class="register-btn">Admin</button>
+                      </a>
+                      {% elif user.is_staff %}
+                           <a href="{% url 'reviewer_dashboard' %}">
+                               <button class="register-btn">Submissions</button>
                            </a>
                       {% else %}
                       <a href="{% url 'student_dashboard' %}">

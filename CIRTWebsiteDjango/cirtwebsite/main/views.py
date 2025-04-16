@@ -156,6 +156,9 @@ def upload_images(request):
 def student_dashboard(request):
     return render(request, "student-dashboard.html")
 
+def reviewer_dashboard(request):
+    return render(request, "reviewer-dashboard.html")
+
 
 def past_uploads(request):
     return render(request, "past-uploads.html")
