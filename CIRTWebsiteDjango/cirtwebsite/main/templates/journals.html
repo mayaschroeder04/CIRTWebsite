@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title %}All Journals - University of Tampa CIRT{% endblock %}
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     {% load static %}
@@ -90,9 +93,10 @@
             color: #333;
         }
     </style>
-</head>
+</head> {% endcomment %}
 <body>
 
+{% block content %}
 
     <h1>All Journals</h1>
 
@@ -108,7 +112,92 @@
         {% endfor %}
     </div>
 
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #journals-list {
+            margin: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            grid-auto-rows: auto;
+        }
+
+        .journal-post {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .journal-post h3 {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .journal-post p {
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .read-more {
+            text-decoration: none;
+            color: #fff;
+            background-color: #a6192e;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .read-more:hover {
+            background-color: #d02d41;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .step-links a {
+            margin: 0 5px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .step-links .current {
+            font-weight: bold;
+        }
+
+        @media (max-width: 1024px) {
+            #journals-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #journals-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+        }
+    </style>
    
 </body>
-</html>
+{% endblock %}
+{% comment %} </html> {% endcomment %}
 
