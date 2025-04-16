@@ -473,3 +473,21 @@ def autocomplete(request):
         request,
         {"documents_json": documents_json},
     )
+
+def privacy_policy_view(request):
+    return render(request, "privacy-policy.html")
+
+
+def faq_view(request):
+    return render(request, "FAQ.html")
+
+def terms_and_conditions_view(request):
+    return render(request, "terms_and_conditions.html")
+
+
+def cookie_policy_view(request):
+    return render(request, "cookie-policy.html")
+
+
+def contact_view(request):
+    return render(request, "contact.html")
