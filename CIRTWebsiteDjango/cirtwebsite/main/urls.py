@@ -47,4 +47,6 @@ urlpatterns = [
     path('generate_presigned_url/<path:file_path>/', views.generate_presigned_url, name='generate_presigned_url'),
 
     path('set-password/', views.set_password, name="set_password"),
+
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
 ]

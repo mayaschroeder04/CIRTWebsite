@@ -453,3 +453,23 @@ def journals_view(request):
     
     # Pass journals as a context variable to the template
     return render(request, 'journals.html', {'journals': journals})
+
+
+def autocomplete(request):
+    query = request.GET.get("query", "")
+    documents = Document.objects.select_related("category").filter(
+        Q(title__istartswith=query)
+    )[:10]  # Limit suggestions for performance
+    #Q(title__icontains=query) |
+    #Q(description__icontains=query) |
+    #Q(author__icontains=query)
+    suggestions = [doc.title for doc in documents]
+    return JsonResponse(suggestions, safe=False)
+
+    # Debugging
+    print("Documents JSON:", documents_json)
+
+    return render(
+        request,
+        {"documents_json": documents_json},
+    )
