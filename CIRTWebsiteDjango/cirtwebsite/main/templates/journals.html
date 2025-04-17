@@ -3,6 +3,7 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/journals.css' %}">
     <script src="{% static 'homepage.js' %}"></script>
     <meta charset="UTF-8">
     <title>All Journals</title>
@@ -93,7 +94,6 @@
 </head>
 <body>
 
-
     <h1>All Journals</h1>
 
     <div id="journals-list">
@@ -103,7 +103,11 @@
                 <p><strong>Author:</strong> {{ journal.author }}</p>
                 <p><strong>Category:</strong> {{ journal.category_name }}</p>
                 <p>{{ journal.description }}</p>
-                <a class="read-more" href="{{ journal.file_url }}">Continue Reading</a>
+                <div class="result-actions">
+                    <button onclick="window.open('{{ journal.file_url }}', '_blank')">Download</button>
+                    <button>Save</button>
+                    <button>Cite</button>
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -111,4 +115,3 @@
    
 </body>
 </html>
-
