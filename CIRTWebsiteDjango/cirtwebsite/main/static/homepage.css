@@ -833,43 +833,8 @@ html, body {
 .name-fields input {
     flex: 1;
 }
-.upload-journal{
-    margin-left: 200px;
-    width: 200px;
-    height: 100px;
-    background-color: white;
-    padding: 300px;
-    border: #1a1a1a;
-
-}
-
-.input_a_journal{
-    margin-top: 10px;
-    padding: 20px;
-    border: #1a1a1a;
-    border-style: solid;
-}
 
 
-input, button {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-button {
-    background: #a6192e;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-button:hover {
-    background: #e4405f;
-
-}
 body {
     overflow-x:hidden;
     font-family: 'Poppins', sans-serif;
