@@ -1,4 +1,13 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title %}<title>Search Results - University of Tampa CIRT</title>{% endblock %}
+{% block stylesheet %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search-results.css' %}">
+{% endblock %}
+
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     {% load static %}
@@ -32,9 +41,10 @@
             <button class="login-btn" onclick="openModal()">Log In</button>
         </div>
     </div>
-</header>
+</header> {% endcomment %}
 
-    <div class="red-bar"></div>
+{% block content %}
+<div class="red-bar"></div>
 
  <div class="main-container">
     <!-- Sidebar for Filters -->
@@ -233,7 +243,9 @@
         document.addEventListener("DOMContentLoaded", displaySearchResults);
     </script>
 
-    <!-- Footer -->
+
+{% endblock %}
+    {% comment %} <!-- Footer -->
     <div class="footer-container">
         <div class="footer-inner">
             <div class="main-title">
@@ -247,4 +259,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> {% endcomment %}
