@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}University of Tampa CIRT Website{% endblock %}</title>
+    {% block title %}<title>University of Tampa CIRT Website</title>{% endblock %}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% load static %}
     {% block stylesheet %}<link rel="stylesheet" href="{% static 'homepage.css' %}">{% endblock %}
@@ -53,8 +53,14 @@
                 </div>
             {% else %}
                 <div class="login-buttons">
-                    <button class="register-btn" onclick="openModal()">Register</button>
-                    <button class="login-btn" onclick="openModal()">Log In</button>
+                        <a href="{% url 'login' %}">
+                            <button class="register-btn">Register</button>
+                        </a>
+                        <a href="{% url 'login' %}">
+                            <button class="login-btn">Log In</button>
+                        </a>
+                    {% comment %} <button class="register-btn" onclick="openModal()">Register</button>
+                    <button class="login-btn" onclick="openModal()">Log In</button> {% endcomment %}
                 </div>
             {% endif %}
         </div>
