@@ -52,7 +52,11 @@ header {
 
 .login-buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+}
+
+.login-buttons p{
+    margin-top:22px;
 }
 
 /* Register button (outlined) */

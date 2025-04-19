@@ -23,7 +23,8 @@ class Command(BaseCommand):
             ('JohnDoe', 'johndoe@example.com', 'password123', '0', 'John', 'Doe'),
             ('maya', 'janedoe@example.com', 'maya', '1', 'Alice', 'Doe'),
             ('sayedali', 'bobdoe@example.com', 'password789', '0', 'Sayed', 'Ali'),
-            ('abc', 'abc@example.com', 'abc', '0', 'Adam', 'Cobb', )
+            ('abc', 'abc@example.com', 'abc', '0', 'Adam', 'Cobb', ),
+            ('tim', 'tim@example.com', 'tim', '0', 'TIMOTHYYYYYYY', 'Knapp', ),
         ]
         if not User.objects.filter(username='parker').exists():
             user = User.objects.create_user(username='parker', password='pass', is_active=False)
