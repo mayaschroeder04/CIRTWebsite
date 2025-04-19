@@ -184,7 +184,10 @@ def editor_dashboard(request):
 
 
 def check_status(request):
-    return render(request, "check-status.html")
+    user = request.user
+    documents = Document.objects.filter(submitted_user=user.id)
+    return render(request, 'check-status.html', {'documents': documents})
+
 
 
 def button_two(request):
