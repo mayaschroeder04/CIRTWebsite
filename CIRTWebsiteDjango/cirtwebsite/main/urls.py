@@ -59,4 +59,6 @@ urlpatterns = [
     path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
 
     path("contact/", views.contact_view, name="contact"),
+
+    
 ]

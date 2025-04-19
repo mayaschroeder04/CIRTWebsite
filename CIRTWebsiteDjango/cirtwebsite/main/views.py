@@ -167,7 +167,12 @@ def assigned_journals(request):
 
 
 def past_uploads(request):
-    return render(request, "past-uploads.html")
+    user = request.user
+    if user.is_authenticated:
+        documents = Document.objects.filter(submitted_user=user.id)
+    else:
+        documents = []
+    return render(request, 'past-uploads.html', {'documents': documents})
 
 
 def past_reviews(request):
@@ -500,3 +505,4 @@ def cookie_policy_view(request):
 
 def contact_view(request):
     return render(request, "contact.html")
+
