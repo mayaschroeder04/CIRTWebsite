@@ -834,7 +834,6 @@ html, body {
     flex: 1;
 }
 
-
 body {
     overflow-x:hidden;
     font-family: 'Poppins', sans-serif;
@@ -884,7 +883,12 @@ header {
     text-decoration: underline;
 }
 
-.result-author,
+.result-author{
+    font-size: 0.95rem;
+    color: #a6192e;
+    margin-bottom: 4px;
+}
+
 .result-org {
     font-size: 0.95rem;
     color: #444;

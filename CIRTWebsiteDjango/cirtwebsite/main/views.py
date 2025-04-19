@@ -159,6 +159,12 @@ def student_dashboard(request):
 def reviewer_dashboard(request):
     return render(request, "reviewer-dashboard.html")
 
+def view_uploads(request):
+    return render(request, "view-uploads.html")
+
+def assigned_journals(request):
+    return render(request, "assigned-journals.html")
+
 
 def past_uploads(request):
     return render(request, "past-uploads.html")

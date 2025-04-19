@@ -35,9 +35,9 @@ urlpatterns = [
     path("sign_up/", views.sign_up, name="sign_up"),
     path("reviewer-dashboard/", views.reviewer_dashboard, name="reviewer_dashboard"),
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
-
+    path("view-uploads/", views.view_uploads, name="view_uploads"),
     path("upload-journal/", views.upload_journal, name="upload_a_journal"),
-
+    path("assigned-journals/", views.assigned_journals, name="assigned_journals"),
     path('accounts/', include('allauth.urls')),
 
     path('verify_email/<uidb64>/<token>/', views.verify_email, name="verify_email"),

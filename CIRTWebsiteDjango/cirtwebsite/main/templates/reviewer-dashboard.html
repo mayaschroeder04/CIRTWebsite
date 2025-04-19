@@ -16,10 +16,9 @@
     <section class="reviewer-controls" style="max-width: 600px; text-align: center;">
         <h2 style="color: black;">Reviewer Dashboard</h2>
         <div class="button-group" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
-            <button class="review-btn">✅ Approve Journals</button>
-            <button class="review-btn">❌ Disapprove Journals</button>
-            <button class="review-btn">🕓 View Pending Journals</button>
-            <button class="review-btn">📄 Reviewed Journals</button>
+            <a href="{% url 'assigned_journals' %}" class="dashboard-link">
+                <button class="review-btn">🕓 View Pending Journals</button>
+            <button class="review-btn">📚 Reviewed Journals</button>
             <button class="review-btn">⚠️ Flagged for Revision</button>
         </div>
     </section>
