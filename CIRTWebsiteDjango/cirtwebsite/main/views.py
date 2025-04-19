@@ -506,3 +506,6 @@ def cookie_policy_view(request):
 def contact_view(request):
     return render(request, "contact.html")
 
+def view_pdf(request, doc_id):
+    return render(request, 'view_pdf.html')
+

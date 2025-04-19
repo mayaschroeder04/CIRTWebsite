@@ -60,5 +60,5 @@ urlpatterns = [
 
     path("contact/", views.contact_view, name="contact"),
 
-    
+    path('view_pdf/<int:doc_id>/', views.view_pdf, name='view_pdf'),
 ]
