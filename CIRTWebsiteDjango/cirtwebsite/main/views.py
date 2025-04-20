@@ -6,7 +6,7 @@ import boto3
 from django.core.cache import cache
 from datetime import timedelta
 from django.core import serializers
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
@@ -513,7 +513,8 @@ def contact_view(request):
     return render(request, "contact.html")
 
 def view_pdf(request, doc_id):
-    return render(request, 'view_pdf.html')
+    journal = get_object_or_404(Document, id=doc_id)
+    return render(request, 'view_pdf.html', {'journal': journal})
 
 def submit_review(request, journal_id):
     if request.method == "POST":
