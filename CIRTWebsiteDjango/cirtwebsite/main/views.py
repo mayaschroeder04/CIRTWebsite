@@ -160,7 +160,8 @@ def reviewer_dashboard(request):
     return render(request, "reviewer-dashboard.html")
 
 def view_uploads(request):
-    return render(request, "view-uploads.html")
+    uploads = Document.objects.all()
+    return render(request, 'view_uploads.html', {'uploads': uploads})
 
 def assigned_journals(request):
     journals = Document.objects.all()  # no filter
