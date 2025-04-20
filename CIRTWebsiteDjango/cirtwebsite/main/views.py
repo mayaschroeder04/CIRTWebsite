@@ -163,7 +163,10 @@ def view_uploads(request):
     return render(request, "view-uploads.html")
 
 def assigned_journals(request):
-    return render(request, "assigned-journals.html")
+    journals = Document.objects.all()  # no filter
+    return render(request, 'assigned-journals.html', {
+        'pending_journals': journals
+    })
 
 
 def past_uploads(request):
@@ -511,4 +514,14 @@ def contact_view(request):
 
 def view_pdf(request, doc_id):
     return render(request, 'view_pdf.html')
+
+def submit_review(request, journal_id):
+    if request.method == "POST":
+        journal = get_object_or_404(Document, id=journal_id)
+        comment = request.POST.get("review_comment")
+
+        # Save comment logic goes here (maybe to a Review model?)
+        print(f"Review submitted for {journal.title}: {comment}")
+
+        return redirect("assigned_journals")  # Or wherever you want to redirect
 

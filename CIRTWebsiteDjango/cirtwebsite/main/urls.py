@@ -61,4 +61,6 @@ urlpatterns = [
     path("contact/", views.contact_view, name="contact"),
 
     path('view_pdf/<int:doc_id>/', views.view_pdf, name='view_pdf'),
+
+    path('submit-review/<int:journal_id>/', views.submit_review, name='submit_review'),
 ]
