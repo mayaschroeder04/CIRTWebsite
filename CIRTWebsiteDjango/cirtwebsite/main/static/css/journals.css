@@ -1,0 +1,51 @@
+.result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+    align-items: flex-end;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.result-actions button {
+    background-color: #820000;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    min-width: 60px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.result-actions button:hover {
+    background-color: #a30000;
+}
+
+.journal-post {
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.journal-post h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.journal-post p {
+    color: #333;
+    font-size: 0.95em;
+}
+
+.result-meta {
+    margin-bottom: 10px;
+}

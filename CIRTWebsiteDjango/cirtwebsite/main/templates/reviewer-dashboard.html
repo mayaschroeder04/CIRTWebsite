@@ -18,8 +18,13 @@
         <div class="button-group" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
             <a href="{% url 'assigned_journals' %}" class="dashboard-link">
                 <button class="review-btn">🕓 View Pending Journals</button>
-            <button class="review-btn">📚 Reviewed Journals</button>
-            <button class="review-btn">⚠️ Flagged for Revision</button>
+            </a>
+            <a href="{% url 'reviewed_journals' %}" class="dashboard-link">
+                <button class="review-btn">📚 Reviewed Journals</button>
+            </a>
+            <a href="{% url 'flagged_revision' %}" class="dashboard-link">
+                <button class="review-btn">⚠️ Flagged for Revision</button>
+            </a>
         </div>
     </section>
 
