@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
-from .models import Category, Document, SubCategory
+from .models import Category, Document, Subcategory
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
@@ -31,18 +31,30 @@ CustomerUser = get_user_model()
 # Basic Page Views
 # ---------------------------
 def homepage(request):
+    saved_document_ids = []  # Default to empty list
+
+    if(request.user.is_authenticated):
+        print("hererer")
+        user = CustomerUser.objects.get(id=request.user.id)
+        print(user.username)
+        saved_documents = user.saved_documents.all()
+        print("SAVED: ", saved_documents)
+        saved_document_ids = list(user.saved_documents.values_list('id', flat=True))
+        print(saved_document_ids)
+
     documents = Document.objects.select_related('category').order_by('-created_at')[:3]
     categories = Category.objects.all()
     category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
     documents_json = json.dumps([
-        {"title": doc.title,
+        {"id": doc.id,
+         "title": doc.title,
          "author": doc.author,
          "description": doc.description,
          "category_name": doc.category.name,
          "file_url": doc.file_url}
         for doc in documents
     ])
-    return render(request, "homepage.html", {"documents_json": documents_json, "categories": category_data})
+    return render(request, "homepage.html", {"documents_json": documents_json, "categories": category_data, "saved_documents": saved_document_ids})
 
 
 def fake_journal(request):
@@ -103,7 +115,7 @@ def search_results(request):
         documents = documents.filter(category__id=filter_category)
 
     categories = Category.objects.all()
-    sub_categories = SubCategory.objects.all()
+    sub_categories = Subcategory.objects.all()
 
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -391,37 +403,50 @@ def terms_conditions(request):
 # ---------------------------
 def upload_journal(request):
     if request.method == "POST":
+
+        type = request.POST.get("type")
         user_id = request.POST.get("user_id")
         file = request.FILES.get("journal")
         title = request.POST.get("title")
         author = request.POST.get("author")
         category = request.POST.get("category")
         description = request.POST.get("description")
+        subcategory = request.POST.get("subcategory")
+        subcategory_instance = Subcategory.objects.get(name=subcategory)
+
         if not title:
             return JsonResponse({"status": "error", "message": "Missing title"})
         if not file:
             return JsonResponse({"status": "error", "message": "Missing file"})
         if file.content_type != "application/pdf":
             return JsonResponse({"status": "error", "message": "Only PDF files are allowed"})
-        print("User ID:", user_id)
-        print("Author:", author)
-        print("Category:", category)
-        print("Title:", title)
-        print("File:", file)
-        print(f"File type: {file.content_type}")
-        upload_document(file, title, description, author, category, user_id)
+        if type == 'journal':
+            upload_document(file, title, description, author, category, user_id, type, subcategory_instance)
+        elif type == 'image':
+            pass
+        else:
+            return JsonResponse({"status": "error", "message": "Invalid type"})
         return JsonResponse({"status": "success", "message": "Upload successful!"})
     categories = Category.objects.all()
-    return render(request, "upload_a_journal.html", {'categories': categories})
+    subcategories = Subcategory.objects.all()
+    return render(request, "upload_a_journal.html", {'categories': categories, 'subcategories': subcategories})
 
 
-def upload_document(file, title, description, author, category, user_id):
+# def upload_image(file, title, description, author, user_id ):
+#     s3_client = boto3.client('s3',
+#                              aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+#                              aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+#                              region_name=settings.AWS_S3_REGION_NAME)
+#     file_path = f"{type}"
+
+
+def upload_document(file, title, description, author, category, user_id, type, subcategory):
     s3_client = boto3.client('s3',
                              aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                              aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
                              region_name=settings.AWS_S3_REGION_NAME)
     category_instance = Category.objects.get(name=category)
-    file_path = f"{category.replace(' ', '-')}/{title.replace(' ', '-')}.pdf"
+    file_path = f"{type}/{category.replace(' ', '-')}/{title.replace(' ', '-')}.pdf"
     s3_client.upload_fileobj(file, settings.AWS_STORAGE_BUCKET_NAME, file_path,
                              ExtraArgs={
                                  "ContentType": file.content_type,
@@ -434,7 +459,8 @@ def upload_document(file, title, description, author, category, user_id):
         file_url=file_path,
         author=author,
         submitted_user=user_id,
-        file_size=file.size
+        file_size=file.size,
+        subcategory = subcategory
     )
     return document
 
@@ -513,6 +539,83 @@ def cookie_policy_view(request):
 
 def contact_view(request):
     return render(request, "contact.html")
+
+
+
+def save_user_documents(request, documentId):
+    if request.method == "POST":
+        if (request.user.is_authenticated):
+            # document_id = request.POST.get("document_id")
+            print(request.user.id)
+            user_id = request.user.id
+            user = CustomerUser.objects.get(id=user_id)
+            user.saved_documents.add(documentId)
+            print("here")
+            print(user.saved_documents.all())
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"status": "Not authorized"})
+    else:
+        return JsonResponse({"success": True})
+
+def unsave_user_documents(request, documentId):
+    if request.method == "POST":
+        if (request.user.is_authenticated):
+            # document_id = request.POST.get("document_id")
+            print(request.user.id)
+            user_id = request.user.id
+            user = CustomerUser.objects.get(id=user_id)
+            user.saved_documents.remove(documentId)
+            print(user.saved_documents.all())
+            return JsonResponse({"success": True})
+    else:
+        return JsonResponse({"success": False})
+
+def display_user_documents(request):
+    if request.method == "POST":
+        user_id = request.POST.get("user_id")
+        user = CustomerUser.objects.get(id=user_id)
+        documents = user.saved_documents.all()
+
+        categories = Category.objects.all()
+
+        category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
+
+        documents_json = json.dumps([
+            {"title": doc.title,
+             "author": doc.author,
+             "description": doc.description,
+             "category_name": doc.category.name,
+             "file_url": doc.file_url}
+            for doc in documents
+        ])
+
+        return JsonResponse({"status": "success", "documents": documents_json, "categories": category_data})
+
+
+def cite_document(request, documentId):
+    if request.method == "POST":
+            document = Document.objects.get(id=documentId)
+
+            citation = document.get_citation()
+            return JsonResponse({
+                'success': True,
+                'citation': citation  # Send the citation to the frontend
+            })
+
+    else:
+        return JsonResponse({
+            'success': False,
+            'message': "Invalid request method."
+        })
+
+def download_document(request, documentId):
+    if request.method == "POST":
+        document = Document.objects.get(id=documentId)
+
+        url = generate_presigned_url(request, document.file_url)
+
+    return JsonResponse({"success": True, 'url': url})
 
 def view_pdf(request, doc_id):
     document = Document.objects.get(id=doc_id)

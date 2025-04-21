@@ -60,6 +60,14 @@ urlpatterns = [
 
     path("contact/", views.contact_view, name="contact"),
 
+    path('save-document/<path:documentId>/', views.save_user_documents, name="save_document"),
+
+    path('unsave-document/<path:documentId>/', views.unsave_user_documents, name="unsave_document"),
+
+    path('cite-document/<path:documentId>/', views.cite_document, name="cite-document"),
+
+    path('download-document/<path:documentId>/', views.download_document, name="download_document"),
+
     path('view_pdf/<int:doc_id>/', views.view_pdf, name='view_pdf'),
 
     path('submit-review/<int:journal_id>/', views.submit_review, name='submit_review'),

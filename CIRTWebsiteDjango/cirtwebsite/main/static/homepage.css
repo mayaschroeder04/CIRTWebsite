@@ -925,7 +925,7 @@ header {
 }
 
 .result-actions button {
-    background-color: black;
+    /*background-color: #b51616;*/
     color: white;
     border: none;
     padding: 10px 16px;
@@ -976,3 +976,84 @@ header {
 .continue-reading:hover {
     background-color: #a6192e;
 }
+
+.save-btn {
+  background-color: #000000; /* red */
+
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  content: "Save";
+}
+
+/*.save-btn::after {*/
+/*  content: "Save";*/
+/*  position: absolute;*/
+/*  left: 36px;*/
+/*  top: 50%;*/
+/*  transform: translateY(-50%);*/
+/*}*/
+
+
+.save-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+
+}
+
+.unsave-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  min-width: 100px;
+  text-align: center;
+  white-space: nowrap;
+
+  /* Icon stuff */
+  background-image: url("bookmark.png");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 18px 18px;
+  padding-left: 36px; /* give room for the icon */
+  padding-right: 5px;
+  display: inline-block;
+  /*content: "Saved";*/
+}
+
+
+.unsave-btn:hover {
+    background-color: #1a1a1a;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    content: "Unsave";
+
+}
+
+.download-btn {
+    background-color: #000000;
+}
+
+.download-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+}
+
+
+.cite-btn{
+    background-color: #000000;
+}
+
+.cite-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+}
+
+
+

@@ -13,12 +13,12 @@ GRANT ALL PRIVILEGES ON criminology_db.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
 
 USE criminology_db;
-
-CREATE TABLE IF NOT EXISTS web_pages (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255),
-    html_content TEXT
-);
-
-INSERT INTO web_pages (title, html_content)
-VALUES ('mainpage', '$(cat /docker-entrypoint-initdb.d/main.html)');
+--
+-- CREATE TABLE IF NOT EXISTS web_pages (
+--     id SERIAL PRIMARY KEY,
+--     title VARCHAR(255),
+--     html_content TEXT
+-- );
+--
+-- INSERT INTO web_pages (title, html_content)
+-- VALUES ('mainpage', '$(cat /docker-entrypoint-initdb.d/main.html)');
