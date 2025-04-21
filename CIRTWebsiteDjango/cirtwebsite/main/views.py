@@ -554,3 +554,6 @@ def reviewed_journals(request):
 
 def flagged_revision(request):
     return render(request, "flagged_revision.html")
+
+def saved_journals(request):
+    return render(request, 'saved_journals.html')

@@ -67,4 +67,6 @@ urlpatterns = [
     path('reviewed_journals/', views.reviewed_journals, name='reviewed_journals'),
     
     path('flagged_revision/', views.flagged_revision, name='flagged_revision'),
+
+    path('saved-journals/', views.saved_journals, name='saved_journals'),
 ]
