@@ -515,8 +515,29 @@ def contact_view(request):
     return render(request, "contact.html")
 
 def view_pdf(request, doc_id):
-    journal = get_object_or_404(Document, id=doc_id)
-    return render(request, 'view_pdf.html', {'journal': journal})
+    document = Document.objects.get(id=doc_id)
+    file_path = document.file_url  # should be like 'Case-Studies/dfks.pdf'
+
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME
+    )
+
+    try:
+        presigned_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME, 'Key': file_path},
+            ExpiresIn=3600
+        )
+    except ClientError as e:
+        return HttpResponse(f"Error generating presigned URL: {str(e)}")
+
+    return render(request, 'view_pdf.html', {
+        'journal': document,
+        'pdf_url': presigned_url
+    })
 
 def submit_review(request, journal_id):
     if request.method == "POST":
