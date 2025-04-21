@@ -26,18 +26,18 @@ urlpatterns = [
     path("past-uploads/", views.past_uploads, name="past_uploads"),
     path("past-reviews/", views.past_reviews, name="past_reviews"),
     path("editor-dashboard/", views.editor_dashboard, name="editor_dashboard"),
-    path("check-status/", views.check_status, name="check_status"),
+    path('check_status/', views.check_status, name='check_status'),
     path("button-two", views.button_two, name="button_two"),
     path("button-four", views.button_four, name="button_four"),
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
-    path("sign-up/", views.sign_up, name="sign_up"),
-
+    path("sign_up/", views.sign_up, name="sign_up"),
+    path("reviewer-dashboard/", views.reviewer_dashboard, name="reviewer_dashboard"),
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
-
+    path("view-uploads/", views.view_uploads, name="view_uploads"),
     path("upload-journal/", views.upload_journal, name="upload_a_journal"),
-
+    path("assigned-journals/", views.assigned_journals, name="assigned_journals"),
     path('accounts/', include('allauth.urls')),
 
     path('verify_email/<uidb64>/<token>/', views.verify_email, name="verify_email"),
@@ -57,6 +57,10 @@ urlpatterns = [
     path("terms-and-conditions/",views.terms_and_conditions_view,name="terms-and-conditions",),
 
     path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
-    
+
     path("contact/", views.contact_view, name="contact"),
+
+    path('view_pdf/<int:doc_id>/', views.view_pdf, name='view_pdf'),
+
+    path('submit-review/<int:journal_id>/', views.submit_review, name='submit_review'),
 ]

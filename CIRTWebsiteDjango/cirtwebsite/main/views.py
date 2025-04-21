@@ -6,7 +6,7 @@ import boto3
 from django.core.cache import cache
 from datetime import timedelta
 from django.core import serializers
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
@@ -156,9 +156,27 @@ def upload_images(request):
 def student_dashboard(request):
     return render(request, "student-dashboard.html")
 
+def reviewer_dashboard(request):
+    return render(request, "reviewer-dashboard.html")
+
+def view_uploads(request):
+    uploads = Document.objects.all()
+    return render(request, 'view_uploads.html', {'uploads': uploads})
+
+def assigned_journals(request):
+    journals = Document.objects.all()  # no filter
+    return render(request, 'assigned-journals.html', {
+        'pending_journals': journals
+    })
+
 
 def past_uploads(request):
-    return render(request, "past-uploads.html")
+    user = request.user
+    if user.is_authenticated:
+        documents = Document.objects.filter(submitted_user=user.id)
+    else:
+        documents = []
+    return render(request, 'past-uploads.html', {'documents': documents})
 
 
 def past_reviews(request):
@@ -170,7 +188,10 @@ def editor_dashboard(request):
 
 
 def check_status(request):
-    return render(request, "check-status.html")
+    user = request.user
+    documents = Document.objects.filter(submitted_user=user.id)
+    return render(request, 'check-status.html', {'documents': documents})
+
 
 
 def button_two(request):
@@ -491,3 +512,18 @@ def cookie_policy_view(request):
 
 def contact_view(request):
     return render(request, "contact.html")
+
+def view_pdf(request, doc_id):
+    journal = get_object_or_404(Document, id=doc_id)
+    return render(request, 'view_pdf.html', {'journal': journal})
+
+def submit_review(request, journal_id):
+    if request.method == "POST":
+        journal = get_object_or_404(Document, id=journal_id)
+        comment = request.POST.get("review_comment")
+
+        # Save comment logic goes here (maybe to a Review model?)
+        print(f"Review submitted for {journal.title}: {comment}")
+
+        return redirect("assigned_journals")  # Or wherever you want to redirect
+

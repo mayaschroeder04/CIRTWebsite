@@ -8,7 +8,9 @@
     {% load static %}
     {% block stylesheet %}<link rel="stylesheet" href="{% static 'homepage.css' %}">{% endblock %}
     <script id="documents-data" type="application/json">{{ documents_json|safe }}</script>
-    <script src="{% static 'homepage.js' %}"></script>
+    {% block script %}<script src="{% static 'homepage.js' %}"></script>{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
 

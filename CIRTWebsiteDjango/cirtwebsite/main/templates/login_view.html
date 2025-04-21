@@ -44,7 +44,7 @@
                 </div>
             </form>
             <div id="auth-links">
-                <a href="#" class="login-sub-info" onclick="switchForm('signup')" id="signup-link" data-url="{% url 'signup' %}">Sign Up</a>
+                <a href="#" class="login-sub-info" onclick="switchForm('signup')" id="signup-link" data-url="{% url 'sign_up' %}">Sign Up</a>
                 <b class="login-sub-info">|</b>
                 <a href="#" class="login-sub-info" onclick="switchForm('reset')" id="reset-link" data-url="{% url 'reset_password' %}">Reset Password</a>
                 <b class="login-sub-info">|</b>
@@ -56,6 +56,6 @@
         <div id="notification" style="display: none; padding: 10px; margin-top: 10px; background-color: #e0f7fa; color: #00796b;"></div>
 
     </div>
-<script src="{%  static 'auth.js' %}" defer></script> <!-- Ensure the script runs after the DOM is loaded -->
+<script src="{%  static 'auth.js' %}" defer></script>
 </body>
 </html>

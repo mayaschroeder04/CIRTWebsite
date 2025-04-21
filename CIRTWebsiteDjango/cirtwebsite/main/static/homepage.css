@@ -52,7 +52,11 @@ header {
 
 .login-buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+}
+
+.login-buttons p{
+    margin-top:22px;
 }
 
 /* Register button (outlined) */
@@ -833,50 +837,7 @@ html, body {
 .name-fields input {
     flex: 1;
 }
-.upload-journal{
-    margin-left: 200px;
-    width: 200px;
-    height: 100px;
-    background-color: white;
-    padding: 300px;
-    border: #1a1a1a;
 
-}
-
-.input_a_journal{
-    margin-top: 10px;
-    padding: 20px;
-    border: #1a1a1a;
-    border-style: solid;
-}
-form {
-    max-width: 400px;
-    margin: auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-
-}
-
-input, button {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-button {
-    background: #a6192e;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-button:hover {
-    background: #e4405f;
-
-}
 body {
     overflow-x:hidden;
     font-family: 'Poppins', sans-serif;
@@ -926,7 +887,12 @@ header {
     text-decoration: underline;
 }
 
-.result-author,
+.result-author{
+    font-size: 0.95rem;
+    color: #a6192e;
+    margin-bottom: 4px;
+}
+
 .result-org {
     font-size: 0.95rem;
     color: #444;
