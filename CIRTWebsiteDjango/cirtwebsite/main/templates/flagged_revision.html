@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Flagged for Revision - Reviewer Dashboard{% endblock %}
+
+{% block content %}
+<main style="padding: 40px; max-width: 1000px; margin: auto;">
+    <h2 style="color: #a6192e; text-align: center; font-weight: 600; font-size: 28px;">⚠️ Flagged for Revision</h2>
+
+    <ul style="list-style: none; padding: 0; margin-top: 30px;">
+        <li style="background: #fff0f0; padding: 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p style="font-size: 10px; font-weight: bold; letter-spacing: 1px; color: #a6192e;">NEEDS REVISION</p>
+                <p style="font-size: 18px; font-weight: bold;">Youth Crime in Urban Areas</p>
+                <p style="margin: 2px 0;">Paarkerrrr</p>
+                <p style="margin: 2px 0;">category name</p>
+                <p style="margin: 2px 0; font-style: italic;">“Missing sources.”</p>
+            </div>
+            <div>
+                <button style="background-color: #a6192e; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">View PDF</button>
+            </div>
+        </li>
+
+        <li style="background: #fff0f0; padding: 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p style="font-size: 10px; font-weight: bold; letter-spacing: 1px; color: #a6192e;">NEEDS REVISION</p>
+                <p style="font-size: 18px; font-weight: bold;">Ethics in AI Surveillance</p>
+                <p style="margin: 2px 0;">Imran Ali</p>
+                <p style="margin: 2px 0;">Rando category </p>
+                <p style="margin: 2px 0; font-style: italic;">“Conclusion contradicts earlier claims — please clarify.”</p>
+            </div>
+            <div>
+                <button style="background-color: #a6192e; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">View PDF</button>
+            </div>
+        </li>
+    </ul>
+
+    <p style="text-align: center; margin-top: 40px; color: #777;">No more flagged submissions.</p>
+</main>
+{% endblock %}
