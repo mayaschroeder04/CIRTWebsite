@@ -37,8 +37,21 @@ header {
 .header-right {
     display: flex;
     align-items: center;
+    gap: 40px; /* Adjust spacing between tabs and buttons */
 }
 
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and text */
+}
+
+.welcome-text {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent text wrapping */
+}
 
 /* under the logo */
 .cirt-text {
@@ -48,6 +61,12 @@ header {
     margin-top: 1px;
     margin-bottom: 0;
     margin-left: 20px;
+}
+
+.register-btn, .login-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 1;
 }
 
 .login-buttons {
@@ -69,6 +88,7 @@ header {
     cursor: pointer;
     border-radius: 6px;
     transition: 0.3s;
+    width: 100%;
 }
 
 .register-btn:hover {
@@ -87,7 +107,10 @@ header {
     cursor: pointer;
     border-radius: 6px;
     transition: 0.3s;
-    margin-right: 5px
+    margin-right: 5px;
+    white-space: nowrap;
+    height: 40px;
+    width: 100%;
 }
 
 .login-btn:hover {
@@ -106,11 +129,6 @@ header {
 
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Adjust spacing between tabs and buttons */
-}
 
 .header-tabs {
     display: flex;

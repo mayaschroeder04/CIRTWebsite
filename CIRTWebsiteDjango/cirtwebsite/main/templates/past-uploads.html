@@ -13,7 +13,7 @@
                     <p><strong>Description:</strong> {{ doc.description }}</p>
                     <p><strong>Category:</strong> {{ doc.category.name }}</p>
                     <a class="read-more" href="{% url 'view_pdf' doc.id %}">
-                        <i class="fas fa-file-pdf" style="margin-right: 6px;"></i> Open PDF
+                    📄 Open PDF
                     </a>
                     <p style="margin-top: 10px; font-size: 0.85em;"><strong>Uploaded:</strong> <span class="upload-date" data-utc="{{ doc.created_at|date:'c' }}">Loading...</span></p>
                 </div>
