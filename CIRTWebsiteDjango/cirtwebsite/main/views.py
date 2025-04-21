@@ -23,6 +23,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 from botocore.exceptions import NoCredentialsError, ClientError
 
+
 # Use your custom user model throughout
 CustomerUser = get_user_model()
 
@@ -530,4 +531,9 @@ def submit_review(request, journal_id):
         print(f"Review submitted for {journal.title}: {comment}")
 
         return redirect("assigned_journals")  # Or wherever you want to redirect
+    
+def reviewed_journals(request):
+    return render(request, 'reviewed_journals.html')
 
+def flagged_revision(request):
+    return render(request, "flagged_revision.html")

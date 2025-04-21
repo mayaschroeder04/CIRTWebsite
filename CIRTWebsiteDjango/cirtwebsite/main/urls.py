@@ -64,4 +64,8 @@ urlpatterns = [
     path('view_pdf/<int:doc_id>/', views.view_pdf, name='view_pdf'),
 
     path('submit-review/<int:journal_id>/', views.submit_review, name='submit_review'),
+
+    path('reviewed_journals/', views.reviewed_journals, name='reviewed_journals'),
+    
+    path('flagged_revision/', views.flagged_revision, name='flagged_revision'),
 ]
