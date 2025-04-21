@@ -26,21 +26,15 @@
                 <a href="{% url 'upload_a_journal' %}" class="tab">Upload</a>
             </div>
             {% if user.is_authenticated %}
-                  <div class="login-buttons">
-                      <p>Welcome, {{ user.first_name }}!</p>
+                  <div class="user-area">
+                      <p class="welcome-text">Welcome, {{ user.first_name }}!</p>
                      {% load static %}
                       {% if user.is_superuser %}
-                      <a href="{% url 'editor_dashboard' %}">
-                          <button class="register-btn">Admin</button>
-                      </a>
+                            <a href="{% url 'editor_dashboard' %}"><button class="register-btn">Admin</button></a>
                       {% elif user.is_staff %}
-                           <a href="{% url 'reviewer_dashboard' %}">
-                               <button class="register-btn">Submissions</button>
-                           </a>
+                           <a href="{% url 'reviewer_dashboard' %}"><button class="register-btn">Submissions</button></a>
                       {% else %}
-                      <a href="{% url 'student_dashboard' %}">
-                         <button class="register-btn">Account</button>
-                      </a>
+                            <a href="{% url 'student_dashboard' %}"><button class="register-btn">Account</button></a>
                       {% endif %}
                      <form action="{% url 'logout' %}" method="POST">
                          {% csrf_token %}
@@ -49,8 +43,8 @@
                   </div>
             {% else %}
                 <div class="login-buttons">
-                    <button class="register-btn" onclick="openModal()">Register</button>
-                    <button class="login-btn" onclick="openModal()">Log In</button>
+                    <a href="{% url 'login' %}"><button class="register-btn">Register</button></a>
+                    <a href="{% url 'login' %}"><button class="login-btn">Log In</button></a>
                 </div>
             {% endif %}
         </div>

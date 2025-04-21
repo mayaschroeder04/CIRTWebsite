@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}University of Tampa CIRT Website{% endblock %}
 
+{% comment %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,8 +58,9 @@
                 </div>
             {% endif %}
         </div>
-</header>
+</header> {% endcomment %}
 
+{% block content %}
 <div class="background-section">
 
     <!-- quote above search bar -->
@@ -218,9 +222,11 @@
     }
     </script>
 
-<!-- space between the footer and the featured post box -->
-<div class="spacer"></div>
+{% endblock %}
 
+{% comment %} <!-- space between the footer and the featured post box -->
+<div class="spacer"></div> {% endcomment %}
+{% comment %} 
 <!-- left and right black boxes in the footer -->
 <div class="footer-container">
     <!-- Left and right "blocked out" areas -->
@@ -300,4 +306,4 @@
 </div>
 
 </body>
-</html>
+</html> {% endcomment %}
