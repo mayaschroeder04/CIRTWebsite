@@ -120,8 +120,8 @@
                 <button class="btn" onclick="openModal('{{ journal.file_url }}')">Read PDF</button>
                 {% else %}
                 <a class="read-more" href="{% url 'view_pdf' journal.id %}">
-                    <i class="fas fa-file-pdf" style="margin-right: 6px;"></i> Open PDF
-                </a>
+                📄 Open PDF
+                  </a>
                 {% endif %}
 
                 <form action="{% url 'submit_review' journal.id %}" method="POST">
