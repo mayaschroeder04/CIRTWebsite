@@ -11,7 +11,7 @@
         padding: 20px;
     }
 
-    h1 {
+    .page-header {
         text-align: center;
         color: #a6192e;
         margin-bottom: 30px;
@@ -106,7 +106,7 @@
 </style>
 
 <div class="container">
-    <h1>Pending Journals for Review</h1>
+    <h1 class="page-header">Pending Journals for Review</h1>
 
     <div class="journal-list">
         {% for journal in pending_journals %}
