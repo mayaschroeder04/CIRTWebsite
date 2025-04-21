@@ -174,7 +174,6 @@ def assigned_journals(request):
         'pending_journals': journals
     })
 
-
 def past_uploads(request):
     user = request.user
     if user.is_authenticated:
@@ -537,3 +536,9 @@ def reviewed_journals(request):
 
 def flagged_revision(request):
     return render(request, "flagged_revision.html")
+
+def assign_reviewer(request):
+    return render(request, "assign-reviewer.html")
+
+def reviewer_feedback(request):
+    return render(request, "reviewer-feedback.html")

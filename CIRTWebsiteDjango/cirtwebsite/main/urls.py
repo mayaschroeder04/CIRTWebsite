@@ -40,6 +40,7 @@ urlpatterns = [
     path("assigned-journals/", views.assigned_journals, name="assigned_journals"),
     path('accounts/', include('allauth.urls')),
     path("assign-reviewer/", views.assign_reviewer, name="assign_reviewer"),
+    path("reviewer-feedback/", views.reviewer_feedback, name="reviewer_feedback"),
 
     path('verify_email/<uidb64>/<token>/', views.verify_email, name="verify_email"),
 

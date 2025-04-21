@@ -32,11 +32,11 @@
                      {% load static %}
                       {% if user.is_superuser %}
                       <a href="{% url 'editor_dashboard' %}">
-                          <button class="register-btn">Admin</button>
+                          <button class="register-btn">Dashboard</button>
                       </a>
                       {% elif user.is_staff %}
                            <a href="{% url 'reviewer_dashboard' %}">
-                               <button class="register-btn">Submissions</button>
+                               <button class="register-btn">Dashboard</button>
                            </a>
                       {% else %}
                       <a href="{% url 'student_dashboard' %}">
