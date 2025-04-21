@@ -37,6 +37,14 @@
         <h2>Upload a Journal</h2>
         <input type="hidden" name="user_id" value="{{ user.id }}">
 
+        <label for="type" name="type">Type</label>
+        <select id="type" name="type" required>
+            <option value="">-- Select Type --</option>
+            <option value="image">Image</option>
+            <option value="journal">Journal</option>
+        </select>
+
+
         <label for="title">Title</label>
         <input type="text" id="title" name="title" required>
 
@@ -51,6 +59,14 @@
             <option value="">-- Select a Category --</option>
             {% for category in categories %}
                 <option value="{{ category.name }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="subcategory">Select Subcategory</label>
+        <select id="subcategory" name="subcategory" required>
+            <option value="">-- Select a Subcategory --</option>
+            {% for subcategory in subcategories %}
+                <option value="{{ subcategory.name }}">{{ subcategory.name }}</option>
             {% endfor %}
         </select>
 

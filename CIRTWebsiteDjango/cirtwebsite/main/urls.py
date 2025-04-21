@@ -59,4 +59,12 @@ urlpatterns = [
     path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
 
     path("contact/", views.contact_view, name="contact"),
+
+    path('save-document/<path:documentId>/', views.save_user_documents, name="save_document"),
+
+    path('unsave-document/<path:documentId>/', views.unsave_user_documents, name="unsave_document"),
+
+    path('cite-document/<path:documentId>/', views.cite_document, name="cite-document"),
+
+    path('download-document/<path:documentId>/', views.download_document, name="download_document"),
 ]

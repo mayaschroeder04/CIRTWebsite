@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
-    <script src="{% static 'homepage.js' %}"></script>
 </head>
 <body>
 
@@ -28,12 +27,15 @@
             </div>
             {% if user.is_authenticated %}
                   <div class="login-buttons">
-                      {
                       <p>Welcome, {{ user.first_name }}!</p>
                      {% load static %}
-                      {% if user.is_staff %}
-                           <a href="{% url 'editor_dashboard' %}">
-                               <button class="register-btn">Admin</button>
+                      {% if user.is_superuser %}
+                      <a href="{% url 'editor_dashboard' %}">
+                          <button class="register-btn">Admin</button>
+                      </a>
+                      {% elif user.is_staff %}
+                           <a href="{% url 'reviewer_dashboard' %}">
+                               <button class="register-btn">Submissions</button>
                            </a>
                       {% else %}
                       <a href="{% url 'student_dashboard' %}">
@@ -65,7 +67,7 @@
         </p>
 
     </nav>
-    
+
     <!-- search bar with filter button -->
     <div class="group">
         <div class="autocomplete">
@@ -95,6 +97,13 @@
     <h2 style="color: #333; text-transform: uppercase; margin: 0;">Latest Posts</h2>
     <hr style="background-color: #a6192e; height: 3px; border: none;">
 </div>
+
+<script id="documents-data" type="application/json">
+{{ documents_json|safe }}
+</script>
+<script id="saved-documents" type="application/json">
+{{ saved_documents|safe }}
+</script>
 
 <div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
 </div>
@@ -130,6 +139,7 @@
         documents.forEach(document => {
             // Use encodeURIComponent to safely pass data into JavaScript function
             const title = encodeURIComponent(document.title);
+            const id = encodeURIComponent(document.id)
             const description = encodeURIComponent(document.description);
             const fileUrl = encodeURIComponent(document.file_url); // Add this line
 
@@ -137,15 +147,15 @@
                 <li class="search-result-item">
                     <div class="result-meta">
                         <p class="result-type">RESEARCH REPORT</p>
-                        <h3 class="result-title">${document.title}</h3>
+                        <h3 onclick="fetchPresignedUrl('${document.fileUrl}')" class="result-title">${document.title}</h3>
                         <p class="result-author">${document.author}</p>
                         <p class="result-org">${document.category_name}</p>
                         <p>${document.description}</p>
                     </div>
                     <div class="result-actions">
                         <button class="download-btn" onclick="fetchPresignedUrl('${fileUrl}')">Download</button>
-                        <button class="save-btn">Save</button>
-                        <button class="cite-btn">Cite</button>
+                        <button class="save-btn" data-id="${id}">Save</button>
+                        <button class="cite-btn" data-id="{{ doc.id }}">Cite</button>
                     </div>
                 </li>
             `;
@@ -214,6 +224,10 @@
         alert("Continuing as guest... (Placeholder Action)");
     }
     </script>
+
+  <div id="modal" class="modal" style="display:none;">
+    <div id="modal-content" class="modal-content"></div>
+  </div>
 
 <!-- space between the footer and the featured post box -->
 <div class="spacer"></div>
@@ -295,6 +309,7 @@
 
     </div>
 </div>
+    <script src="{% static 'homepage.js' %}"></script>
 
 </body>
 </html>
