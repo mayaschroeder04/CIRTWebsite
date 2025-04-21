@@ -116,13 +116,9 @@
             <p><strong>Category:</strong> {{ journal.category.name }}</p>
 
             <div class="actions">
-                {% if journal.author.username == "abc" %}
-                <button class="btn" onclick="openModal('{{ journal.file_url }}')">Read PDF</button>
-                {% else %}
-                <a class="read-more" href="{% url 'view_pdf' journal.id %}">
-                📄 Open PDF
-                  </a>
-                {% endif %}
+                <a class="btn" href="{% url 'view_pdf' journal.id %}">
+                    📄 Open PDF
+                </a>
 
                 <form action="{% url 'submit_review' journal.id %}" method="POST">
                     {% csrf_token %}
