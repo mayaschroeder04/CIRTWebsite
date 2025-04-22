@@ -24,9 +24,6 @@ class Subcategory(models.Model):
     def __str__(self):
         return self.name
 
-class Images(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    id = models.AutoField(primary_key=True)
 class Document(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
