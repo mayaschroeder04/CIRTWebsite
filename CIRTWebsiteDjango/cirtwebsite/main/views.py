@@ -173,8 +173,8 @@ def reviewer_dashboard(request):
     return render(request, "reviewer-dashboard.html")
 
 def view_uploads(request):
-    uploads = Document.objects.all()
-    return render(request, 'view_uploads.html', {'uploads': uploads})
+    journals = Document.objects.all()
+    return render(request, 'view-uploads.html', {'pending_journals': journals})
 
 def assigned_journals(request):
     journals = Document.objects.all()  # no filter
@@ -660,3 +660,4 @@ def flagged_revision(request):
 
 def saved_journals(request):
     return render(request, 'saved_journals.html')
+

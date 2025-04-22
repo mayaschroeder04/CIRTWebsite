@@ -5,17 +5,81 @@
 <div class="uploads-container">
     <h2>All Journal Uploads</h2>
     {% if uploads %}
-        <ul>
-            {% for upload in uploads %}
-                <li style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
-                    <p><strong>Title:</strong> {{ upload.title }}</p>
-                    <p><strong>Author:</strong> {{ upload.author }}</p>
-                    <a href="https://{{ your_bucket_name }}.s3.amazonaws.com/{{ upload.file_url }}" target="_blank">View File</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <ul>
+        {% for upload in uploads %}
+        <li style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
+            <p><strong>Title:</strong> {{ upload.title }}</p>
+            <p><strong>Author:</strong> {{ upload.author }}</p>
+            <a href="https://{{AWS_STORAGE_BUCKET_NAME}}.s3.amazonaws.com/{{ upload.file_url }}" target="_blank">View File</a>
+            <form method="POST" action="{% url 'assign_reviewer' %}">
+                {% csrf_token %}
+                <input type="hidden" name="upload_id" value="{{ upload.id }}">
+                <label for="reviewer_{{ upload.id }}"><strong>Assign to Reviewer:</strong></label>
+                <select name="reviewer_id" id="reviewer_{{ upload.id }}">
+                    <option value="1">Alice Johnson</option>
+                    <option value="2">Bob Smith</option>
+                    <option value="3">Charlie Nguyen</option>
+                    <option value="4">Diana Lopez</option>
+                    <option value="5">Ethan Brooks</option>
+                </select>
+                <button type="submit">Assign</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
     {% else %}
-        <p>No uploads available.</p>
+    <p>No uploads available.</p>
     {% endif %}
 </div>
+<style>
+    .uploads-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .uploads-container h2 {
+        text-align: center;
+        color: #a6192e;
+        margin-bottom: 30px;
+    }
+
+    .uploads-container ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .uploads-container li {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .uploads-container select,
+    .uploads-container button {
+        margin-top: 10px;
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .uploads-container button {
+        background-color: #a6192e;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .uploads-container button:hover {
+        background-color: #841622;
+    }
+</style>
 {% endblock %}
+
+
