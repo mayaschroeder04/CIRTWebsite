@@ -50,7 +50,7 @@ function fetchPresignedUrl(id) {
     .catch(() => alert('Error fetching document.'));
 }
 
-// Save/Unsave
+// Save
 function saveUserDocument(id, btn) {
   fetch(`/save-document/${id}/`, {
     method: 'POST',
@@ -62,6 +62,8 @@ function saveUserDocument(id, btn) {
     if (d.success) {
       btn.classList.replace('save-btn', 'unsave-btn');
       btn.textContent = 'Saved';
+    }else{
+      alert("Create an account to save!")
     }
   });
 }
@@ -80,31 +82,28 @@ function unsaveUserDocument(id, btn) {
   });
 }
 
-function downloadDocument(id){
-  fetch(`/download-document/${id}`,{
+function downloadDocument(id) {
+  fetch(`/download-document/${id}/`, {
     method: 'POST',
-    headers: {'X-CSRFToken': getCSRFToken(), 'Content-Type': 'application/json'},
-    body: '{}'
+    headers: {
+      'X-CSRFToken': getCSRFToken(),
+      'Content-Type': 'application/json'    // <-- fix this
+    },
+    body: JSON.stringify({})
   })
-      .then(r => r.json())
-      .then(d=> {
-        if(d.success && d.url){
-          const link = document.createElement('a');
-          link.href = d.url;
-          link.download = '';
-          document.body.appendChild(link);
-          link.click();
-          document.body.remove(link)
-
-        }else{
-          alert('Download failed:', err);
-
-        }
-      })
-      .catch(err => {
-        console.error('error downloading:', err);
-        alert('error occured');
-      });
+  .then(res => res.json())                 // this is JSON: { success, url }
+  .then(data => {
+    if (data.success && data.url) {
+      // This will trigger a download (because of your ResponseContentDisposition)
+      window.location.href = data.url;
+    } else {
+      alert('Download failed');
+    }
+  })
+  .catch(err => {
+    console.error('Error downloading:', err);
+    alert('Download error occurred');
+  });
 }
 
 
@@ -161,7 +160,7 @@ function displayLatestPosts() {
           <p>${doc.description}</p>
         </div>
         <div class="result-actions">
-          <button class="download-btn" onclick="fetchPresignedUrl('${url}')">Download</button>
+          <button class="download-btn" data-id="${doc.id}">Download</button>
           ${btn}
           <button class="cite-btn" data-id="${doc.id}">Cite</button>
         </div>
@@ -177,23 +176,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('search-input');
   if (input) input.addEventListener('keypress', e => { if (e.key==='Enter') performSearch(); });
 
-  // Delegate Save/Unsave clicks
   document.addEventListener('click', e => {
-  if (e.target.classList.contains('save-btn')) {
-    saveUserDocument(e.target.dataset.id, e.target);
+  const target = e.target;
+
+  if (target.classList.contains('save-btn')) {
+    console.log('Save clicked:', target.dataset.id);
+    saveUserDocument(target.dataset.id, target);
   }
-  if (e.target.classList.contains('unsave-btn')) {
-    unsaveUserDocument(e.target.dataset.id, e.target);
+
+  if (target.classList.contains('unsave-btn')) {
+    console.log('Unsave clicked:', target.dataset.id);
+    unsaveUserDocument(target.dataset.id, target);
   }
-  if (e.target.classList.contains("cite-btn")) {
-    const id = e.target.dataset.id;
-    citeDocument(id);
+
+  if (target.classList.contains('cite-btn')) {
+    console.log('Cite clicked:', target.dataset.id);
+    citeDocument(target.dataset.id);
   }
-  if(e.target.classList.contains("download-btn")){
-    const id = e.target.dataset.id;
-    downloadDocument(id);
+
+  if (target.classList.contains('download-btn')) {
+    console.log('Download clicked:', target.dataset.id);
+    downloadDocument(target.dataset.id);
   }
 });
+
 
 
   displayLatestPosts();
