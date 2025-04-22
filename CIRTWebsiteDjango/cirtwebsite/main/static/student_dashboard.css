@@ -1,0 +1,201 @@
+/* General Styles */
+body {
+    background-color: #f7f9fc;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: #a6192e;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* Dashboard Navigation */
+.dashboard-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-size: 16px;
+    color: #a6192e;
+    cursor: pointer;
+}
+
+.dashboard-navbar span {
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dashboard-navbar span:hover {
+    color: white;
+    background-color: #d02d41;
+    transform: scale(1.05);
+}
+
+.dashboard-divider {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 0 20px 30px;
+}
+
+/* Dashboard Content Container */
+.dashboard-content {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 300px;
+}
+
+/* Profile Box Styling */
+.profile-box {
+    background-color: #f3f4f6;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile-box h3 {
+    margin-top: 0;
+    color: #a6192e;
+}
+
+.profile-box p {
+    margin: 8px 0;
+}
+
+/* Saved Journals Button */
+#savedBtn {
+    display: inline-block;
+    margin: 20px;
+    padding: 10px 20px;
+    color: #a6192e;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#savedBtn:hover {
+    background-color: #d02d41;
+    color: white;
+}
+
+/* Saved Journals List Container */
+#saved-list {
+    margin: 20px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+}
+
+/* Individual Journal Card Styling */
+#saved-list li {
+    list-style: none;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#saved-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+#saved-list li > strong {
+    display: block;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+#saved-list li p {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+#saved-list li a.read-more {
+    text-decoration: none;
+    color: #fff;
+    background-color: #a6192e;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+#saved-list li a.read-more:hover {
+    background-color: #d02d41;
+}
+
+/* Pagination Styling */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.step-links a {
+    margin: 0 5px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.step-links a:hover {
+    background-color: #f0f0f0;
+}
+
+.step-links .current {
+    font-weight: bold;
+    color: #a6192e;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    #saved-list {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    #saved-list {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-navbar {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .dashboard-content {
+        padding: 20px;
+    }
+}

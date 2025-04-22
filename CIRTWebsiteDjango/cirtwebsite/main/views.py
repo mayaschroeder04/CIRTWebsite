@@ -6,7 +6,7 @@ import boto3
 from django.core.cache import cache
 from datetime import timedelta
 from django.core import serializers
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
@@ -91,6 +91,49 @@ def filter_buttons(request):
     categories = Category.objects.all()
     return render(request, "search-results.html", {"categories": categories})
 
+def past_uploads(request):
+    if request.method == "POST":
+        user = request.user
+        documents = Document.objects.filter(submitted_user=user.id)
+        data = [
+            {
+                "id": doc.id,
+                "title": doc.title,
+                "description": doc.description,
+                "file_url": doc.file_url,
+                "author": doc.author,
+                "category_id": doc.category.id if doc.category else None,
+                "category_name": doc.category.name if doc.category else "Unknown"
+            }
+            for doc in documents
+        ]
+        return JsonResponse(data, safe=False)
+
+def view_uploads(request):
+    uploads = Document.objects.all()
+
+
+    return render(request, 'view-uploads.html', {
+        'uploads': uploads
+    })
+
+def assigned_journals(request):
+    journals = Document.objects.all()  # no filter
+    return render(request, 'assigned-journals.html', {
+        'pending_journals': journals
+    })
+
+def past_reviews(request):
+    return render(request, "past-reviews.html")
+
+
+def editor_dashboard(request):
+    return render(request, "editor-dashboard.html")
+
+def check_status(request):
+    user = request.user
+    documents = Document.objects.filter(submitted_user=user.id)
+    return render(request, 'check-status.html', {'documents': documents})
 
 # ---------------------------
 # Document & Search Views
@@ -169,13 +212,12 @@ def student_dashboard(request):
     return render(request, "student-dashboard.html")
 
 
-def past_uploads(request):
-    return render(request, "past-uploads.html")
-
 
 def past_reviews(request):
     return render(request, "past-reviews.html")
 
+def reviewer_dashboard(request):
+    return render(request, "reviewer-dashboard.html")
 
 def editor_dashboard(request):
     return render(request, "editor-dashboard.html")
@@ -610,7 +652,6 @@ def download_document(request, documentId):
         return JsonResponse({"success": True, "url": url})
 
 
-    return JsonResponse({"success": True, 'url': url})
 
 def view_pdf(request, doc_id):
     document = Document.objects.get(id=doc_id)
@@ -654,4 +695,44 @@ def flagged_revision(request):
     return render(request, "flagged_revision.html")
 
 def saved_journals(request):
-    return render(request, 'saved_journals.html')
+    documents = request.user.saved_documents.all()
+    categories = Category.objects.all()
+    data = [
+        {
+            "id": doc.id,
+            "title": doc.title,
+            "description": doc.description,
+            "file_url": doc.file_url,
+            "author": doc.author,
+            "category_id": doc.category.id if doc.category else None,
+            "category_name": doc.category.name if doc.category else "Unknown"
+        }
+        for doc in documents
+    ]
+    return JsonResponse(data, safe=False)
+
+def review_status(request):
+    if request.method == "POST":
+        user = request.user
+        documents = Document.objects.filter(submitted_user=user.id)
+
+        data = [
+            {
+                "id": doc.id,
+                "title": doc.title,
+                "description": doc.description,
+                "file_url": doc.file_url,
+                "author": doc.author,
+                "category_id": doc.category.id if doc.category else None,
+                "category_name": doc.category.name if doc.category else "Unknown",
+                "status": doc.status
+            }
+            for doc in documents
+        ]
+        return JsonResponse({"success": True, "data": data})
+
+def user_profile(request):
+    if request.method == "POST":
+        user = request.user
+
+        return JsonResponse({"name": user.first_name + " " + user.last_name, "role": user.role, "email": user.email })

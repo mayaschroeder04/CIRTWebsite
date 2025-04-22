@@ -10,7 +10,18 @@
                 <li style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
                     <p><strong>Title:</strong> {{ upload.title }}</p>
                     <p><strong>Author:</strong> {{ upload.author }}</p>
-                    <a href="https://{{ your_bucket_name }}.s3.amazonaws.com/{{ upload.file_url }}" target="_blank">View File</a>
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <p><strong>Status: </strong> {{ upload.status }}</p>
+
+                    <label for="status" name="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option value="">Change Status</option>
+                        <option value="pending">Image</option>
+                        <option value="approved">Journal</option>
+                        <option value="rejected">Journal</option>
+                    </select>
+                    <a href="{% url 'view_pdf' upload.id %}" target="_blank">View File</a>
+
                 </li>
             {% endfor %}
         </ul>
