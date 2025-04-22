@@ -7,23 +7,6 @@
 {% if user.is_authenticated %}
     <body>
 
-
-    <header>
-        <div class="header-left">
-            <a href="{% url 'homepage' %}">
-                <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-            </a>
-            <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
-        </div>
-        <div class="header-right">
-            <div class="header-tabs">
-                <a href="{% url 'journals' %}" class="tab">Journals</a>
-                <a href="{% url 'images' %}" class="tab">Images</a>
-                <a href="{% url 'authors' %}" class="tab">Authors</a>
-            </div>
-        </div>
-    </header>
-
    <form id="uploadForm" method="POST" enctype="multipart/form-data" action="/upload-journal/">
         {% csrf_token %}
         <h2>Upload a Journal</h2>
