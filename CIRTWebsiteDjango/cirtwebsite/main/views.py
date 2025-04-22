@@ -23,7 +23,6 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 from botocore.exceptions import NoCredentialsError, ClientError
 
-
 # Use your custom user model throughout
 CustomerUser = get_user_model()
 
@@ -92,6 +91,49 @@ def filter_buttons(request):
     categories = Category.objects.all()
     return render(request, "search-results.html", {"categories": categories})
 
+def past_uploads(request):
+    if request.method == "POST":
+        user = request.user
+        documents = Document.objects.filter(submitted_user=user.id)
+        data = [
+            {
+                "id": doc.id,
+                "title": doc.title,
+                "description": doc.description,
+                "file_url": doc.file_url,
+                "author": doc.author,
+                "category_id": doc.category.id if doc.category else None,
+                "category_name": doc.category.name if doc.category else "Unknown"
+            }
+            for doc in documents
+        ]
+        return JsonResponse(data, safe=False)
+
+def view_uploads(request):
+    uploads = Document.objects.all()
+
+
+    return render(request, 'view-uploads.html', {
+        'uploads': uploads
+    })
+
+def assigned_journals(request):
+    journals = Document.objects.all()  # no filter
+    return render(request, 'assigned-journals.html', {
+        'pending_journals': journals
+    })
+
+def past_reviews(request):
+    return render(request, "past-reviews.html")
+
+
+def editor_dashboard(request):
+    return render(request, "editor-dashboard.html")
+
+def check_status(request):
+    user = request.user
+    documents = Document.objects.filter(submitted_user=user.id)
+    return render(request, 'check-status.html', {'documents': documents})
 
 # ---------------------------
 # Document & Search Views
@@ -169,42 +211,20 @@ def upload_images(request):
 def student_dashboard(request):
     return render(request, "student-dashboard.html")
 
-def reviewer_dashboard(request):
-    return render(request, "reviewer-dashboard.html")
-
-def view_uploads(request):
-    uploads = Document.objects.all()
-    return render(request, 'view_uploads.html', {'uploads': uploads})
-
-def assigned_journals(request):
-    journals = Document.objects.all()  # no filter
-    return render(request, 'assigned-journals.html', {
-        'pending_journals': journals
-    })
-
-
-def past_uploads(request):
-    user = request.user
-    if user.is_authenticated:
-        documents = Document.objects.filter(submitted_user=user.id)
-    else:
-        documents = []
-    return render(request, 'past-uploads.html', {'documents': documents})
 
 
 def past_reviews(request):
     return render(request, "past-reviews.html")
 
+def reviewer_dashboard(request):
+    return render(request, "reviewer-dashboard.html")
 
 def editor_dashboard(request):
     return render(request, "editor-dashboard.html")
 
 
 def check_status(request):
-    user = request.user
-    documents = Document.objects.filter(submitted_user=user.id)
-    return render(request, 'check-status.html', {'documents': documents})
-
+    return render(request, "check-status.html")
 
 
 def button_two(request):
@@ -554,9 +574,9 @@ def save_user_documents(request, documentId):
             print(user.saved_documents.all())
             return JsonResponse({"success": True})
         else:
-            return JsonResponse({"success": False, "message": "Make an account to save!"})
+            return JsonResponse({"status": "Not authorized"})
     else:
-        return JsonResponse({"success": False})
+        return JsonResponse({"success": True})
 
 def unsave_user_documents(request, documentId):
     if request.method == "POST":
@@ -611,7 +631,6 @@ def cite_document(request, documentId):
 
 def download_document(request, documentId):
     if request.method == "POST":
-        print(documentId)
         document = Document.objects.get(id=documentId)
 
         s3 = boto3.client(
@@ -632,7 +651,7 @@ def download_document(request, documentId):
         )
         return JsonResponse({"success": True, "url": url})
 
-    return JsonResponse({"success": True, 'url': url})
+
 
 def view_pdf(request, doc_id):
     document = Document.objects.get(id=doc_id)
@@ -676,4 +695,44 @@ def flagged_revision(request):
     return render(request, "flagged_revision.html")
 
 def saved_journals(request):
-    return render(request, 'saved_journals.html')
+    documents = request.user.saved_documents.all()
+    categories = Category.objects.all()
+    data = [
+        {
+            "id": doc.id,
+            "title": doc.title,
+            "description": doc.description,
+            "file_url": doc.file_url,
+            "author": doc.author,
+            "category_id": doc.category.id if doc.category else None,
+            "category_name": doc.category.name if doc.category else "Unknown"
+        }
+        for doc in documents
+    ]
+    return JsonResponse(data, safe=False)
+
+def review_status(request):
+    if request.method == "POST":
+        user = request.user
+        documents = Document.objects.filter(submitted_user=user.id)
+
+        data = [
+            {
+                "id": doc.id,
+                "title": doc.title,
+                "description": doc.description,
+                "file_url": doc.file_url,
+                "author": doc.author,
+                "category_id": doc.category.id if doc.category else None,
+                "category_name": doc.category.name if doc.category else "Unknown",
+                "status": doc.status
+            }
+            for doc in documents
+        ]
+        return JsonResponse({"success": True, "data": data})
+
+def user_profile(request):
+    if request.method == "POST":
+        user = request.user
+
+        return JsonResponse({"name": user.first_name + " " + user.last_name, "role": user.role, "email": user.email })
