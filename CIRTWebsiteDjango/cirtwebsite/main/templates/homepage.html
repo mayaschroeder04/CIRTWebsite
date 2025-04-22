@@ -29,7 +29,7 @@
                   <div class="login-buttons">
                       <p>Welcome, {{ user.first_name }}!</p>
                      {% load static %}
-                      {% if user.is_ %}
+                      {% if user.is_staff %}
                       <a href="{% url 'editor_dashboard' %}">
                           <button class="register-btn">Admin</button>
                       </a>
