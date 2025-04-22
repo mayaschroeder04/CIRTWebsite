@@ -1,11 +1,113 @@
 {% extends 'base.html' %}
 {% block title %}Past Uploads - University of Tampa CIRT{% endblock %}
 
-
 {% block content %}
-    <!-- actual content, not sure what type of format to have under it for past uploads-->
-    <div class="content" style="margin-bottom: 500px; text-align: center;">
-        <h2>Your Past Uploads</h2>
-        <p>This page will display a list of all the files you have uploaded.</p>
+<body>
+    <h1>Your Past Uploads</h1>
+
+    <div id="journals-list">
+        {% if documents %}
+            {% for doc in documents %}
+                <div class="journal-post">
+                    <h3>{{ doc.title }}</h3>
+                    <p><strong>Description:</strong> {{ doc.description }}</p>
+                    <p><strong>Category:</strong> {{ doc.category.name }}</p>
+                    <a class="read-more" href="{% url 'view_pdf' doc.id %}">
+                    📄 Open PDF
+                    </a>
+                    <p style="margin-top: 10px; font-size: 0.85em;"><strong>Uploaded:</strong> <span class="upload-date" data-utc="{{ doc.created_at|date:'c' }}">Loading...</span></p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align:center; font-size: 1.1em;">You haven’t uploaded anything yet.</p>
+        {% endif %}
     </div>
+
+    <!-- JavaScript to convert UTC to local time -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const dates = document.querySelectorAll(".upload-date");
+        dates.forEach(el => {
+            const utcTime = el.dataset.utc;
+            const localTime = new Date(utcTime);
+            const formatted = localTime.toLocaleString(undefined, {
+                dateStyle: "medium",
+                timeStyle: "short"
+            });
+            el.textContent = formatted;
+        });
+    });
+    </script>
+</body>
+
+<style>
+    body {
+        background-color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 20px 0 10px;
+        color: #333;
+        font-size: 24px;
+    }
+
+    #journals-list {
+        margin: 10px 20px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .journal-post {
+        padding: 15px;
+        background-color: white;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        font-size: 0.95em;
+    }
+
+    .journal-post h3 {
+        font-size: 1.1em;
+        color: #333;
+        margin-bottom: 6px;
+    }
+
+    .journal-post p {
+        margin: 6px 0;
+        color: #333;
+    }
+
+    .read-more {
+        text-decoration: none;
+        color: #fff;
+        background-color: #a6192e;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-weight: bold;
+        display: inline-block;
+        margin-top: 8px;
+        font-size: 0.9em;
+    }
+
+    .read-more:hover {
+        background-color: #d02d41;
+    }
+
+    @media (max-width: 1024px) {
+        #journals-list {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        #journals-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 {% endblock %}

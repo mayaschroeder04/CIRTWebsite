@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}University of Tampa CIRT Website{% endblock %}
 
+{% comment %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +39,13 @@
                       {% elif user.is_staff %}
                            <a href="{% url 'reviewer_dashboard' %}">
                                <button class="register-btn">Submissions</button>
+                      {% if user.is_superuser %}
+                      <a href="{% url 'editor_dashboard' %}">
+                          <button class="register-btn">Admin</button>
+                      </a>
+                      {% elif user.is_staff %}
+                           <a href="{% url 'reviewer_dashboard' %}">
+                               <button class="register-btn">Submissions</button>
                            </a>
                       {% else %}
                       <a href="{% url 'student_dashboard' %}">
@@ -58,8 +68,9 @@
                 </div>
             {% endif %}
         </div>
-</header>
+</header> {% endcomment %}
 
+{% block content %}
 <div class="background-section">
 
     <!-- quote above search bar -->
@@ -235,7 +246,11 @@
 
 <!-- space between the footer and the featured post box -->
 <div class="spacer"></div>
+{% endblock %}
 
+{% comment %} <!-- space between the footer and the featured post box -->
+<div class="spacer"></div> {% endcomment %}
+{% comment %} 
 <!-- left and right black boxes in the footer -->
 <div class="footer-container">
     <!-- Left and right "blocked out" areas -->
@@ -317,3 +332,4 @@
 
 </body>
 </html>
+</html> {% endcomment %}

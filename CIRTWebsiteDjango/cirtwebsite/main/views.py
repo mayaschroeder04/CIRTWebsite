@@ -532,9 +532,9 @@ def save_user_documents(request, documentId):
             print(user.saved_documents.all())
             return JsonResponse({"success": True})
         else:
-            return JsonResponse({"success": False, "message": "Make an account to save!"})
+            return JsonResponse({"status": "Not authorized"})
     else:
-        return JsonResponse({"success": False})
+        return JsonResponse({"success": True})
 
 def unsave_user_documents(request, documentId):
     if request.method == "POST":
@@ -589,7 +589,6 @@ def cite_document(request, documentId):
 
 def download_document(request, documentId):
     if request.method == "POST":
-        print(documentId)
         document = Document.objects.get(id=documentId)
 
         s3 = boto3.client(
@@ -610,3 +609,49 @@ def download_document(request, documentId):
         )
         return JsonResponse({"success": True, "url": url})
 
+
+    return JsonResponse({"success": True, 'url': url})
+
+def view_pdf(request, doc_id):
+    document = Document.objects.get(id=doc_id)
+    file_path = document.file_url  # should be like 'Case-Studies/dfks.pdf'
+
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME
+    )
+
+    try:
+        presigned_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME, 'Key': file_path},
+            ExpiresIn=3600
+        )
+    except ClientError as e:
+        return HttpResponse(f"Error generating presigned URL: {str(e)}")
+
+    return render(request, 'view_pdf.html', {
+        'journal': document,
+        'pdf_url': presigned_url
+    })
+
+def submit_review(request, journal_id):
+    if request.method == "POST":
+        journal = get_object_or_404(Document, id=journal_id)
+        comment = request.POST.get("review_comment")
+
+        # Save comment logic goes here (maybe to a Review model?)
+        print(f"Review submitted for {journal.title}: {comment}")
+
+        return redirect("assigned_journals")  # Or wherever you want to redirect
+
+def reviewed_journals(request):
+    return render(request, 'reviewed_journals.html')
+
+def flagged_revision(request):
+    return render(request, "flagged_revision.html")
+
+def saved_journals(request):
+    return render(request, 'saved_journals.html')

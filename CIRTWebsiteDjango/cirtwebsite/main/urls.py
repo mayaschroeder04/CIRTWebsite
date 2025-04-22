@@ -26,18 +26,18 @@ urlpatterns = [
     path("past-uploads/", views.past_uploads, name="past_uploads"),
     path("past-reviews/", views.past_reviews, name="past_reviews"),
     path("editor-dashboard/", views.editor_dashboard, name="editor_dashboard"),
-    path("check-status/", views.check_status, name="check_status"),
+    path('check_status/', views.check_status, name='check_status'),
     path("button-two", views.button_two, name="button_two"),
     path("button-four", views.button_four, name="button_four"),
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
     path("sign_up/", views.sign_up, name="sign_up"),
-
+    path("reviewer-dashboard/", views.reviewer_dashboard, name="reviewer_dashboard"),
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
-
+    path("view-uploads/", views.view_uploads, name="view_uploads"),
     path("upload-journal/", views.upload_journal, name="upload_a_journal"),
-
+    path("assigned-journals/", views.assigned_journals, name="assigned_journals"),
     path('accounts/', include('allauth.urls')),
 
     path('verify_email/<uidb64>/<token>/', views.verify_email, name="verify_email"),
@@ -67,4 +67,14 @@ urlpatterns = [
     path('cite-document/<path:documentId>/', views.cite_document, name="cite-document"),
 
     path('download-document/<path:documentId>/', views.download_document, name="download_document"),
+
+    path('view_pdf/<int:doc_id>/', views.view_pdf, name='view_pdf'),
+
+    path('submit-review/<int:journal_id>/', views.submit_review, name='submit_review'),
+
+    path('reviewed_journals/', views.reviewed_journals, name='reviewed_journals'),
+    
+    path('flagged_revision/', views.flagged_revision, name='flagged_revision'),
+
+    path('saved-journals/', views.saved_journals, name='saved_journals'),
 ]
