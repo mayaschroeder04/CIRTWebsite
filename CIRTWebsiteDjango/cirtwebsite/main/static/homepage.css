@@ -37,8 +37,21 @@ header {
 .header-right {
     display: flex;
     align-items: center;
+    gap: 40px; /* Adjust spacing between tabs and buttons */
 }
 
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and text */
+}
+
+.welcome-text {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent text wrapping */
+}
 
 /* under the logo */
 .cirt-text {
@@ -50,9 +63,19 @@ header {
     margin-left: 20px;
 }
 
+.register-btn, .login-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 1;
+}
+
 .login-buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+}
+
+.login-buttons p{
+    margin-top:22px;
 }
 
 /* Register button (outlined) */
@@ -65,6 +88,7 @@ header {
     cursor: pointer;
     border-radius: 6px;
     transition: 0.3s;
+    width: 100%;
 }
 
 .register-btn:hover {
@@ -83,7 +107,10 @@ header {
     cursor: pointer;
     border-radius: 6px;
     transition: 0.3s;
-    margin-right: 5px
+    margin-right: 5px;
+    white-space: nowrap;
+    height: 40px;
+    width: 100%;
 }
 
 .login-btn:hover {
@@ -102,11 +129,6 @@ header {
 
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Adjust spacing between tabs and buttons */
-}
 
 .header-tabs {
     display: flex;
@@ -833,50 +855,7 @@ html, body {
 .name-fields input {
     flex: 1;
 }
-.upload-journal{
-    margin-left: 200px;
-    width: 200px;
-    height: 100px;
-    background-color: white;
-    padding: 300px;
-    border: #1a1a1a;
 
-}
-
-.input_a_journal{
-    margin-top: 10px;
-    padding: 20px;
-    border: #1a1a1a;
-    border-style: solid;
-}
-form {
-    max-width: 400px;
-    margin: auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-
-}
-
-input, button {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-button {
-    background: #a6192e;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-button:hover {
-    background: #e4405f;
-
-}
 body {
     overflow-x:hidden;
     font-family: 'Poppins', sans-serif;
@@ -926,7 +905,12 @@ header {
     text-decoration: underline;
 }
 
-.result-author,
+.result-author{
+    font-size: 0.95rem;
+    color: #a6192e;
+    margin-bottom: 4px;
+}
+
 .result-org {
     font-size: 0.95rem;
     color: #444;
@@ -941,7 +925,7 @@ header {
 }
 
 .result-actions button {
-    background-color: black;
+    /*background-color: #b51616;*/
     color: white;
     border: none;
     padding: 10px 16px;
@@ -992,3 +976,84 @@ header {
 .continue-reading:hover {
     background-color: #a6192e;
 }
+
+.save-btn {
+  background-color: #000000; /* red */
+
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  content: "Save";
+}
+
+/*.save-btn::after {*/
+/*  content: "Save";*/
+/*  position: absolute;*/
+/*  left: 36px;*/
+/*  top: 50%;*/
+/*  transform: translateY(-50%);*/
+/*}*/
+
+
+.save-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+
+}
+
+.unsave-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  min-width: 100px;
+  text-align: center;
+  white-space: nowrap;
+
+  /* Icon stuff */
+  background-image: url("bookmark.png");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 18px 18px;
+  padding-left: 36px; /* give room for the icon */
+  padding-right: 5px;
+  display: inline-block;
+  /*content: "Saved";*/
+}
+
+
+.unsave-btn:hover {
+    background-color: #1a1a1a;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    content: "Unsave";
+
+}
+
+.download-btn {
+    background-color: #000000;
+}
+
+.download-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+}
+
+
+.cite-btn{
+    background-color: #000000;
+}
+
+.cite-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+}
+
+
+

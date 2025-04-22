@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}View PDF - {{ journal.title }}{% endblock %}
+
+{% block content %}
+<div class="pdf-container">
+    <div class="journal-info">
+        <h1>{{ journal.title }}</h1>
+        <p><strong>Description:</strong> {{ journal.description }}</p>
+        <p><strong>Author:</strong> {{ journal.author }}</p>
+        <p><strong>Category:</strong> {{ journal.category.name }}</p>
+        <p><strong>Uploaded:</strong>
+            <span class="upload-date" data-utc="{{ journal.created_at|date:'c' }}">Loading...</span>
+        </p>
+    </div>
+
+    <div class="pdf-viewer">
+        <iframe 
+            src="{{ pdf_url }}" 
+            width="100%" 
+            height="700px" 
+            frameborder="0">
+        </iframe>
+    </div>
+    
+    <p>If the PDF doesn't load, <a href="{{ pdf_url }}" target="_blank">Click here to view it in a new tab</a>.</p>
+
+    <a class="read-more" href="javascript:history.back()">← Go Back</a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const dates = document.querySelectorAll(".upload-date");
+        dates.forEach(el => {
+            const utcTime = el.dataset.utc;
+            const localTime = new Date(utcTime);
+            const formatted = localTime.toLocaleString(undefined, {
+                dateStyle: "medium",
+                timeStyle: "short"
+            });
+            el.textContent = formatted;
+        });
+    });
+</script>
+
+<style>
+.pdf-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.journal-info {
+    margin-bottom: 25px;
+}
+
+.journal-info h1 {
+    font-size: 26px;
+    color: #a6192e;
+    margin-bottom: 10px;
+}
+
+.journal-info p {
+    font-size: 15px;
+    margin: 6px 0;
+    color: #333;
+}
+
+.pdf-viewer {
+    width: 100%;
+    height: 700px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.read-more {
+    text-decoration: none;
+    color: #fff;
+    background-color: #a6192e;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 0.9em;
+}
+
+.read-more:hover {
+    background-color: #d02d41;
+}
+</style>
+{% endblock %}

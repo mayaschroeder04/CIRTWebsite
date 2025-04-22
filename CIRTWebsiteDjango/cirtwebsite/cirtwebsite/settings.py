@@ -14,8 +14,11 @@ from decouple import config  # type: ignore
 from pathlib import Path
 import os
 
+from criminology_db.settings import AUTH_USER_MODEL
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+AUTH_USER_MODEL = 'main.CustomUser'
 
 
 # Quick-start development settings - unsuitable for production
@@ -132,6 +135,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend'
 )
+
+
 
 SITE_ID = 1
 

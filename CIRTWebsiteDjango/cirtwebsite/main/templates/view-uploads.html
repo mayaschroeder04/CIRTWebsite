@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}View Uploads - University of Tampa CIRT{% endblock %}
+
+{% block content %}
+<div class="uploads-container">
+    <h2>All Journal Uploads</h2>
+    {% if uploads %}
+        <ul>
+            {% for upload in uploads %}
+                <li style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
+                    <p><strong>Title:</strong> {{ upload.title }}</p>
+                    <p><strong>Author:</strong> {{ upload.author }}</p>
+                    <a href="https://{{ your_bucket_name }}.s3.amazonaws.com/{{ upload.file_url }}" target="_blank">View File</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No uploads available.</p>
+    {% endif %}
+</div>
+{% endblock %}

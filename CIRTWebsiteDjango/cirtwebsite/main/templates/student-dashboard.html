@@ -2,22 +2,76 @@
 {% block title %}Student Dashboard - University of Tampa CIRT{% endblock %}
 
 {% block content %}
-    <!-- actual content , can replace with an act header or sum  -->
-    <div class="content" style="margin-bottom: 100px; text-align: center;">
-        <h2>Welcome to the Student Dashboard</h2>
-        <p>Not sure what to have here as the view yet.</p>
-    </div>
+<div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; margin-bottom: 100px;">
 
-    <!-- buttons below caption -->
-    <div class="dashboard-buttons">
-        <a href="{% url 'upload_images' %}">
-                <button class="login-box">Upload Journals</button>
-        </a>
-        <a href="{% url 'past_uploads' %}">
-            <button class="login-box">View Past Uploads</button>
-        </a>
-        <a href="{% url 'check_status' %}">
-            <button onclick="checkStatus()">Check Status</button>
-        </a>
+    <!-- Sidebar for user info -->
+    <aside class="user-info-card">
+        <h3>Your Profile</h3>
+        <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Role:</strong> Student</p>
+    </aside>
+
+    <!-- Main dashboard content -->
+    <div class="dashboard-main" style="max-width: 600px; text-align: center;">
+        <h2>Welcome to the Student Dashboard</h2>
+        <p>Use the tools below to manage your journal submissions, review past uploads, and track review status.</p>
+
+        <div class="dashboard-buttons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px;">
+            <a href="{% url 'upload_a_journal' %}" class="dashboard-link">
+                <button class="dashboard-btn">📤 Upload Journal</button>
+            </a>
+            <a href="{% url 'past_uploads' %}" class="dashboard-link">
+                <button class="dashboard-btn">📚 View Past Uploads</button>
+            </a>
+            <a href="{% url 'check_status' %}" class="dashboard-link">
+                <button class="dashboard-btn">📊 Check Review Status</button>
+            </a>
+            <a href="{% url 'saved_journals' %}" class="dashboard-link">
+                <button class="dashboard-btn">📁 View Saved Journals</button>
+            </a>
+        </div>
     </div>
+</div>
+
+<style>
+    .dashboard-btn {
+        background-color: #a6192e;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 15px 25px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .dashboard-btn:hover {
+        background-color: #a6192e;
+        transform: scale(1.05);
+    }
+
+    .dashboard-link {
+        text-decoration: none;
+    }
+
+    .user-info-card {
+        background-color: #f3f4f6;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        min-width: 250px;
+        max-height: fit-content;
+    }
+
+    .user-info-card h3 {
+        margin-top: 0;
+        color: #a6192e;
+    }
+
+    .user-info-card p {
+        margin: 8px 0;
+    }
+</style>
 {% endblock %}

@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}<title>University of Tampa CIRT Website</title>{% endblock %}
 {% comment %} <!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title %}University of Tampa CIRT Website{% endblock %}
+
+{% comment %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
-    <script src="{% static 'homepage.js' %}"></script>
 </head>
 <body>
 
@@ -29,6 +33,7 @@
             </div>
             {% if user.is_authenticated %}
                   <div class="login-buttons">
+                      {
                       <p>Welcome, {{ user.first_name }}!</p>
                      {% load static %}
                       {% if user.is_staff %}
@@ -55,8 +60,7 @@
 </header> {% endcomment %}
 
 {% block content %}
-
-    <div class="background-section">
+<div class="background-section">
 
         <!-- quote above search bar -->
         <nav>
@@ -66,22 +70,22 @@
                 Inspiring Innovation.
             </p>
 
-        </nav>
-        
-        <!-- search bar with filter button -->
-        <div class="group">
-            <div class="autocomplete">
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                <g>
-                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-                </g>
-            </svg>
-            {% load static %}
-                <input id="search-input" placeholder="Search" type="search" class="input" autocomplete="off" oninput="showSuggestions()">
-                <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
-                <script src="{% static 'search.js' %}"></script>
-            </div>
+    </nav>
+
+    <!-- search bar with filter button -->
+    <div class="group">
+        <div class="autocomplete">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+            <g>
+                <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+            </g>
+        </svg>
+        {% load static %}
+            <input id="search-input" placeholder="Search" type="search" class="input" autocomplete="off" oninput="showSuggestions()">
+            <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
+            <script src="{% static 'search.js' %}"></script>
         </div>
+    </div>
 
 
     <!-- Filter options -->
@@ -98,129 +102,144 @@
         <hr style="background-color: #a6192e; height: 3px; border: none;">
     </div>
 
-    <div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
-    </div>
+<script id="documents-data" type="application/json">
+{{ documents_json|safe }}
+</script>
+<script id="saved-documents" type="application/json">
+{{ saved_documents|safe }}
+</script>
 
-    <script>
-        function fetchPresignedUrl(documentId) {
-            fetch(`/generate_presigned_url/${documentId}/`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.url) {
-                        window.open(data.url, '_blank');
-                    } else {
-                        alert('Failed to generate download link.');
-                        console.error(data.error);
-                    }
-                })
-                .catch(error => {
-                    alert('Error fetching document.');
-                    console.error(error);
-                });
-        }
-    </script>
-    <script>
-        console.log("Display Latest Posts Function is Loaded");
+<div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
+</div>
 
-        function displayLatestPosts() {
-            const rawDocumentsJson = "{{ documents_json|escapejs }}";
-            const documents = JSON.parse(rawDocumentsJson);
-            console.log(documents);
-
-            let resultHTML = "<ul class='results-list'>";
-
-            documents.forEach(document => {
-                // Use encodeURIComponent to safely pass data into JavaScript function
-                const title = encodeURIComponent(document.title);
-                const description = encodeURIComponent(document.description);
-                const fileUrl = encodeURIComponent(document.file_url); // Add this line
-
-                resultHTML += `
-                    <li class="search-result-item">
-                        <div class="result-meta">
-                            <p class="result-type">RESEARCH REPORT</p>
-                            <h3 class="result-title">${document.title}</h3>
-                            <p class="result-author">${document.author}</p>
-                            <p class="result-org">${document.category_name}</p>
-                            <p>${document.description}</p>
-                        </div>
-                        <div class="result-actions">
-                            <button class="download-btn" onclick="fetchPresignedUrl('${fileUrl}')">Download</button>
-                            <button class="save-btn">Save</button>
-                            <button class="cite-btn">Cite</button>
-                        </div>
-                    </li>
-                `;
+<script>
+    function fetchPresignedUrl(documentId) {
+        fetch(`/generate_presigned_url/${documentId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    window.open(data.url, '_blank');
+                } else {
+                    alert('Failed to generate download link.');
+                    console.error(data.error);
+                }
             })
-            resultHTML += "</ul>";
-            document.getElementById("latest-posts").innerHTML = resultHTML;
-        }
-        document.addEventListener("DOMContentLoaded", displayLatestPosts);
-        console.log("DOM content loaded, calling displayLatestPosts...");
-        displayLatestPosts();
+            .catch(error => {
+                alert('Error fetching document.');
+                console.error(error);
+            });
+    }
+</script>
+<script>
+    console.log("Display Latest Posts Function is Loaded");
 
-    </script>
+    function displayLatestPosts() {
+        const rawDocumentsJson = "{{ documents_json|escapejs }}";
+        const documents = JSON.parse(rawDocumentsJson);
+        console.log(documents);
 
-    <script>
-        console.log("Documents JSON:", "{{ documents_json|escapejs }}");
-    </script>
-    <!-- Modal (for all featured posts) -->
-    <div id="modal" class="modal" style="display: none;">
-        <div id="modal-content" class="modal-content">
-            <!-- Modal content will be injected here -->
-        </div>
-    </div>
+        let resultHTML = "<ul class='results-list'>";
 
-    <script>
-        function openModal(title) {
+        documents.forEach(document => {
+            // Use encodeURIComponent to safely pass data into JavaScript function
+            const title = encodeURIComponent(document.title);
+            const id = encodeURIComponent(document.id)
+            const description = encodeURIComponent(document.description);
+            const fileUrl = encodeURIComponent(document.file_url); // Add this line
 
-            let modal = document.getElementById("modal");
-            let modalContent = document.getElementById("modal-content");
-
-            console.log('Opening modal with title:', title); // Check if this gets logged
-
-
-            // Ensure modal elements exist before modifying them
-            if (modal && modalContent) {
-                modal.style.display = "block";
-                modalContent.innerHTML = `
-                    <div class="modal-content">
-                        <h2><strong>Log in to continue reading</strong></h2>
-                        <p>${title}</p>
-                        <a href="{% url 'login' %}">
-                            <button>Sign Up / Log In</button>
-                        </a>
-                        <a href="{% url 'student_dashboard' %}">
-                            <button>Continue as guest</button>
-                        </a>
-                        <button href="{% url 'homepage' %}">Continue as Guest</button>
-                        <button onclick="closeModal()">Close</button>
+            resultHTML += `
+                <li class="search-result-item">
+                    <div class="result-meta">
+                        <p class="result-type">RESEARCH REPORT</p>
+                        <h3 onclick="fetchPresignedUrl('${document.fileUrl}')" class="result-title">${document.title}</h3>
+                        <p class="result-author">${document.author}</p>
+                        <p class="result-org">${document.category_name}</p>
+                        <p>${document.description}</p>
                     </div>
-                `;
-            }
+                    <div class="result-actions">
+                        <button class="download-btn" onclick="fetchPresignedUrl('${fileUrl}')">Download</button>
+                        <button class="save-btn" data-id="${id}">Save</button>
+                        <button class="cite-btn" data-id="{{ doc.id }}">Cite</button>
+                    </div>
+                </li>
+            `;
+        })
+        resultHTML += "</ul>";
+        document.getElementById("latest-posts").innerHTML = resultHTML;
+    }
+    document.addEventListener("DOMContentLoaded", displayLatestPosts);
+    console.log("DOM content loaded, calling displayLatestPosts...");
+    displayLatestPosts();
+
+</script>
+
+<script>
+    console.log("Documents JSON:", "{{ documents_json|escapejs }}");
+</script>
+<!-- Modal (for all featured posts) -->
+<div id="modal" class="modal" style="display: none;">
+    <div id="modal-content" class="modal-content">
+        <!-- Modal content will be injected here -->
+    </div>
+</div>
+
+<script>
+    function openModal(title) {
+
+        let modal = document.getElementById("modal");
+        let modalContent = document.getElementById("modal-content");
+
+        console.log('Opening modal with title:', title); // Check if this gets logged
+
+
+        // Ensure modal elements exist before modifying them
+        if (modal && modalContent) {
+            modal.style.display = "block";
+            modalContent.innerHTML = `
+                <div class="modal-content">
+                    <h2><strong>Log in to continue reading</strong></h2>
+                    <p>${title}</p>
+                    <a href="{% url 'login' %}">
+                        <button>Sign Up / Log In</button>
+                    </a>
+                    <a href="{% url 'student_dashboard' %}">
+                        <button>Continue as guest</button>
+                    </a>
+                    <button href="{% url 'homepage' %}">Continue as Guest</button>
+                    <button onclick="closeModal()">Close</button>
+                </div>
+            `;
         }
+    }
 
 
-        function closeModal() {
-            let modal = document.getElementById("modal");
-            if (modal) {
-                modal.style.display = "none";
-            }
+    function closeModal() {
+        let modal = document.getElementById("modal");
+        if (modal) {
+            modal.style.display = "none";
         }
+    }
 
-        function redirectToLogin() {
-            alert("Redirecting to login page... (Placeholder Action)");
-        }
+    function redirectToLogin() {
+        alert("Redirecting to login page... (Placeholder Action)");
+    }
 
-        function continueAsGuest() {
-            alert("Continuing as guest... (Placeholder Action)");
-        }
-        </script>
+    function continueAsGuest() {
+        alert("Continuing as guest... (Placeholder Action)");
+    }
+    </script>
 
-{% endblock %}
-{% comment %} <!-- space between the footer and the featured post box -->
+  <div id="modal" class="modal" style="display:none;">
+    <div id="modal-content" class="modal-content"></div>
+  </div>
+
+<!-- space between the footer and the featured post box -->
 <div class="spacer"></div>
+{% endblock %}
 
+{% comment %} <!-- space between the footer and the featured post box -->
+<div class="spacer"></div> {% endcomment %}
+{% comment %}
 <!-- left and right black boxes in the footer -->
 <div class="footer-container">
     <!-- Left and right "blocked out" areas -->
@@ -298,6 +317,8 @@
 
     </div>
 </div>
+    <script src="{% static 'homepage.js' %}"></script>
 
 </body>
+</html>
 </html> {% endcomment %}

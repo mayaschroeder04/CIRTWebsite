@@ -108,7 +108,7 @@
                     <p><strong>Author:</strong> {{ journal.author }}</p>
                     <p><strong>Category:</strong> {{ journal.category.name }}</p>
                     <p>{{ journal.description }}</p>
-                    <a class="read-more" href="{{ journal.file_url }}">Continue Reading</a>
+                    <a class="read-more" href="{% url 'view_pdf' journal.id %}">Continue Reading</a>
                 </div>
             {% endfor %}
         </div>

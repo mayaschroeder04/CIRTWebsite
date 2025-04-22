@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Reviewed Journals - University of Tampa CIRT{% endblock %}
+
+{% block content %}
+<main style="padding: 40px; max-width: 900px; margin: auto;">
+    <h2 style="color: #a6192e; text-align: center;">📚 Reviewed Journals</h2>
+
+    <ul style="list-style: none; padding: 0; margin-top: 30px;">
+        <li style="background: #f9f9f9; padding: 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p style="font-size: 10px; font-weight: bold; letter-spacing: 1px; color: #555;">RESEARCH REPORT</p>
+                <p style="font-size: 18px; font-weight: bold;">The Impact of Community Policing</p>
+                <p style="margin: 2px 0;">Jordan Michaels</p>
+                <p style="margin: 2px 0;">Law Enforcement</p>
+                <p style="margin: 2px 0;">Reviewed on April 10, 2025</p>
+            </div>
+            <div>
+                <button style="background-color: black; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Download</button>
+            </div>
+        </li>
+        <li style="background: #f9f9f9; padding: 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <p style="font-size: 10px; font-weight: bold; letter-spacing: 1px; color: #555;">RESEARCH REPORT</p>
+                <p style="font-size: 18px; font-weight: bold;">Social Media Evidence in Criminal Trials</p>
+                <p style="margin: 2px 0;">Taylor R.</p>
+                <p style="margin: 2px 0;">Criminal Justice</p>
+                <p style="margin: 2px 0;">Reviewed on April 7, 2025</p>
+            </div>
+            <div>
+                <button style="background-color: black; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">Download</button>
+            </div>
+        </li>
+    </ul>
+
+    <p style="text-align: center; margin-top: 40px;">No more reviews</p>
+</main>
+{% endblock %}
