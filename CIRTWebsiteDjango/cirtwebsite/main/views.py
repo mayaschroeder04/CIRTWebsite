@@ -211,20 +211,34 @@ def upload_images(request):
 def student_dashboard(request):
     return render(request, "student-dashboard.html")
 
+def reviewer_dashboard(request):
+    return render(request, "reviewer-dashboard.html")
+
+def view_uploads(request):
+    uploads = Document.objects.all()
+    return render(request, 'view_uploads.html', {'uploads': uploads})
+
+def assigned_journals(request):
+    journals = Document.objects.all()  # no filter
+    return render(request, 'assigned-journals.html', {
+        'pending_journals': journals
+    })
+
 
 
 def past_reviews(request):
     return render(request, "past-reviews.html")
 
-def reviewer_dashboard(request):
-    return render(request, "reviewer-dashboard.html")
 
 def editor_dashboard(request):
     return render(request, "editor-dashboard.html")
 
 
 def check_status(request):
-    return render(request, "check-status.html")
+    user = request.user
+    documents = Document.objects.filter(submitted_user=user.id)
+    return render(request, 'check-status.html', {'documents': documents})
+
 
 
 def button_two(request):
@@ -574,9 +588,9 @@ def save_user_documents(request, documentId):
             print(user.saved_documents.all())
             return JsonResponse({"success": True})
         else:
-            return JsonResponse({"status": "Not authorized"})
+            return JsonResponse({"success": False, "message": "Make an account to save!"})
     else:
-        return JsonResponse({"success": True})
+        return JsonResponse({"success": False})
 
 def unsave_user_documents(request, documentId):
     if request.method == "POST":
@@ -631,6 +645,7 @@ def cite_document(request, documentId):
 
 def download_document(request, documentId):
     if request.method == "POST":
+        print(documentId)
         document = Document.objects.get(id=documentId)
 
         s3 = boto3.client(
