@@ -27,10 +27,10 @@ class Command(BaseCommand):
 
         # Define users and their roles
         users = [
-            ('JohnDoe', 'johndoe@example.com', 'password123', 'student', 'John', 'Doe'),
-            ('maya', 'janedoe@example.com', 'maya', 'reviewer', 'Alice', 'Doe'),
-            ('sayedali', 'bobdoe@example.com', 'password789', 'editor', 'Sayed', 'Ali'),
-            ('abc', 'abc@example.com', 'abc', 'student', 'Adam', 'Cobb'),
+            ('JohnDoe', 'johndoe@example.com', 'password123', 'student', 'John', 'Doe', 1),
+            ('maya', 'janedoe@example.com', 'maya', 'reviewer', 'Alice', 'Doe', 1),
+            ('sayedali', 'bobdoe@example.com', 'password789', 'editor', 'Sayed', 'Ali', 0),
+            ('abc', 'abc@example.com', 'abc', 'student', 'Adam', 'Cobb', 0),
         ]
 
         # Check if the "parker" user exists, if not, create it
@@ -39,14 +39,15 @@ class Command(BaseCommand):
             print(f"User parker created")
 
         # Create other users if they do not exist
-        for username, email, password, role, first_name, last_name in users:
+        for username, email, password, role, first_name, last_name, is_staff in users:
             if not User.objects.filter(username=username).exists():  # Check if the user exists
                 user = User.objects.create_user(
                     username=username,
                     email=email,
                     first_name=first_name,
                     last_name=last_name,
-                    role=role  # Assign the role to each user
+                    role=role,  # Assign the role to each user
+                    is_staff=is_staff,
                 )
                 user.set_password(password)  # Hash the password before saving
                 user.save()

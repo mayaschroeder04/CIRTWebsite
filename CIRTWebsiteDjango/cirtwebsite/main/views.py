@@ -554,9 +554,9 @@ def save_user_documents(request, documentId):
             print(user.saved_documents.all())
             return JsonResponse({"success": True})
         else:
-            return JsonResponse({"status": "Not authorized"})
+            return JsonResponse({"success": False, "message": "Make an account to save!"})
     else:
-        return JsonResponse({"success": True})
+        return JsonResponse({"success": False})
 
 def unsave_user_documents(request, documentId):
     if request.method == "POST":
@@ -611,9 +611,26 @@ def cite_document(request, documentId):
 
 def download_document(request, documentId):
     if request.method == "POST":
+        print(documentId)
         document = Document.objects.get(id=documentId)
 
-        url = generate_presigned_url(request, document.file_url)
+        s3 = boto3.client(
+            's3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            region_name=settings.AWS_S3_REGION_NAME)
+
+        url = s3.generate_presigned_url(
+            ClientMethod='get_object',
+            Params={
+                'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                'Key': document.file_url,
+                'ResponseContentDisposition': f'attachment; filename="{document.title}.pdf"',
+                'ResponseContentType': 'application/pdf'
+            },
+            ExpiresIn=3600
+        )
+        return JsonResponse({"success": True, "url": url})
 
     return JsonResponse({"success": True, 'url': url})
 
@@ -651,7 +668,7 @@ def submit_review(request, journal_id):
         print(f"Review submitted for {journal.title}: {comment}")
 
         return redirect("assigned_journals")  # Or wherever you want to redirect
-    
+
 def reviewed_journals(request):
     return render(request, 'reviewed_journals.html')
 

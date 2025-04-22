@@ -27,6 +27,15 @@ class Subcategory(models.Model):
 class Images(models.Model):
     name = models.CharField(max_length=255, unique=True)
     id = models.AutoField(primary_key=True)
+    author = models.CharField(max_length=255)
+    file_url = models.CharField(max_length=255)
+    file_size = models.CharField(max_length=255)
+    file_type = models.CharField(max_length=255)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    submitted_user = models.IntegerField(null=True, blank=True)
+
+
 class Document(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)

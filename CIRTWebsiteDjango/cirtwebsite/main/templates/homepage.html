@@ -32,7 +32,7 @@
                   <div class="login-buttons">
                       <p>Welcome, {{ user.first_name }}!</p>
                      {% load static %}
-                      {% if user.is_superuser %}
+                      {% if user.is_staff %}
                       <a href="{% url 'editor_dashboard' %}">
                           <button class="register-btn">Admin</button>
                       </a>
@@ -59,8 +59,12 @@
                   </div>
             {% else %}
                 <div class="login-buttons">
-                    <button class="register-btn" onclick="openModal()">Register</button>
-                    <button class="login-btn" onclick="openModal()">Log In</button>
+                    <a href="{% url 'login' %}">
+                        <button class="register-btn" >Register</button>
+                    </a>
+                    <a href="{% url 'login' %}">
+                        <button class="login-btn">Log In</button>
+                    </a>
                 </div>
             {% endif %}
         </div>
@@ -158,15 +162,15 @@
                 <li class="search-result-item">
                     <div class="result-meta">
                         <p class="result-type">RESEARCH REPORT</p>
-                        <h3 onclick="fetchPresignedUrl('${document.fileUrl}')" class="result-title">${document.title}</h3>
+                        <h3 onclick="fetchPresignedUrl('${fileUrl}')" class="result-title">${document.title}</h3>
                         <p class="result-author">${document.author}</p>
                         <p class="result-org">${document.category_name}</p>
                         <p>${document.description}</p>
                     </div>
                     <div class="result-actions">
-                        <button class="download-btn" onclick="fetchPresignedUrl('${fileUrl}')">Download</button>
+                        <button class="download-btn" data-id="${id}">Download</button>
                         <button class="save-btn" data-id="${id}">Save</button>
-                        <button class="cite-btn" data-id="{{ doc.id }}">Cite</button>
+                        <button class="cite-btn" data-id="${ id }">Cite</button>
                     </div>
                 </li>
             `;
