@@ -32,7 +32,7 @@ urlpatterns = [
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
     path("reset-password/", views.reset_password, name="reset_password"),
-    path("sign_up/", views.sign_up, name="sign_up"),
+    path("sign-up/", views.sign_up, name="sign_up"),
     path("reviewer-dashboard/", views.reviewer_dashboard, name="reviewer_dashboard"),
     path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
     path("view-uploads/", views.view_uploads, name="view_uploads"),
@@ -78,4 +78,8 @@ urlpatterns = [
     path('flagged_revision/', views.flagged_revision, name='flagged_revision'),
 
     path('saved-journals/', views.saved_journals, name='saved_journals'),
+
+    path('review-status/', views.review_status, name='review_status'),
+
+    path('user-profile/', views.user_profile, name='user_profile')
 ]

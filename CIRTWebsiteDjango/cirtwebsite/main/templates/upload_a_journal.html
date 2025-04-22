@@ -5,7 +5,9 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+
     <body>
+    <link rel="stylesheet" href="{% static 'upload_journal.css' %}">
 
    <form id="uploadForm" method="POST" enctype="multipart/form-data" action="/upload-journal/">
         {% csrf_token %}

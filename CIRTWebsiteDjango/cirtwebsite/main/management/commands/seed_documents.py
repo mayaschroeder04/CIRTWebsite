@@ -18,15 +18,6 @@ class Command(BaseCommand):
             for subcat in subcats:
                 Subcategory.objects.get_or_create(name=subcat, category=category)  # Fixed line
 
-        # Admin user
-        CustomUser.objects.get_or_create(
-            username='pmalmgren',
-            defaults={
-                'email': 'parker@themalmgrens.com',
-                'role': 'admin'
-            }
-        )
-
         # Documents
         doc_data = [
             ('Order on Sanctions in Wadsworth v. Walmart Inc et al', 'Margaret Botkins', 'Walamrt is amazing', 'PDF', 265, 'Court Records', 'Case Rulings'),

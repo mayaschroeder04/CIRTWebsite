@@ -1,10 +1,12 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    overflow-x: hidden;
+form {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white; /* optional, but gives contrast */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
 
 form {
     max-width: 500px;
