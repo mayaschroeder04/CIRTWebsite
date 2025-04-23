@@ -495,7 +495,8 @@ def upload_document(file, title, description, author, category, user_id, type, s
         author=author,
         submitted_user=user_id,
         file_size=file.size,
-        subcategory = subcategory
+        subcategory = subcategory,
+        status = "pending"
     )
     return document
 
@@ -752,3 +753,17 @@ def user_profile(request):
         user = request.user
 
         return JsonResponse({"name": user.first_name + " " + user.last_name, "role": user.role, "email": user.email })
+
+
+def get_pending_journals(request):
+    journals = Document.objects.filter(status='pending', type='journal')
+    data = [
+        {
+            'id': doc.id,
+            'title': doc.title,
+            'author': doc.author,
+            'fileUrl': f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{doc.file_url}"
+        }
+        for doc in journals
+    ]
+    return JsonResponse(data, safe=False)

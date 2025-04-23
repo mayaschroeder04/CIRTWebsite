@@ -144,7 +144,7 @@
 
     function displayLatestPosts() {
         const rawDocumentsJson = "{{ documents_json|escapejs }}";
-        const documents = JSON.parse(rawDocumentsJson);
+        const documents = JSON.parse(rawDocumentsJson).filter(doc => doc.status === 'approved');
         console.log(documents);
 
         let resultHTML = "<ul class='results-list'>";

@@ -198,4 +198,12 @@ h1 {
     .dashboard-content {
         padding: 20px;
     }
+
+    .journal-entry {
+        padding: 15px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
 }
