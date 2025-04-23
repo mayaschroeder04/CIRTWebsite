@@ -102,24 +102,58 @@
 </div>
 
 <div style="margin-top: 40px; margin-left: 18.5%; width: 60%;">
-    <h2 style="color: #333; text-transform: uppercase; margin: 0;">Latest Journals</h2>
-    <hr style="background-color: #a6192e; height: 3px; border: none;">
+    <!-- Tab placeholders for posters/journals-->
+    <div style="display: flex; cursor: pointer;">
+        <div onclick="switchTab('journals')" id="tab-journals" style="flex: 1; padding: 10px; text-align: center; background-color: #a6192e; color: white;">
+            Latest Journals
+        </div>
+        <div onclick="switchTab('posters')" id="tab-posters" style="flex: 1; padding: 10px; text-align: center; background-color: #e0e0e0; color: #333;">
+            Latest Posters
+        </div>
+    </div>
+    
+    <hr style="background-color: #a6192e; height: 3px; border: none; margin-top: 0;">
+    
+    <div id="content-journals" style="margin-top: 20px;">
+        <script id="documents-data" type="application/json">
+            {{ documents_json|safe }}
+        </script>
+        <div id="latest-posts"></div>
+    </div>
+
+    <div id="content-posters" style="margin-top: 20px; display: none;">
+        <script id="saved-documents" type="application/json">
+            {{ saved_documents|safe }}
+        </script>
+        <!-- for when posters are in -->
+        <div id="latest-posters"></div>
+    </div>
 </div>
 
-<script id="documents-data" type="application/json">
-{{ documents_json|safe }}
+<script>
+function switchTab(tab) {
+    const journalsTab = document.getElementById('tab-journals');
+    const postersTab = document.getElementById('tab-posters');
+    const journalsContent = document.getElementById('content-journals');
+    const postersContent = document.getElementById('content-posters');
+
+    if (tab === 'journals') {
+        journalsContent.style.display = 'block';
+        postersContent.style.display = 'none';
+        journalsTab.style.backgroundColor = '#a6192e';
+        journalsTab.style.color = 'white';
+        postersTab.style.backgroundColor = '#e0e0e0';
+        postersTab.style.color = '#333';
+    } else {
+        journalsContent.style.display = 'none';
+        postersContent.style.display = 'block';
+        postersTab.style.backgroundColor = '#a6192e';
+        postersTab.style.color = 'white';
+        journalsTab.style.backgroundColor = '#e0e0e0';
+        journalsTab.style.color = '#333';
+    }
+}
 </script>
-<script id="saved-documents" type="application/json">
-{{ saved_documents|safe }}
-</script>
-
-<div id="latest-posts" style="margin-top: 20px; margin-left: 2%; width: 93.5%;">
-</div>
-
-<div style="margin-top: 30px; margin-left: 18.5%; width: 60%;">
-    <h2 style="color: #333; text-transform: uppercase; margin: 0;">Latest Posters</h2>
-    <hr style="background-color: #a6192e; height: 3px; border: none;">
-</div>
 
 <script>
     function fetchPresignedUrl(documentId) {
