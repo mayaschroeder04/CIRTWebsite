@@ -1067,3 +1067,22 @@ header {
     transform: scale(1.05);
 }
 
+#tab-journals, #tab-posters {
+    height: 28px;            
+    padding: 0 20px;        
+    border-radius: 20px;     
+    background-color: #e0e0e0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+#tab-journals:hover, #tab-posters:hover {
+    background-color: #d1d1d1;
+    transform: scale(1.03);
+}
