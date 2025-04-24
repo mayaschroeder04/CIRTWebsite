@@ -1,19 +1,19 @@
 /* General Styles */
 body {
     background-color: #f7f9fc;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
 }
 
-h1 {
+/* h1 {
     text-align: center;
     margin: 20px 0;
     color: #a6192e;
     font-size: 2em;
     font-weight: 600;
-}
+} */
 
 /* Dashboard Navigation */
 .dashboard-navbar {
