@@ -3,10 +3,18 @@ function getCSRFToken() {
     return m ? m.split('=')[1] : '';
 }
 
+function setActiveTab(tabId) {
+    document.querySelectorAll('.dashboard-navbar span').forEach(span => {
+        span.classList.remove('active-tab');
+    });
+    document.getElementById(tabId).classList.add('active-tab');
+}
+
 const reviewers = [
     { id: 1, name: "Alice Johnson" },
     { id: 2, name: "Brian Carter" }
 ];
+
 
 function assignReviewer(journalId) {
     // Simulate the assign action
@@ -28,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Profile Info
     document.getElementById('profileBtn').addEventListener('click', () => {
+        setActiveTab('profileBtn')
         contentDiv.innerHTML = `
             <div class="profile-box">
                 <h3>Your Profile</h3>
@@ -63,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('needsReviewBtn').addEventListener('click', function () {
+        setActiveTab('needsReviewBtn');
         const container = document.getElementById('dashboard-content');
         container.innerHTML = ''; // Clear existing content
 

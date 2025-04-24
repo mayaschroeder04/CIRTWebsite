@@ -3,6 +3,14 @@ function getCSRFToken() {
   return m ? m.split('=')[1] : '';
 }
 
+function setActiveTab(tabId) {
+    document.querySelectorAll('.dashboard-navbar span').forEach(span => {
+        span.classList.remove('active-tab');
+    });
+    document.getElementById(tabId).classList.add('active-tab');
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const contentDiv = document.getElementById('dashboard-content');
 
@@ -13,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Past Uploads
     document.getElementById('pastUploadsBtn').addEventListener('click', () => {
+        setActiveTab('pastUploadsBtn');
         contentDiv.innerHTML = `
             <h3>Past Uploads</h3>
             <ul id="uploads-list"></ul>
@@ -49,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Review Status
     document.getElementById('statusBtn').addEventListener('click', () => {
+        setActiveTab('statusBtn')
     contentDiv.innerHTML = `
         <h3>Review Status</h3>
         <ul id="status-list"></ul>
@@ -91,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Saved Journals
     document.getElementById('savedBtn').addEventListener('click', () => {
+        setActiveTab('savedBtn')
         contentDiv.innerHTML = `
             <h3>Saved Journals</h3>
             <ul id="saved-list"></ul>
@@ -131,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Profile Info
     document.getElementById('profileBtn').addEventListener('click', () => {
+        setActiveTab('profileBtn')
         contentDiv.innerHTML = `
             <div class="profile-box">
                 <h3>Your Profile</h3>

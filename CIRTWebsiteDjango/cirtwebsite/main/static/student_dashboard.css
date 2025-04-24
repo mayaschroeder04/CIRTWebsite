@@ -40,6 +40,11 @@ h1 {
     transform: scale(1.05);
 }
 
+.dashboard-navbar span.active-tab {
+    color: white;
+    background-color: #d02d41;
+}
+
 .dashboard-divider {
     border: none;
     height: 1px;
