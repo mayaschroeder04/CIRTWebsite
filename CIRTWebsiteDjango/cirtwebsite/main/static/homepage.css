@@ -1058,5 +1058,12 @@ header {
     transform: scale(1.05);
 }
 
+.open-btn{
+    background-color: #000000;
+}
 
+.open-btn:hover{
+    background-color: #8b141f;
+    transform: scale(1.05);
+}
 
