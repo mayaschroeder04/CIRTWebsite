@@ -37,7 +37,7 @@
                       {% else %}
                             <a href="{% url 'student_dashboard' %}"><button class="register-btn">Account</button></a>
                       {% endif %}
-                     <form action="{% url 'logout' %}" method="POST">
+                     <form id="logoutForm" action="{% url 'logout' %}" method="POST">
                          {% csrf_token %}
                          <button class="login-btn" type="submit">Log Out</button>
                      </form>
