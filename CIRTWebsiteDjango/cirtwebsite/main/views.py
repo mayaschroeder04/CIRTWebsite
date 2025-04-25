@@ -861,3 +861,7 @@ def user_profile(request):
                 "email": user.email,
             }
         )
+
+
+def faculty_view(request):
+    return render(request, "faculty.html")

@@ -6,7 +6,9 @@
     <title>University of Tampa CIRT Website</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {% load static %}
+    {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'homepage.css' %}">
+    {% endblock %}
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <script src="{% static 'homepage.js' %}"></script>
 </head>
@@ -17,7 +19,7 @@
     <div class="header-left">
         {% load static %}
         <a href="{% url 'homepage' %}"><img src="{% static 'tampalogo.png' %}" alt="CIRT Logo"></a>
-        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
+        <h1>CRIMINOLOGY INSTITUTE FOR <br> RESEARCH AND TRAINING</h1>
     </div>
         <div class="header-right">
             <div class="header-tabs">
@@ -141,8 +143,7 @@
                 <h3>About Us</h3>
                 <ul>
                     <li><a href="{% url 'homepage' %}">CIRT</a></li>
-                    <li><a href="https://www.ut.edu/academics/college-of-social-sciences-mathematics-and-education/criminology-and-criminal-justice-degrees/faculty-directory">Faculty</a></li>
-                    {% comment %} <li><a href="#">Link</a></li> {% endcomment %}
+                    <li><a href="{% url 'faculty' %}">Faculty</a></li>
                 </ul>
             </div>
             <div class="footer-section">
