@@ -81,8 +81,8 @@ header {
 /* Register button (outlined) */
 .register-btn {
     background-color: white;
-    color: black;
-    border: 2px solid black;
+    color: #333;
+    border: #333 solid 1px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -92,9 +92,9 @@ header {
 }
 
 .register-btn:hover {
-    background-color: black;
-    color: white;
     transform: scale(1.02);
+    transition: 0.3s ease;
+
 }
 
 /* Log In button (red background) */
@@ -201,7 +201,7 @@ nav {
 }
 .read-more {
     display: inline-block;
-    background-color: black;
+    background-color: #a6192e;
     color: white;
     padding: 10px;
     transition: 0.3s;
@@ -212,7 +212,7 @@ nav {
     font-size: 15px;
 }
 .read-more:hover {
-    background-color: #a6192e;
+    background-color: #e4405f;
     transform: scale(1.02);
 
 }
@@ -963,7 +963,7 @@ header {
 
 .read-more,
 .continue-reading {
-    background-color: #8b141f;
+    background-color: #a6192e;
     color: white;
     padding: 10px 16px;
     border-radius: 4px;
@@ -981,7 +981,7 @@ header {
 }
 
 .save-btn {
-  background-color: #000000; /* red */
+  background-color: #a6192e; /* red */
 
   color: white;
   border: none;
@@ -1001,14 +1001,14 @@ header {
 
 
 .save-btn:hover{
-    background-color: #8b141f;
+    background-color: #e4405f;
     transform: scale(1.05);
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 
 }
 
 .unsave-btn {
-  background-color: black;
+  background-color:#e4405f;
   color: white;
   border: none;
   padding: 10px 16px;
@@ -1032,39 +1032,42 @@ header {
 
 
 .unsave-btn:hover {
-    background-color: #1a1a1a;
+    background-color: #a6192e;
     transform: scale(1.05);
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     content: "Unsave";
 
 }
 
 .download-btn {
-    background-color: #000000;
+    background-color: #a6192e;
 }
 
 .download-btn:hover{
-    background-color: #8b141f;
+    background-color: #e4405f;
     transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 
 .cite-btn{
-    background-color: #000000;
+    background-color: #a6192e;
 }
 
 .cite-btn:hover{
-    background-color: #8b141f;
+    background-color: #e4405f;
     transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 .open-btn{
-    background-color: #000000;
+    background-color: #a6192e;
 }
 
 .open-btn:hover{
-    background-color: #8b141f;
+    background-color: #e4405f;
     transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 #tab-journals, #tab-posters {
