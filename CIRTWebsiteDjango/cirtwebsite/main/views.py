@@ -769,5 +769,17 @@ def get_pending_journals(request):
     ]
     return JsonResponse(data, safe=False)
 
+def get_reviewers(request):
+    User = get_user_model()
+    reviewers = User.objects.filter(role='reviewer')
+    data = [
+        {
+            'id': reviewer.id,
+            'name': reviewer.get_full_name() or reviewer.username
+        }
+        for reviewer in reviewers
+    ]
+    return JsonResponse(data, safe=False)
+
 def feedback(request):
     journals = Document.objects.filter(status='')

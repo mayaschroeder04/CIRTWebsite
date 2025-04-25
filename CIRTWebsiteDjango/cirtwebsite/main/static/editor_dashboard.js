@@ -10,11 +10,6 @@ function setActiveTab(tabId) {
     document.getElementById(tabId).classList.add('active-tab');
 }
 
-const reviewers = [
-    { id: 1, name: "Alice Johnson" },
-    { id: 2, name: "Brian Carter" }
-];
-
 
 function assignReviewer(journalId) {
     // Simulate the assign action
@@ -85,38 +80,46 @@ document.addEventListener('DOMContentLoaded', function () {
         const container = document.getElementById('dashboard-content');
         container.innerHTML = ''; // Clear existing content
 
-        fetch('/get-pending-journals/')
+        fetch('/get-reviewers/')
             .then(response => response.json())
-            .then(data => {
-                if (data.length === 0) {
-                    container.innerHTML = "<p>No unassigned journals!</p>";
-                    return;
-                }
+            .then(reviewers => {
+                fetch('/get-pending-journals/')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            container.innerHTML = "<p>No unassigned journals!</p>";
+                            return;
+                        }
 
-                data.forEach((journal) => {
-                    const journalDiv = document.createElement('div');
-                    journalDiv.className = "journal-entry";
-                    journalDiv.id = `journal-${journal.id}`;
+                        data.forEach((journal) => {
+                            const journalDiv = document.createElement('div');
+                            journalDiv.className = "journal-entry";
+                            journalDiv.id = `journal-${journal.id}`;
 
-                    journalDiv.innerHTML = `
-                        <p><strong>Title:</strong> ${journal.title}</p>
-                        <p><strong>Author:</strong> ${journal.author}</p>
-                        <a href="${journal.fileUrl}" target="_blank">View File</a>
-                        <div style="margin-top:10px;">
-                            <label for="reviewer-${journal.id}">Assign Reviewer:</label>
-                            <select id="reviewer-${journal.id}">
-                                ${reviewers.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
-                            </select>
-                            <button onclick="assignReviewer(${journal.id})">Assign</button>
-                        </div>
-                    `;
+                            journalDiv.innerHTML = `
+                                <p><strong>Title:</strong> ${journal.title}</p>
+                                <p><strong>Author:</strong> ${journal.author}</p>
+                                <a href="${journal.fileUrl}" target="_blank">View File</a>
+                                <div style="margin-top:10px;">
+                                    <label for="reviewer-${journal.id}">Assign Reviewer:</label>
+                                    <select id="reviewer-${journal.id}">
+                                        ${reviewers.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
+                                    </select>
+                                    <button onclick="assignReviewer(${journal.id})">Assign</button>
+                                </div>
+                            `;
 
-                    container.appendChild(journalDiv);
-                });
+                            container.appendChild(journalDiv);
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Failed to load pending journals:', err);
+                        container.innerHTML = '<p style="color: red;">Error loading journals.</p>';
+                    });
             })
             .catch(err => {
-                console.error('Failed to load pending journals:', err);
-                container.innerHTML = '<p style="color: red;">Error loading journals.</p>';
+                console.error('Failed to load reviewers:', err);
+                container.innerHTML = '<p style="color: red;">Error loading reviewers.</p>';
             });
     });
     document.getElementById('feedbackBtn').addEventListener('click', function () {
@@ -126,8 +129,5 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(`/feedback/`, {
 
         })
-
-
-
     })
 });

@@ -80,6 +80,7 @@ urlpatterns = [
     path('saved-journals/', views.saved_journals, name='saved_journals'),
 
     path('review-status/', views.review_status, name='review_status'),
+    path('get-reviewers/', views.get_reviewers, name='get-reviewers'),
 
     path('get-pending-journals/', views.get_pending_journals, name='get_pending_journals'),
 
