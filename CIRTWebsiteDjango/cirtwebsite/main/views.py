@@ -42,7 +42,8 @@ def homepage(request):
         saved_document_ids = list(user.saved_documents.values_list('id', flat=True))
         print(saved_document_ids)
 
-    documents = Document.objects.select_related('category').order_by('-created_at')[:3]
+    documents = Document.objects.select_related('category').filter(status='approved').order_by('-created_at')[:3]
+
     categories = Category.objects.all()
     category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
     documents_json = json.dumps([
@@ -167,7 +168,7 @@ def search_results(request):
         print('Selected Categories:', selected_categories)
         print('Selected Subcategories:', selected_subcategories)
 
-        documents = Document.objects.all()
+        documents = Document.objects.all(status='approved')
         if selected_categories:
             documents = documents.filter(category__id__in=selected_categories)
         # Uncomment and update if you want to filter by subcategories:
@@ -767,3 +768,6 @@ def get_pending_journals(request):
         for doc in journals
     ]
     return JsonResponse(data, safe=False)
+
+def feedback(request):
+    journals = Document.objects.filter(status='')

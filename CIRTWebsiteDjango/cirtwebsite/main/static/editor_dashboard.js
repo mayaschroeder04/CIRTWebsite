@@ -20,6 +20,15 @@ function assignReviewer(journalId) {
     // Simulate the assign action
     document.getElementById(`journal-${journalId}`).remove();
 
+    // Parker says to do this,  create the URL by looking at the other ones I have in there
+
+    // fetch(`/assign-reviewer/${journalId}/`, {
+    //     method: 'POST',
+    //     headers: {journ
+    //         'X-CSRFToken': getCSRFToken(),
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: '{}'
     // Remove from dummy data (optional, simulating "backend update")
     // This part is no longer applicable as unassignedJournals is removed
 
@@ -47,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
 
         // Fetch actual user profile info
-        fetch('/user-profile/', {
+        fetch(`/user-profile/`, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': getCSRFToken(),
@@ -110,5 +119,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.innerHTML = '<p style="color: red;">Error loading journals.</p>';
             });
     });
+    document.getElementById('feedbackBtn').addEventListener('click', function () {
+        setActiveTab('feedbackBtn');
+        const container = document.getElementById('dashboard-content');
+        container.innerHTML = '';
+        fetch(`/feedback/`, {
 
+        })
+
+
+
+    })
 });

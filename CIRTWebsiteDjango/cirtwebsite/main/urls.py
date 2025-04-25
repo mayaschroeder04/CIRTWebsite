@@ -83,5 +83,7 @@ urlpatterns = [
 
     path('get-pending-journals/', views.get_pending_journals, name='get_pending_journals'),
 
+    path('feedback/', views.feedback, name="feedback"),
+
     path('user-profile/', views.user_profile, name='user_profile')
 ]
