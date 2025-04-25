@@ -104,15 +104,15 @@
 <div style="margin-top: 40px; margin-left: 18.5%; width: 60%;">
     <!-- Tab placeholders for posters/journals-->
     <div style="display: flex; cursor: pointer;">
-        <div onclick="switchTab('journals')" id="tab-journals" style="flex: 1; padding: 10px; text-align: center; background-color: #a6192e; color: white;">
+        <div onclick="switchTab('journals')" id="tab-journals" style="flex: 1; padding: 10px; text-align: center; background-color: #a6192e; color: white; font-size: 18px; font-weight: bold; font-family: 'Poppins', sans-serif;">
             Latest Journals
         </div>
-        <div onclick="switchTab('posters')" id="tab-posters" style="flex: 1; padding: 10px; text-align: center; background-color: #e0e0e0; color: #333;">
+        <div onclick="switchTab('posters')" id="tab-posters" style="flex: 1; padding: 10px; text-align: center; background-color: #e0e0e0; color: #333; font-size: 18px; font-weight: bold; font-family: 'Poppins', sans-serif;">
             Latest Posters
         </div>
     </div>
     
-    <hr style="background-color: #a6192e; height: 3px; border: none; margin-top: 0;">
+    
     
     <div id="content-journals" style="margin-top: 20px;">
         <script id="documents-data" type="application/json">
@@ -203,6 +203,7 @@ function switchTab(tab) {
                         <button class="download-btn" data-id="${id}">Download</button>
                         <button class="save-btn" data-id="${id}">Save</button>
                         <button class="cite-btn" data-id="${ id }">Cite</button>
+                        <button class="open-btn" onclick="window.location.href='/view_pdf/${id}/'">View PDF</button>
                     </div>
                 </li>
             `;
