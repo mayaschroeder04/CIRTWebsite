@@ -215,9 +215,9 @@ def student_dashboard(request):
 def reviewer_dashboard(request):
     return render(request, "reviewer-dashboard.html")
 
-def view_uploads(request):
-    journals = Document.objects.all()
-    return render(request, 'view-uploads.html', {'pending_journals': journals})
+# def view_uploads(request):
+#     journals = Document.objects.all()
+#     return render(request, 'view-uploads.html', {'pending_journals': journals})
 
 def assigned_journals(request):
     journals = Document.objects.all()  # no filter

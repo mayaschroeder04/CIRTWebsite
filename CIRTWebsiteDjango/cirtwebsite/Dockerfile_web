@@ -22,7 +22,6 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 RUN apt-get update && apt-get install -y netcat-traditional
 
-COPY init.sql /docker-entrypoint-initdb.d/init.sql
 
 
 # Stage 2: Production stage
