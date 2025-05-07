@@ -113,6 +113,7 @@ def past_uploads(request):
 def view_uploads(request):
     uploads = Document.objects.all()
 
+    return render(request, "view-uploads.html", {"uploads": uploads})
 
     return render(request, 'view-uploads.html', {
         'uploads': uploads
@@ -215,9 +216,11 @@ def student_dashboard(request):
 def reviewer_dashboard(request):
     return render(request, "reviewer-dashboard.html")
 
-# def view_uploads(request):
-#     journals = Document.objects.all()
-#     return render(request, 'view-uploads.html', {'pending_journals': journals})
+
+def view_uploads(request):
+    journals = Document.objects.all()
+    return render(request, "view-uploads.html", {"pending_journals": journals})
+
 
 def assigned_journals(request):
     journals = Document.objects.all()  # no filter
@@ -359,13 +362,15 @@ def forgot_username(request):
                 [email],
                 fail_silently=False,
             )
-            return JsonResponse({
-                'success': True,
-                'message': 'If an account exists with this email, you will receive instructions shortly.'
-            })
+            return JsonResponse(
+                {
+                    "success": True,
+                    "message": "If an account exists with this email, you will receive instructions shortly.",
+                }
+            )
         else:
-            return JsonResponse({'success': False, 'message': "Email not found."})
-    return JsonResponse({'success': False, 'message': "Invalid request."})
+            return JsonResponse({"success": False, "message": "Email not found."})
+    return JsonResponse({"success": False, "message": "Invalid request."})
 
 
 def login_view(request):
@@ -380,13 +385,19 @@ def login_view(request):
             if otp_on_off:
                 otp = generate_otp_for_user(user)
                 send_otp_email(user.email, otp)
-                request.session['otp_user'] = user.username
-                return JsonResponse({"success": True, "redirect_url": "verify_otp?username=" + username})
+                request.session["otp_user"] = user.username
+                return JsonResponse(
+                    {"success": True, "redirect_url": "verify_otp?username=" + username}
+                )
             else:
                 login(request, user)
-                return JsonResponse({"success": True, "message": "Logging in...", "redirect_url": "/"})
+                return JsonResponse(
+                    {"success": True, "message": "Logging in...", "redirect_url": "/"}
+                )
         else:
-            return JsonResponse({"success": False, "message": "Invalid username or password."})
+            return JsonResponse(
+                {"success": False, "message": "Invalid username or password."}
+            )
     return render(request, "login_view.html")
 
 
@@ -409,11 +420,19 @@ def login_otp(request):
         user = CustomerUser.objects.get(username=username)
         if verify_otp_user(user, otp):
             print("made it here!")
-            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            user.backend = "django.contrib.auth.backends.ModelBackend"
             login(request, user)
-            return JsonResponse({"success": True, "message": "Logging in...", "redirect_url": "/"})
+            return JsonResponse(
+                {"success": True, "message": "Logging in...", "redirect_url": "/"}
+            )
         else:
-            return JsonResponse({"success": False, "message": "Invalid OTP.", "redirect_url": "#login_otp?username=" + user.username})
+            return JsonResponse(
+                {
+                    "success": False,
+                    "message": "Invalid OTP.",
+                    "redirect_url": "#login_otp?username=" + user.username,
+                }
+            )
     return render(request, "login_view.html")
 
 
@@ -454,10 +473,21 @@ def upload_journal(request):
         if not file:
             return JsonResponse({"status": "error", "message": "Missing file"})
         if file.content_type != "application/pdf":
-            return JsonResponse({"status": "error", "message": "Only PDF files are allowed"})
-        if type == 'journal':
-            upload_document(file, title, description, author, category, user_id, type, subcategory_instance)
-        elif type == 'image':
+            return JsonResponse(
+                {"status": "error", "message": "Only PDF files are allowed"}
+            )
+        if type == "journal":
+            upload_document(
+                file,
+                title,
+                description,
+                author,
+                category,
+                user_id,
+                type,
+                subcategory_instance,
+            )
+        elif type == "image":
             pass
         else:
             return JsonResponse({"status": "error", "message": "Invalid type"})
@@ -475,18 +505,23 @@ def upload_journal(request):
 #     file_path = f"{type}"
 
 
-def upload_document(file, title, description, author, category, user_id, type, subcategory):
-    s3_client = boto3.client('s3',
-                             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                             region_name=settings.AWS_S3_REGION_NAME)
+def upload_document(
+    file, title, description, author, category, user_id, type, subcategory
+):
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME,
+    )
     category_instance = Category.objects.get(name=category)
     file_path = f"{type}/{category.replace(' ', '-')}/{title.replace(' ', '-')}.pdf"
-    s3_client.upload_fileobj(file, settings.AWS_STORAGE_BUCKET_NAME, file_path,
-                             ExtraArgs={
-                                 "ContentType": file.content_type,
-                                 "ContentDisposition": "inline"
-                             })
+    s3_client.upload_fileobj(
+        file,
+        settings.AWS_STORAGE_BUCKET_NAME,
+        file_path,
+        ExtraArgs={"ContentType": file.content_type, "ContentDisposition": "inline"},
+    )
     document = Document.objects.create(
         title=title,
         description=description,
@@ -532,8 +567,10 @@ def generate_presigned_url(request, file_path):
 
 def journals_view(request):
     # Get all documents (which you might be using as journals)
-    journals = Document.objects.all().order_by("title")  # Use Document instead of Journal
-    
+    journals = Document.objects.all().order_by(
+        "title"
+    )  # Use Document instead of Journal
+
     # Pass journals as a context variable to the template
     return render(request, 'journals.html', {'journals': journals})
 
@@ -589,7 +626,9 @@ def save_user_documents(request, documentId):
             print(user.saved_documents.all())
             return JsonResponse({"success": True})
         else:
-            return JsonResponse({"success": False, "message": "Make an account to save!"})
+            return JsonResponse(
+                {"success": False, "message": "Make an account to save!"}
+            )
     else:
         return JsonResponse({"success": False})
 
@@ -747,8 +786,50 @@ def review_status(request):
         ]
         return JsonResponse({"success": True, "data": data})
 
+
 def user_profile(request):
     if request.method == "POST":
         user = request.user
 
         return JsonResponse({"name": user.first_name + " " + user.last_name, "role": user.role, "email": user.email })
+
+
+def get_pending_journals(request):
+    journals = Document.objects.filter(status='pending', type='journal')
+    data = [
+        {
+            'id': doc.id,
+            'title': doc.title,
+            'author': doc.author,
+            'fileUrl': f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{doc.file_url}"
+        }
+        for doc in journals
+    ]
+    return JsonResponse(data, safe=False)
+
+def get_reviewers(request):
+    User = get_user_model()
+    reviewers = User.objects.filter(role='reviewer')
+    data = [
+        {
+            'id': reviewer.id,
+            'name': reviewer.get_full_name() or reviewer.username
+        }
+        for reviewer in reviewers
+    ]
+    return JsonResponse(data, safe=False)
+
+
+def feedback(request):
+    journals = Document.objects.filter(status='')
+    return JsonResponse(
+        {
+            "name": user.first_name + " " + user.last_name,
+            "role": user.role,
+            "email": user.email,
+        }
+    )
+
+
+def faculty_view(request):
+    return render(request, "faculty.html")

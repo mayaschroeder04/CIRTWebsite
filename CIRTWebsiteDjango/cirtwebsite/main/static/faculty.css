@@ -1,0 +1,28 @@
+h1 {
+    text-align: center;
+}
+
+.faculty-image {
+    border-radius: 10%;
+    width: 250px;
+    height: 301px;
+}
+
+.faculty-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.faculty-box {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10%;
+    background-color: #f9f9f9;
+    width: 350px;
+    height: 450px;
+}
