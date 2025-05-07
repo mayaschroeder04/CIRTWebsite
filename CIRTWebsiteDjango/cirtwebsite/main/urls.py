@@ -2,9 +2,6 @@ from django.urls import path, include
 from . import views, admin
 
 
-
-
-
 urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("fake_journal/", views.fake_journal, name="fake_journal"),
@@ -26,7 +23,7 @@ urlpatterns = [
     path("past-uploads/", views.past_uploads, name="past_uploads"),
     path("past-reviews/", views.past_reviews, name="past_reviews"),
     path("editor-dashboard/", views.editor_dashboard, name="editor_dashboard"),
-    path('check_status/', views.check_status, name='check_status'),
+    path("check_status/", views.check_status, name="check_status"),
     path("button-two", views.button_two, name="button_two"),
     path("button-four", views.button_four, name="button_four"),
     path("awaiting-review/", views.awaiting_review, name="awaiting_review"),
@@ -38,34 +35,27 @@ urlpatterns = [
     path("view-uploads/", views.view_uploads, name="view_uploads"),
     path("upload-journal/", views.upload_journal, name="upload_a_journal"),
     path("assigned-journals/", views.assigned_journals, name="assigned_journals"),
-    path('accounts/', include('allauth.urls')),
-    path('view-uploads/', views.view_uploads, name="view_uploads"),
-
-    path('verify_email/<uidb64>/<token>/', views.verify_email, name="verify_email"),
-
-    path('login-otp/', views.login_otp, name="login_otp"),
-
-    path('generate_presigned_url/<path:file_path>/', views.generate_presigned_url, name='generate_presigned_url'),
-
-    path('set-password/', views.set_password, name="set_password"),
-
-    path('autocomplete/', views.autocomplete, name='autocomplete'),
-
+    path("accounts/", include("allauth.urls")),
+    path("view-uploads/", views.view_uploads, name="view_uploads"),
+    path("verify_email/<uidb64>/<token>/", views.verify_email, name="verify_email"),
+    path("login-otp/", views.login_otp, name="login_otp"),
+    path(
+        "generate_presigned_url/<path:file_path>/",
+        views.generate_presigned_url,
+        name="generate_presigned_url",
+    ),
+    path("set-password/", views.set_password, name="set_password"),
+    path("autocomplete/", views.autocomplete, name="autocomplete"),
     path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
-
     path("faq/", views.faq_view, name="faq"),
-
-    path("terms-and-conditions/",views.terms_and_conditions_view,name="terms-and-conditions",),
-
+    path(
+        "terms-and-conditions/",
+        views.terms_and_conditions_view,
+        name="terms-and-conditions",
+    ),
     path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
 
     path("contact/", views.contact_view, name="contact"),
-
-    path('save-document/<path:documentId>/', views.save_user_documents, name="save_document"),
-
-    path('unsave-document/<path:documentId>/', views.unsave_user_documents, name="unsave_document"),
-
-    path('cite-document/<path:documentId>/', views.cite_document, name="cite-document"),
 
     path('download-document/<path:documentId>/', views.download_document, name="download_document"),
 
@@ -86,5 +76,15 @@ urlpatterns = [
 
     path('feedback/', views.feedback, name="feedback"),
 
-    path('user-profile/', views.user_profile, name='user_profile')
+    path('user-profile/', views.user_profile, name='user_profile'),
+
+    path("save-document/<path:documentId>/",views.save_user_documents,name="save_document"),
+
+    path("unsave-document/<path:documentId>/",views.unsave_user_documents,name="unsave_document"),
+
+    path("cite-document/<path:documentId>/", views.cite_document, name="cite-document"),
+
+    path("download-document/<path:documentId>/",views.download_document,name="download_document"),
+
+    path("faculty/", views.faculty_view, name="faculty"),
 ]
