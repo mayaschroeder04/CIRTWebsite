@@ -189,6 +189,7 @@ nav {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
     width: 90%;
 }
+
 .featured-post h2 {
     font-size: 1.2rem;
     color: #000;
@@ -199,6 +200,7 @@ nav {
 .featured-post .author {
     color: #555;
 }
+
 .read-more {
     display: inline-block;
     background-color: #a6192e;
@@ -1071,9 +1073,9 @@ header {
 }
 
 #tab-journals, #tab-posters {
-    height: 28px;            
-    padding: 0 20px;        
-    border-radius: 20px;     
+    height: 28px;
+    padding: 0 20px;
+    border-radius: 10px;
     background-color: #e0e0e0;
     color: #333;
     display: flex;

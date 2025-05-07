@@ -12,27 +12,33 @@ function setActiveTab(tabId) {
 
 
 function assignReviewer(journalId) {
-    // Simulate the assign action
-    document.getElementById(`journal-${journalId}`).remove();
+    const reviewerSelect = document.getElementById(`reviewer-${journalId}`);
+    const reviewerId = reviewerSelect.value;
 
-    // Parker says to do this,  create the URL by looking at the other ones I have in there
-
-    // fetch(`/assign-reviewer/${journalId}/`, {
-    //     method: 'POST',
-    //     headers: {journ
-    //         'X-CSRFToken': getCSRFToken(),
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: '{}'
-    // Remove from dummy data (optional, simulating "backend update")
-    // This part is no longer applicable as unassignedJournals is removed
-
-    // Optional success message
-    const container = document.getElementById('dashboard-content');
-    const message = document.createElement('p');
-    message.textContent = "Journal successfully assigned!";
-    message.style.color = "green";
-    container.insertBefore(message, container.firstChild);
+    fetch(`/assign-reviewer/${journalId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reviewer_id: reviewerId })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Assignment failed');
+            }
+            // Remove the journal from the page on successful assignment
+            document.getElementById(`journal-${journalId}`).remove();
+            const container = document.getElementById('dashboard-content');
+            const message = document.createElement('p');
+            message.textContent = "Journal successfully assigned!";
+            message.style.color = "green";
+            container.insertBefore(message, container.firstChild);
+        })
+        .catch(error => {
+            console.error('Error assigning reviewer:', error);
+            alert('Failed to assign reviewer.');
+        });
 }
 
 document.addEventListener('DOMContentLoaded', function () {

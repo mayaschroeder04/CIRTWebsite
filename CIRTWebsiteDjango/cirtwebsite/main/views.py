@@ -781,5 +781,6 @@ def get_reviewers(request):
     ]
     return JsonResponse(data, safe=False)
 
+
 def feedback(request):
     journals = Document.objects.filter(status='')
