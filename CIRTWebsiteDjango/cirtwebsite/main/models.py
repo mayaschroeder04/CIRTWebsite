@@ -1,6 +1,7 @@
 
 from django.contrib.auth.models import AbstractUser, Group, Permission, UserManager
 from django.db import models
+from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -27,16 +28,21 @@ class Subcategory(models.Model):
 class Images(models.Model):
     name = models.CharField(max_length=255, unique=True)
     id = models.AutoField(primary_key=True)
-    author = models.CharField(max_length=255)
-    file_url = models.CharField(max_length=255)
-    file_size = models.CharField(max_length=255)
-    file_type = models.CharField(max_length=255)
-    description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=255, default="Unknown")
+    file_url = models.URLField(max_length=255, default="")
+    file_size = models.CharField(max_length=255, default="")
+    file_type = models.CharField(max_length=255, default="")
+    description = models.TextField(default='')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     submitted_user = models.IntegerField(null=True, blank=True)
 
+    class Meta:
+        db_table = "images"
 
-class Document(models.Model):
+    def __str__(self):
+        return self.name
+
+class Document(models.Model) :
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     # subcategory_id = models.IntegerField(null=True, blank=True)  # You can improve this later with a proper FK
@@ -46,6 +52,8 @@ class Document(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     submitted_user = models.IntegerField(null=True, blank=True)
+    reviewer_comments = models.TextField(default ='')
+    assigned_reviewer = models.CharField(max_length=255, default="")
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="documents")
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)  # Ensure this is defined
@@ -54,6 +62,7 @@ class Document(models.Model):
         ('approved', 'Approved' ),
         ('rejected', 'Rejected' ),
         ('pending', 'Pending' ),
+        ('reviewing', 'Reviewing' ),
     ]
 
     TYPE = [
@@ -87,6 +96,8 @@ class CustomUser(AbstractUser):
     saved_documents = models.ManyToManyField('main.Document', blank=True, related_name='saved_by')
     groups = models.ManyToManyField(Group, blank=True, related_name="customuser_set")
     user_permissions = models.ManyToManyField(Permission, blank=True, related_name="customuser_set")
+    assigned_journals = models.ManyToManyField('main.Document', blank=True, related_name='assigned')
+    reviewed_journals = models.ManyToManyField('main.Document', blank=True, related_name='reviewed')
 
     objects = UserManager()
 
@@ -103,7 +114,9 @@ class Journal(models.Model):
     author = models.CharField(max_length=255)
     category_name = models.CharField(max_length=255)
     description = models.TextField()
-    file_url = models.URLField()  # Or FileField if you're uploading actual files
+    reviewer_comments = models.TextField(default='')
+    assigned_reviewer = models.CharField(max_length=255, default='')
+    file_url = models.URLField()
 
     def __str__(self):
         return self.title

@@ -10,35 +10,40 @@ function setActiveTab(tabId) {
     document.getElementById(tabId).classList.add('active-tab');
 }
 
-
 function assignReviewer(journalId) {
     const reviewerSelect = document.getElementById(`reviewer-${journalId}`);
-    const reviewerId = reviewerSelect.value;
+    const reviewerId     = reviewerSelect.value;               // chosen reviewer
 
-    fetch(`/assign-reviewer/${journalId}/`, {
+    fetch(`/assign-reviewer/${journalId}/${reviewerId}/`, {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCSRFToken(),
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ reviewer_id: reviewerId })
+        body: '{}'
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Assignment failed');
-            }
-            // Remove the journal from the page on successful assignment
-            document.getElementById(`journal-${journalId}`).remove();
-            const container = document.getElementById('dashboard-content');
-            const message = document.createElement('p');
-            message.textContent = "Journal successfully assigned!";
-            message.style.color = "green";
-            container.insertBefore(message, container.firstChild);
-        })
-        .catch(error => {
-            console.error('Error assigning reviewer:', error);
-            alert('Failed to assign reviewer.');
-        });
+    .then(response => {
+        if (!response.ok) throw new Error('Assignment failed');
+
+        // Remove the journal from the page
+        document.getElementById(`journal-${journalId}`).remove();
+
+        // Success message
+        const container = document.getElementById('dashboard-content');
+        const message   = document.createElement('p');
+        message.textContent = 'Journal successfully assigned!';
+        message.style.color = 'green';
+        container.insertBefore(message, container.firstChild);
+
+        // If no journals remain, say so
+        if (!container.querySelector('.journal-entry')) {
+            container.innerHTML += '<p>No unassigned journals!</p>';
+        }
+    })
+    .catch(error => {
+        console.error('Error assigning reviewer:', error);
+        alert('Failed to assign reviewer.');
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -46,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Profile Info
     document.getElementById('profileBtn').addEventListener('click', () => {
-        setActiveTab('profileBtn')
+        setActiveTab('profileBtn');
         contentDiv.innerHTML = `
             <div class="profile-box">
                 <h3>Your Profile</h3>
@@ -56,8 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        // Fetch actual user profile info
-        fetch(`/user-profile/`, {
+        fetch('/user-profile/', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': getCSRFToken(),
@@ -65,75 +69,75 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: '{}'
         })
-            .then(res => res.json())
-            .then(data => {
-                // Dynamically update profile box with actual data
-                contentDiv.querySelector('.profile-box').innerHTML = `
+        .then(res => res.json())
+        .then(data => {
+            contentDiv.querySelector('.profile-box').innerHTML = `
                 <h3>Your Profile</h3>
-                <p><strong>Name:</strong> ${data.name}</p>
+                <p><strong>Name:</strong>  ${data.name}</p>
                 <p><strong>Email:</strong> ${data.email}</p>
-                <p><strong>Role:</strong> ${data.role}</p>
-            `;
-            })
-            .catch(err => {
-                console.error('Error loading profile:', err);
-                contentDiv.innerHTML += '<p style="color: red;">Failed to load profile.</p>';
-            });
+                <p><strong>Role:</strong>  ${data.role}</p>`;
+        })
+        .catch(err => {
+            console.error('Error loading profile:', err);
+            contentDiv.innerHTML +=
+                '<p style="color:red;">Failed to load profile.</p>';
+        });
     });
 
-    document.getElementById('needsReviewBtn').addEventListener('click', function () {
+    // Needs-Review tab
+    document.getElementById('needsReviewBtn').addEventListener('click', () => {
         setActiveTab('needsReviewBtn');
         const container = document.getElementById('dashboard-content');
-        container.innerHTML = ''; // Clear existing content
+        container.innerHTML = '';
 
         fetch('/get-reviewers/')
-            .then(response => response.json())
-            .then(reviewers => {
-                fetch('/get-pending-journals/')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.length === 0) {
-                            container.innerHTML = "<p>No unassigned journals!</p>";
-                            return;
-                        }
+        .then(r => r.json())
+        .then(reviewers => {
+            fetch('/get-pending-journals/')
+            .then(r => r.json())
+            .then(data => {
+                if (data.length === 0) {
+                    container.innerHTML = '<p>No unassigned journals!</p>';
+                    return;
+                }
 
-                        data.forEach((journal) => {
-                            const journalDiv = document.createElement('div');
-                            journalDiv.className = "journal-entry";
-                            journalDiv.id = `journal-${journal.id}`;
+                data.forEach(journal => {
+                    const div = document.createElement('div');
+                    div.className = 'journal-entry';
+                    div.id        = `journal-${journal.id}`;
 
-                            journalDiv.innerHTML = `
-                                <p><strong>Title:</strong> ${journal.title}</p>
-                                <p><strong>Author:</strong> ${journal.author}</p>
-                                <a href="${journal.fileUrl}" target="_blank">View File</a>
-                                <div style="margin-top:10px;">
-                                    <label for="reviewer-${journal.id}">Assign Reviewer:</label>
-                                    <select id="reviewer-${journal.id}">
-                                        ${reviewers.map(r => `<option value="${r.id}">${r.name}</option>`).join('')}
-                                    </select>
-                                    <button onclick="assignReviewer(${journal.id})">Assign</button>
-                                </div>
-                            `;
-
-                            container.appendChild(journalDiv);
-                        });
-                    })
-                    .catch(err => {
-                        console.error('Failed to load pending journals:', err);
-                        container.innerHTML = '<p style="color: red;">Error loading journals.</p>';
-                    });
+                    div.innerHTML = `
+                        <p><strong>Title:</strong> ${journal.title}</p>
+                        <p><strong>Author:</strong> ${journal.author}</p>
+                        <a href="${journal.fileUrl}" target="_blank">View File</a>
+                        <div style="margin-top:10px;">
+                          <label for="reviewer-${journal.id}">Assign Reviewer:</label>
+                          <select id="reviewer-${journal.id}">
+                            ${reviewers.map(r =>
+                               `<option value="${r.id}">${r.name}</option>`).join('')}
+                          </select>
+                          <button onclick="assignReviewer(${journal.id})">Assign</button>
+                        </div>`;
+                    container.appendChild(div);
+                });
             })
             .catch(err => {
-                console.error('Failed to load reviewers:', err);
-                container.innerHTML = '<p style="color: red;">Error loading reviewers.</p>';
+                console.error('Failed to load pending journals:', err);
+                container.innerHTML =
+                    '<p style="color:red;">Error loading journals.</p>';
             });
-    });
-    document.getElementById('feedbackBtn').addEventListener('click', function () {
-        setActiveTab('feedbackBtn');
-        const container = document.getElementById('dashboard-content');
-        container.innerHTML = '';
-        fetch(`/feedback/`, {
-
         })
-    })
+        .catch(err => {
+            console.error('Failed to load reviewers:', err);
+            container.innerHTML =
+                '<p style="color:red;">Error loading reviewers.</p>';
+        });
+    });
+
+    // Feedback tab (skeleton)
+    document.getElementById('feedbackBtn').addEventListener('click', () => {
+        setActiveTab('feedbackBtn');
+        document.getElementById('dashboard-content').innerHTML = '';
+        fetch('/feedback/');
+    });
 });

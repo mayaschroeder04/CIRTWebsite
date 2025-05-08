@@ -80,4 +80,52 @@ h1 {
 .profile-box p {
     margin: 8px 0;
 }
+.pending-journals-box {
+    padding: 20px;
+}
+
+.journal-entry {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.review-btn {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #a6192e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.review-btn.approve {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.review-btn.reject {
+    background-color: #f44336;
+    color: white;
+}
+
+.review-btn.approve:hover {
+    background-color: #45a049;
+}
+
+.review-btn.reject:hover {
+    background-color: #d32f2f;
+}
+.review-comment {
+    width: 100%;
+    max-width: 600px;
+    height: 80px;
+    padding: 8px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+}
 

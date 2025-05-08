@@ -17,6 +17,7 @@ echo "MySQL is up!"
 
 python manage.py seed_users  # Seeds users to auth_users
 python manage.py seed_documents
+python manage.py seed_images
 
 echo "Applying database migrations..."
 python manage.py migrate

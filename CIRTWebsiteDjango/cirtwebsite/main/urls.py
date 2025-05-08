@@ -31,7 +31,7 @@ urlpatterns = [
     path("reset-password/", views.reset_password, name="reset_password"),
     path("sign-up/", views.sign_up, name="sign_up"),
     path("reviewer-dashboard/", views.reviewer_dashboard, name="reviewer_dashboard"),
-    path("terms-and-conditions/", views.terms_conditions, name="terms_conditions"),
+    path("terms-and-conditions/", views.terms_and_conditions_view, name="terms-and-conditions"),
     path("view-uploads/", views.view_uploads, name="view_uploads"),
     path("upload-journal/", views.upload_journal, name="upload_a_journal"),
     path("assigned-journals/", views.assigned_journals, name="assigned_journals"),
@@ -48,11 +48,6 @@ urlpatterns = [
     path("autocomplete/", views.autocomplete, name="autocomplete"),
     path("privacy-policy/", views.privacy_policy_view, name="privacy-policy"),
     path("faq/", views.faq_view, name="faq"),
-    path(
-        "terms-and-conditions/",
-        views.terms_and_conditions_view,
-        name="terms-and-conditions",
-    ),
     path("cookie-policy/", views.cookie_policy_view, name="cookie-policy"),
 
     path("contact/", views.contact_view, name="contact"),
@@ -87,4 +82,8 @@ urlpatterns = [
     path("download-document/<path:documentId>/",views.download_document,name="download_document"),
 
     path("faculty/", views.faculty_view, name="faculty"),
+
+    path('assign-reviewer/<int:journalId>/<int:reviewerId>/', views.assign_reviewer, name="assign-reviewer"),
+
+    path('past-reviews/<int:journalId>/<path:status>/<path:comment>/', views.past_reviews, name="past_reviews"),
 ]

@@ -2,6 +2,8 @@ import json
 import random
 import string
 import time
+from tkinter import Image
+
 import boto3
 from django.core.cache import cache
 from datetime import timedelta
@@ -10,7 +12,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
-from .models import Category, Document, Subcategory
+from .models import Category, Document, Subcategory, Images
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
@@ -27,47 +29,49 @@ from botocore.exceptions import NoCredentialsError, ClientError
 # Use your custom user model throughout
 CustomerUser = get_user_model()
 
-
 # ---------------------------
 # Basic Page Views
 # ---------------------------
 def homepage(request):
     saved_document_ids = []  # Default to empty list
 
-    if request.user.is_authenticated:
+    if(request.user.is_authenticated):
         print("hererer")
         user = CustomerUser.objects.get(id=request.user.id)
         print(user.username)
         saved_documents = user.saved_documents.all()
         print("SAVED: ", saved_documents)
-        saved_document_ids = list(user.saved_documents.values_list("id", flat=True))
+        saved_document_ids = list(user.saved_documents.values_list('id', flat=True))
         print(saved_document_ids)
 
-    documents = Document.objects.select_related('category').filter(status='approved').order_by('-created_at')[:3]
+    images = Images.objects.all().order_by('-created_at')[:3]
+    images_json = json.dumps([{
+        "author": image.author,
+        "description": image.description,
+        "file_type": image.file_type,
+        "file_size": image.file_size,
+        "file_url": image.file_url,}
+        for image in images
+    ])
+
+    documents = (
+        Document.objects
+        .filter(status='approved')  # ← only approved
+        .select_related('category')
+        .order_by('-created_at')[:3]  # newest 3
+    )
     categories = Category.objects.all()
     category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
-    documents_json = json.dumps(
-        [
-            {
-                "id": doc.id,
-                "title": doc.title,
-                "author": doc.author,
-                "description": doc.description,
-                "category_name": doc.category.name,
-                "file_url": doc.file_url,
-            }
-            for doc in documents
-        ]
-    )
-    return render(
-        request,
-        "homepage.html",
-        {
-            "documents_json": documents_json,
-            "categories": category_data,
-            "saved_documents": saved_document_ids,
-        },
-    )
+    documents_json = json.dumps([
+        {"id": doc.id,
+         "title": doc.title,
+         "author": doc.author,
+         "description": doc.description,
+         "category_name": doc.category.name,
+         "file_url": doc.file_url}
+        for doc in documents
+    ])
+    return render(request, "homepage.html", {"documents_json": documents_json, "categories": category_data, "saved_documents": saved_document_ids, "images": images_json})
 
 
 def fake_journal(request):
@@ -75,7 +79,7 @@ def fake_journal(request):
 
 
 def toc(request):
-    return render(request, "terms_and_conditions.html")
+    return render(request, "terms-and-conditions.html")
 
 
 def journals_view(request):
@@ -83,7 +87,17 @@ def journals_view(request):
 
 
 def images_view(request):
-    return render(request, "images.html")
+    images = Images.objects.all().order_by('-created_at')[:3]
+    images_json = json.dumps([{
+        "author": image.author,
+        "description": image.description,
+        "file_type": image.file_type,
+        "file_size": image.file_size,
+        "file_url": image.file_url, }
+        for image in images
+    ])
+    return render(request, "images.html", {"images": images_json})
+
 
 
 def authors_view(request):
@@ -105,7 +119,6 @@ def filter_buttons(request):
     categories = Category.objects.all()
     return render(request, "search-results.html", {"categories": categories})
 
-
 def past_uploads(request):
     if request.method == "POST":
         user = request.user
@@ -118,37 +131,69 @@ def past_uploads(request):
                 "file_url": doc.file_url,
                 "author": doc.author,
                 "category_id": doc.category.id if doc.category else None,
-                "category_name": doc.category.name if doc.category else "Unknown",
+                "category_name": doc.category.name if doc.category else "Unknown"
             }
             for doc in documents
         ]
         return JsonResponse(data, safe=False)
-
 
 def view_uploads(request):
     uploads = Document.objects.all()
 
     return render(request, "view-uploads.html", {"uploads": uploads})
 
+    return render(request, 'view-uploads.html', {
+        'uploads': uploads
+    })
 
 def assigned_journals(request):
-    journals = Document.objects.all()  # no filter
-    return render(request, "assigned-journals.html", {"pending_journals": journals})
+    user = request.user
+    journals = user.assigned_journals.all()
+
+    journal_data = [
+        {
+            "id": doc.id,
+            "title": doc.title,
+            "author": str(doc.author),  # ensure plain text
+            "description": doc.description,
+            "category_name": doc.category.name,
+            "file_url": doc.file_url,
+            "status": doc.status  # so front-end can show it
+        }
+        for doc in journals
+    ]
+    return JsonResponse(journal_data, safe=False)
+
+def assign_reviewer(request, journalId, reviewerId):
+    reviewer = get_object_or_404(CustomerUser, pk=reviewerId)
+    reviewer.assigned_journals.add(journalId)
+    journal = Document.objects.get(id=journalId)
+    journal.status = 'reviewing'
+    journal.save()
+
+    return JsonResponse({"success": True})
+
+def past_reviews(request, journalId, status, comment):
+    journal = get_object_or_404(Document, pk=journalId)      # ← FIXED
+    journal.status = status
+    journal.reviewer_comments = comment
+    journal.save()
+    user = request.user
+    user.reviewed_journals.add(journalId)
+    print("hererere")
+
+    return JsonResponse({"success": True})
 
 
-def past_reviews(request):
-    return render(request, "past-reviews.html")
 
 
 def editor_dashboard(request):
     return render(request, "editor-dashboard.html")
 
-
 def check_status(request):
     user = request.user
     documents = Document.objects.filter(submitted_user=user.id)
-    return render(request, "check-status.html", {"documents": documents})
-
+    return render(request, 'check-status.html', {'documents': documents})
 
 # ---------------------------
 # Document & Search Views
@@ -156,16 +201,16 @@ def check_status(request):
 def search_results(request):
     query = request.GET.get("query", None)
     filter_category = request.GET.get("filter", None)
-    documents = Document.objects.select_related("category").all()
+    documents = Document.objects.select_related('category').all()
     cat = Category.objects.all()
     print("Category:", cat)
     category_name = "All Categories"
 
     if query:
         documents = documents.filter(
-            Q(title__icontains=query)
-            | Q(description__icontains=query)
-            | Q(author__icontains=query)
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(author__icontains=query)
         )
 
     if filter_category and filter_category != "All":
@@ -174,34 +219,27 @@ def search_results(request):
     categories = Category.objects.all()
     sub_categories = Subcategory.objects.all()
 
-    if request.method == "POST":
+    if request.method == 'POST':
         data = json.loads(request.body)
-        selected_categories = data.get("selected_categories", [])
-        selected_subcategories = data.get("selected_subcategories", [])
-        print("Selected Categories:", selected_categories)
-        print("Selected Subcategories:", selected_subcategories)
+        selected_categories = data.get('selected_categories', [])
+        selected_subcategories = data.get('selected_subcategories', [])
+        print('Selected Categories:', selected_categories)
+        print('Selected Subcategories:', selected_subcategories)
 
-        documents = Document.objects.all(status='approved')
+        documents = Document.objects.all()
         if selected_categories:
             documents = documents.filter(category__id__in=selected_categories)
         # Uncomment and update if you want to filter by subcategories:
         # if selected_subcategories:
         #     documents = documents.filter(subcategory_id__in=selected_subcategories)
 
-        documents_filtered = list(
-            documents.values(
-                "id",
-                "title",
-                "description",
-                "file_url",
-                "author",
-                "category__id",
-                "category__name",
-            )
-        )
+        documents_filtered = list(documents.values(
+            "id", "title", "description", "file_url", "author",
+            "category__id", "category__name"
+        ))
         print(type(documents_filtered))
         print(documents_filtered)
-        return JsonResponse({"documents": documents_filtered}, safe=False)
+        return JsonResponse({'documents': documents_filtered}, safe=False)
 
     documents_data = [
         {
@@ -211,23 +249,19 @@ def search_results(request):
             "file_url": doc.file_url,
             "author": doc.author,
             "category_id": doc.category.id if doc.category else None,
-            "category_name": doc.category.name if doc.category else "Unknown",
+            "category_name": doc.category.name if doc.category else "Unknown"
         }
         for doc in documents
     ]
     documents_json = json.dumps(documents_data)
-    return render(
-        request,
-        "search-results.html",
-        {
-            "documents_json": documents_json,
-            "filter": filter_category,
-            "qry": query,
-            "category_name": category_name,
-            "categories": categories,
-            "sub_categories": sub_categories,
-        },
-    )
+    return render(request, "search-results.html", {
+        "documents_json": documents_json,
+        "filter": filter_category,
+        "qry": query,
+        "category_name": category_name,
+        "categories": categories,
+        "sub_categories": sub_categories,
+    })
 
 
 def upload_images(request):
@@ -236,7 +270,6 @@ def upload_images(request):
 
 def student_dashboard(request):
     return render(request, "student-dashboard.html")
-
 
 def reviewer_dashboard(request):
     return render(request, "reviewer-dashboard.html")
@@ -247,15 +280,6 @@ def view_uploads(request):
     return render(request, "view-uploads.html", {"pending_journals": journals})
 
 
-def assigned_journals(request):
-    journals = Document.objects.all()  # no filter
-    return render(request, "assigned-journals.html", {"pending_journals": journals})
-
-
-def past_reviews(request):
-    return render(request, "past-reviews.html")
-
-
 def editor_dashboard(request):
     return render(request, "editor-dashboard.html")
 
@@ -263,7 +287,8 @@ def editor_dashboard(request):
 def check_status(request):
     user = request.user
     documents = Document.objects.filter(submitted_user=user.id)
-    return render(request, "check-status.html", {"documents": documents})
+    return render(request, 'check-status.html', {'documents': documents})
+
 
 
 def button_two(request):
@@ -288,14 +313,10 @@ def send_verification_email(user, request):
     print("token", token)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     print(f"User ID: {user.pk}, Token: {token}, Encoded UID: {uid}")
-    verification_url = urljoin(
-        request.build_absolute_uri("/verify_email/"), f"{uid}/{token}/"
-    )
+    verification_url = urljoin(request.build_absolute_uri('/verify_email/'), f"{uid}/{token}/")
     print("URL: ", verification_url)
     subject = "Verify your email address"
-    message = render_to_string(
-        "email/verification_email.html", {"verification_url": verification_url}
-    )
+    message = render_to_string("email/verification_email.html", {"verification_url": verification_url})
     send_mail(subject, message, "from@example.com", [user.email])
 
 
@@ -322,29 +343,17 @@ def sign_up(request):
         email = request.POST.get("email")
         confirm_password = request.POST.get("confirm_password")
         if password != confirm_password:
-            return JsonResponse(
-                {"success": False, "message": "Passwords must match."}, status=400
-            )
+            return JsonResponse({'success': False, "message": "Passwords must match."}, status=400)
         if CustomerUser.objects.filter(email=email).exists():
-            return JsonResponse(
-                {"success": False, "message": "Email is already in use."}, status=409
-            )
+            return JsonResponse({'success': False, "message": "Email is already in use."}, status=409)
         if CustomerUser.objects.filter(username=username).exists():
-            return JsonResponse(
-                {"success": False, "message": "Username already exists."}, status=409
-            )
+            return JsonResponse({'success': False, "message": "Username already exists."}, status=409)
         try:
-            user = CustomerUser.objects.create_user(
-                username=username, email=email, password=password, is_active=False
-            )
+            user = CustomerUser.objects.create_user(username=username, email=email, password=password, is_active=False)
             send_verification_email(user, request)
-            return JsonResponse(
-                {"success": True, "message": "User created successfully!"}
-            )
+            return JsonResponse({'success': True, 'message': 'User created successfully!'})
         except Exception as e:
-            return JsonResponse(
-                {"success": False, "message": f"Error: {str(e)}"}, status=500
-            )
+            return JsonResponse({'success': False, 'message': f"Error: {str(e)}"}, status=500)
 
 
 def reset_password(request):
@@ -354,9 +363,9 @@ def reset_password(request):
         if CustomerUser.objects.filter(email=email).exists():
             user = CustomerUser.objects.get(email=email)
             send_reset_password_email(user, request)
-            return JsonResponse({"success": True, "message": "Instructions sent"})
-        return JsonResponse({"success": False, "message": "Email doesn't exist"})
-    return JsonResponse({"success": False, "message": "Invalid request."})
+            return JsonResponse({'success': True, "message": "Instructions sent"})
+        return JsonResponse({'success': False, "message": "Email doesn't exist"})
+    return JsonResponse({'success': False, "message": "Invalid request."})
 
 
 def send_reset_password_email(user, request):
@@ -393,9 +402,9 @@ def forgot_username(request):
         user = CustomerUser.objects.filter(email=email).first()
         if user:
             send_mail(
-                "Your Username",
-                f"Your username is: {user.username}",
-                "from@example.com",
+                'Your Username',
+                f'Your username is: {user.username}',
+                'from@example.com',
                 [email],
                 fail_silently=False,
             )
@@ -439,7 +448,7 @@ def login_view(request):
 
 
 def generate_otp_for_user(user):
-    otp = "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    otp = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     cache.set(f"otp_{user.username}", otp, timeout=300)
     return otp
 
@@ -485,10 +494,6 @@ def verify_otp_user(user, otp):
     return cached_otp == otp
 
 
-def terms_conditions(request):
-    return render(request, "terms_and_conditions.html")
-
-
 # ---------------------------
 # Document Upload & Viewing
 # ---------------------------
@@ -531,11 +536,7 @@ def upload_journal(request):
         return JsonResponse({"status": "success", "message": "Upload successful!"})
     categories = Category.objects.all()
     subcategories = Subcategory.objects.all()
-    return render(
-        request,
-        "upload_a_journal.html",
-        {"categories": categories, "subcategories": subcategories},
-    )
+    return render(request, "upload_a_journal.html", {'categories': categories, 'subcategories': subcategories})
 
 
 # def upload_image(file, title, description, author, user_id ):
@@ -571,17 +572,14 @@ def upload_document(
         author=author,
         submitted_user=user_id,
         file_size=file.size,
-        subcategory = subcategory,
-        status = "pending"
+        subcategory = subcategory
     )
     return document
 
 
 def view_document(request, document_id):
     document = Document.objects.get(id=document_id)
-    file_path = document.file_url.split(
-        f"{settings.AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/"
-    )[1]
+    file_path = document.file_url.split(f"{settings.AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/")[1]
     presigned_url = document.presigned_url(file_path)
     print("presigned url: ", presigned_url)
     print("filepath: ", file_path)
@@ -594,21 +592,19 @@ def view_document(request, document_id):
 def generate_presigned_url(request, file_path):
     print(file_path)
     s3_client = boto3.client(
-        "s3",
+        's3',
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-        region_name=settings.AWS_S3_REGION_NAME,
-    )
+        region_name=settings.AWS_S3_REGION_NAME)
     print("here")
     try:
-        url = s3_client.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_path},
-            ExpiresIn=3600,
-        )
+        url = s3_client.generate_presigned_url('get_object',
+                                               Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                                                       'Key': file_path},
+                                               ExpiresIn=3600)
         return JsonResponse({"url": url})
     except ClientError as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        return JsonResponse({'error': str(e)}, status=500)
 
 
 def journals_view(request):
@@ -618,19 +614,17 @@ def journals_view(request):
     )  # Use Document instead of Journal
 
     # Pass journals as a context variable to the template
-    return render(request, "journals.html", {"journals": journals})
+    return render(request, 'journals.html', {'journals': journals})
 
 
 def autocomplete(request):
     query = request.GET.get("query", "")
     documents = Document.objects.select_related("category").filter(
         Q(title__istartswith=query)
-    )[
-        :10
-    ]  # Limit suggestions for performance
-    # Q(title__icontains=query) |
-    # Q(description__icontains=query) |
-    # Q(author__icontains=query)
+    )[:10]  # Limit suggestions for performance
+    #Q(title__icontains=query) |
+    #Q(description__icontains=query) |
+    #Q(author__icontains=query)
     suggestions = [doc.title for doc in documents]
     return JsonResponse(suggestions, safe=False)
 
@@ -642,14 +636,12 @@ def autocomplete(request):
         {"documents_json": documents_json},
     )
 
-
 def privacy_policy_view(request):
     return render(request, "privacy-policy.html")
 
 
 def faq_view(request):
     return render(request, "FAQ.html")
-
 
 def terms_and_conditions_view(request):
     return render(request, "terms_and_conditions.html")
@@ -663,9 +655,10 @@ def contact_view(request):
     return render(request, "contact.html")
 
 
+
 def save_user_documents(request, documentId):
     if request.method == "POST":
-        if request.user.is_authenticated:
+        if (request.user.is_authenticated):
             # document_id = request.POST.get("document_id")
             print(request.user.id)
             user_id = request.user.id
@@ -681,10 +674,9 @@ def save_user_documents(request, documentId):
     else:
         return JsonResponse({"success": False})
 
-
 def unsave_user_documents(request, documentId):
     if request.method == "POST":
-        if request.user.is_authenticated:
+        if (request.user.is_authenticated):
             # document_id = request.POST.get("document_id")
             print(request.user.id)
             user_id = request.user.id
@@ -694,7 +686,6 @@ def unsave_user_documents(request, documentId):
             return JsonResponse({"success": True})
     else:
         return JsonResponse({"success": False})
-
 
 def display_user_documents(request):
     if request.method == "POST":
@@ -706,40 +697,33 @@ def display_user_documents(request):
 
         category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
 
-        documents_json = json.dumps(
-            [
-                {
-                    "title": doc.title,
-                    "author": doc.author,
-                    "description": doc.description,
-                    "category_name": doc.category.name,
-                    "file_url": doc.file_url,
-                }
-                for doc in documents
-            ]
-        )
+        documents_json = json.dumps([
+            {"title": doc.title,
+             "author": doc.author,
+             "description": doc.description,
+             "category_name": doc.category.name,
+             "file_url": doc.file_url}
+            for doc in documents
+        ])
 
-        return JsonResponse(
-            {
-                "status": "success",
-                "documents": documents_json,
-                "categories": category_data,
-            }
-        )
+        return JsonResponse({"status": "success", "documents": documents_json, "categories": category_data})
 
 
 def cite_document(request, documentId):
     if request.method == "POST":
-        document = Document.objects.get(id=documentId)
+            document = Document.objects.get(id=documentId)
 
-        citation = document.get_citation()
-        return JsonResponse(
-            {"success": True, "citation": citation}  # Send the citation to the frontend
-        )
+            citation = document.get_citation()
+            return JsonResponse({
+                'success': True,
+                'citation': citation  # Send the citation to the frontend
+            })
 
     else:
-        return JsonResponse({"success": False, "message": "Invalid request method."})
-
+        return JsonResponse({
+            'success': False,
+            'message': "Invalid request method."
+        })
 
 def download_document(request, documentId):
     if request.method == "POST":
@@ -747,51 +731,49 @@ def download_document(request, documentId):
         document = Document.objects.get(id=documentId)
 
         s3 = boto3.client(
-            "s3",
+            's3',
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            region_name=settings.AWS_S3_REGION_NAME,
-        )
+            region_name=settings.AWS_S3_REGION_NAME)
 
         url = s3.generate_presigned_url(
-            ClientMethod="get_object",
+            ClientMethod='get_object',
             Params={
-                "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
-                "Key": document.file_url,
-                "ResponseContentDisposition": f'attachment; filename="{document.title}.pdf"',
-                "ResponseContentType": "application/pdf",
+                'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                'Key': document.file_url,
+                'ResponseContentDisposition': f'attachment; filename="{document.title}.pdf"',
+                'ResponseContentType': 'application/pdf'
             },
-            ExpiresIn=3600,
+            ExpiresIn=3600
         )
         return JsonResponse({"success": True, "url": url})
 
-    return JsonResponse({"success": True, "url": url})
-
+    return JsonResponse({"success": True, 'url': url})
 
 def view_pdf(request, doc_id):
     document = Document.objects.get(id=doc_id)
     file_path = document.file_url  # should be like 'Case-Studies/dfks.pdf'
 
     s3_client = boto3.client(
-        "s3",
+        's3',
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-        region_name=settings.AWS_S3_REGION_NAME,
+        region_name=settings.AWS_S3_REGION_NAME
     )
 
     try:
         presigned_url = s3_client.generate_presigned_url(
-            "get_object",
-            Params={"Bucket": settings.AWS_STORAGE_BUCKET_NAME, "Key": file_path},
-            ExpiresIn=3600,
+            'get_object',
+            Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME, 'Key': file_path},
+            ExpiresIn=3600
         )
     except ClientError as e:
         return HttpResponse(f"Error generating presigned URL: {str(e)}")
 
-    return render(
-        request, "view_pdf.html", {"journal": document, "pdf_url": presigned_url}
-    )
-
+    return render(request, 'view_pdf.html', {
+        'journal': document,
+        'pdf_url': presigned_url
+    })
 
 def submit_review(request, journal_id):
     if request.method == "POST":
@@ -803,14 +785,11 @@ def submit_review(request, journal_id):
 
         return redirect("assigned_journals")  # Or wherever you want to redirect
 
-
 def reviewed_journals(request):
-    return render(request, "reviewed_journals.html")
-
+    return render(request, 'reviewed_journals.html')
 
 def flagged_revision(request):
     return render(request, "flagged_revision.html")
-
 
 def saved_journals(request):
     documents = request.user.saved_documents.all()
@@ -823,12 +802,11 @@ def saved_journals(request):
             "file_url": doc.file_url,
             "author": doc.author,
             "category_id": doc.category.id if doc.category else None,
-            "category_name": doc.category.name if doc.category else "Unknown",
+            "category_name": doc.category.name if doc.category else "Unknown"
         }
         for doc in documents
     ]
     return JsonResponse(data, safe=False)
-
 
 def review_status(request):
     if request.method == "POST":
@@ -844,7 +822,7 @@ def review_status(request):
                 "author": doc.author,
                 "category_id": doc.category.id if doc.category else None,
                 "category_name": doc.category.name if doc.category else "Unknown",
-                "status": doc.status,
+                "status": doc.status
             }
             for doc in documents
         ]
@@ -885,6 +863,7 @@ def get_reviewers(request):
 
 
 def feedback(request):
+    user = request.user
     journals = Document.objects.filter(status='')
     return JsonResponse(
         {
