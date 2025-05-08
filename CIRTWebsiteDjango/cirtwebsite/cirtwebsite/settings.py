@@ -184,6 +184,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # allow all origins
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = ['https://cirt.themalmgrens.com']
+
 #using credentials like cookies
 CORS_ALLOW_CREDENTIALS = True
 
