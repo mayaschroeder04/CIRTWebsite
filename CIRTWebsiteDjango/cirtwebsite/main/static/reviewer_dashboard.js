@@ -72,6 +72,27 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
     `;
     });
+    // Reviewed Journals
+    document.getElementById('feedbackBtn').addEventListener('click', () => {
+        setActiveTab('feedbackBtn');
+        contentDiv.innerHTML = `
+        <div class="reviewed-journals-box">
+            <h3>Reviewed Journals</h3>
+            <div class="journal-entry">
+                <p><strong>Title:</strong> Cybersecurity Policies</p>
+                <p><strong>Author:</strong> Dana Smith</p>
+                <a href="#" target="_blank">View File</a>
+                <p><strong>Reviewer Comment:</strong> Well-researched and clearly written. Approved.</p>
+            </div>
+            <div class="journal-entry">
+                <p><strong>Title:</strong> Facial Recognition & Privacy</p>
+                <p><strong>Author:</strong> Kevin Tran</p>
+                <a href="#" target="_blank">View File</a>
+                <p><strong>Reviewer Comment:</strong> Needs stronger citations. Rejected for now.</p>
+            </div>
+        </div>
+    `;
+    });
 })
 
 
