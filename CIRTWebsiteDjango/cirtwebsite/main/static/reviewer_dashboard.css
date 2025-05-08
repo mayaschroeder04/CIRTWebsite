@@ -116,4 +116,16 @@ h1 {
 .review-btn.reject:hover {
     background-color: #d32f2f;
 }
+.review-comment {
+    width: 100%;
+    max-width: 600px;
+    height: 80px;
+    padding: 8px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+}
 
