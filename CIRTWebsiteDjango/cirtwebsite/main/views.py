@@ -45,14 +45,26 @@ def homepage(request):
         print(saved_document_ids)
 
     images = Images.objects.all().order_by('-created_at')[:3]
+
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME,
+    )
+
     images_json = json.dumps([{
         "author": image.author,
         "description": image.description,
         "file_type": image.file_type,
         "file_size": image.file_size,
-        "file_url": image.file_url,}
+        "file_url":  s3.generate_presigned_url('get_object',
+                                           Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                                                   'Key': image.file_url},
+                                           ExpiresIn=3600),}
         for image in images
     ])
+
 
     documents = (
         Document.objects
@@ -83,17 +95,48 @@ def toc(request):
 
 
 def journals_view(request):
-    return render(request, "journals.html")
+    images = Images.objects.all()
 
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME,
+    )
 
-def images_view(request):
-    images = Images.objects.all().order_by('-created_at')[:3]
     images_json = json.dumps([{
         "author": image.author,
         "description": image.description,
         "file_type": image.file_type,
         "file_size": image.file_size,
-        "file_url": image.file_url, }
+        "file_url": s3.generate_presigned_url('get_object',
+                                              Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                                                      'Key': image.file_url},
+                                              ExpiresIn=3600), }
+        for image in images
+    ])
+    return render(request, "journals.html" , {"images": images_json})
+
+
+def images_view(request):
+    images = Images.objects.all()
+
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME,
+    )
+
+    images_json = json.dumps([{
+        "author": image.author,
+        "description": image.description,
+        "file_type": image.file_type,
+        "file_size": image.file_size,
+        "file_url": s3.generate_presigned_url('get_object',
+                                              Params={'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+                                                      'Key': image.file_url},
+                                              ExpiresIn=3600), }
         for image in images
     ])
     return render(request, "images.html", {"images": images_json})
@@ -540,15 +583,15 @@ def upload_journal(request):
 
 
 # def upload_image(file, title, description, author, user_id ):
-#     s3_client = boto3.client('s3',
-#                              aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-#                              aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-#                              region_name=settings.AWS_S3_REGION_NAME)
+#     REGION_NAMs3_client = boto3.client('s3',
+# #                              aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+# #                              aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+# #                              region_name=settings.AWS_S3_E)
 #     file_path = f"{type}"
 
 
 def upload_document(
-    file, title, description, author, category, user_id, type, subcategory
+        file, title, description, author, category, user_id, type, subcategory
 ):
     s3_client = boto3.client(
         "s3",

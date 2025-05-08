@@ -1,368 +1,146 @@
 {% extends 'base.html' %}
 {% block title %}University of Tampa CIRT Website{% endblock %}
 
-{% comment %} 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University of Tampa CIRT Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'homepage.css' %}">
-</head>
-<body>
-
-<!-- top of the page -->
-<header>
-    <div class="header-left">
-        {% load static %}
-        <img src="{% static 'tampalogo.png' %}" alt="CIRT Logo">
-        <h1>CRIMINOLOGY INSTITUTE of <br> RESEARCH TECHNOLOGY</h1>
-    </div>
-        <div class="header-right">
-            <div class="header-tabs">
-                {% load static %}
-                <a href="{% url 'journals' %}" class="tab">Journals</a>
-                <a href="{% url 'images' %}" class="tab">Images</a>
-                <a href="{% url 'upload_a_journal' %}" class="tab">Upload</a>
-            </div>
-            {% if user.is_authenticated %}
-                  <div class="login-buttons">
-                      <p>Welcome, {{ user.first_name }}!</p>
-                     {% load static %}
-                      {% if user.is_staff %}
-                      <a href="{% url 'editor_dashboard' %}">
-                          <button class="register-btn">Dashboard</button>
-                      </a>
-                      {% elif user.is_staff %}
-                           <a href="{% url 'reviewer_dashboard' %}">
-                               <button class="register-btn">Dashboard</button>
-                           </a>
-                      {% else %}
-                      <a href="{% url 'student_dashboard' %}">
-                         <button class="register-btn">Account</button>
-                      </a>
-                      {% endif %}
-                     <form action="{% url 'logout' %}" method="POST">
-                         {% csrf_token %}
-                         <button class="login-btn" type="submit">Log Out</button>
-                     </form>
-                  </div>
-            {% else %}
-                <div class="login-buttons">
-                    <a href="{% url 'login' %}">
-                        <button class="register-btn" >Register</button>
-                    </a>
-                    <a href="{% url 'login' %}">
-                        <button class="login-btn">Log In</button>
-                    </a>
-                </div>
-            {% endif %}
-        </div>
-</header> {% endcomment %}
-
 {% block content %}
 <div class="background-section">
 
-    <!-- quote above search bar -->
+    <!-- Quote above search bar -->
     <nav>
         <p>
-            Connecting Minds. <br>
-            Empowering Change. <br>
+            Connecting Minds.<br>
+            Empowering Change.<br>
             Inspiring Innovation.
         </p>
-
     </nav>
 
-    <!-- search bar with filter button -->
+    <!-- Search bar with filter button -->
     <div class="group">
         <div class="autocomplete">
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-            <g>
-                <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
-            </g>
-        </svg>
-        {% load static %}
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                <g>
+                    <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                </g>
+            </svg>
+            {% load static %}
             <input id="search-input" placeholder="Search" type="search" class="input" autocomplete="off" oninput="showSuggestions()">
-            <img id="filter-btn" src="{%static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
+            <img id="filter-btn" src="{% static 'filter.png' %}" alt="Filter" class="filter-icon" onclick="toggleFilter()">
             <script src="{% static 'search.js' %}"></script>
         </div>
     </div>
 
-
-<!-- Filter options -->
-<div id="filter-options" class="filter-dropdown">
-    <label><input type="radio" name="filter" value="All" checked> All</label>
-    {% for category in categories %}
-    <label><input type="radio" name="filter" value="{{ category.id }}">{{ category.name }}</label>
-    {% endfor %}
-</div>
-</div>
-
-<div style="margin-top: 40px; margin-left: 18.5%; width: 60%;">
-    <!-- Tab placeholders for posters/journals-->
-    <div style="display: flex; cursor: pointer;">
-        <div onclick="switchTab('journals')" id="tab-journals" style="flex: 1; padding: 10px; text-align: center; background-color: #a6192e; color: white; font-size: 18px; font-weight: bold; font-family: 'Poppins', sans-serif;">
-            Latest Journals
-        </div>
-        <div onclick="switchTab('posters')" id="tab-posters" style="flex: 1; padding: 10px; text-align: center; background-color: #e0e0e0; color: #333; font-size: 18px; font-weight: bold; font-family: 'Poppins', sans-serif;">
-            Latest Posters
-        </div>
+    <!-- Filter options -->
+    <div id="filter-options" class="filter-dropdown">
+        <label><input type="radio" name="filter" value="All" checked> All</label>
+        {% for category in categories %}
+            <label><input type="radio" name="filter" value="{{ category.id }}">{{ category.name }}</label>
+        {% endfor %}
     </div>
-    
-    
-    
-    <div id="content-journals" style="margin-top: 20px;">
-        <script id="documents-data" type="application/json">
-            {{ documents_json|safe }}
-        </script>
+</div>
+
+<div style="margin-top:40px;margin-left:18.5%;width:60%;">
+    <!-- Tabs -->
+    <div style="display:flex;cursor:pointer;">
+        <div onclick="switchTab('journals')" id="tab-journals" style="flex:1;padding:10px;text-align:center;background-color:#a6192e;color:white;font-size:18px;font-weight:bold;font-family:'Poppins',sans-serif;">Latest Journals</div>
+        <div onclick="switchTab('posters')" id="tab-posters" style="flex:1;padding:10px;text-align:center;background-color:#e0e0e0;color:#333;font-size:18px;font-weight:bold;font-family:'Poppins',sans-serif;">Latest Posters</div>
+    </div>
+
+    <!-- Journals content -->
+    <div id="content-journals" style="margin-top:20px;">
+        <script id="documents-data" type="application/json">{{ documents_json|safe }}</script>
         <div id="latest-posts"></div>
     </div>
 
-    <div id="content-posters" style="margin-top: 20px; display: none;">
-        <script id="saved-documents" type="application/json">
-            {{ saved_documents|safe }}
-        </script>
-        <!-- for when posters are in -->
-        <div id="latest-posters"></div>
+    <!-- Posters content -->
+    <div id="content-posters" style="margin-top:20px;display:none;">
+        <script id="images-data" type="application/json">{{ images|safe }}</script>
+        <div id="latest-posters" class="posters-grid"></div>
     </div>
 </div>
 
 <script>
-function switchTab(tab) {
-    const journalsTab = document.getElementById('tab-journals');
-    const postersTab = document.getElementById('tab-posters');
-    const journalsContent = document.getElementById('content-journals');
-    const postersContent = document.getElementById('content-posters');
-
-    if (tab === 'journals') {
-        journalsContent.style.display = 'block';
-        postersContent.style.display = 'none';
-        journalsTab.style.backgroundColor = '#a6192e';
-        journalsTab.style.color = 'white';
-        postersTab.style.backgroundColor = '#e0e0e0';
-        postersTab.style.color = '#333';
-    } else {
-        journalsContent.style.display = 'none';
-        postersContent.style.display = 'block';
-        postersTab.style.backgroundColor = '#a6192e';
-        postersTab.style.color = 'white';
-        journalsTab.style.backgroundColor = '#e0e0e0';
-        journalsTab.style.color = '#333';
+// Switch between tabs
+function switchTab(tab){
+    const jTab=document.getElementById('tab-journals');
+    const pTab=document.getElementById('tab-posters');
+    const jContent=document.getElementById('content-journals');
+    const pContent=document.getElementById('content-posters');
+    const ACTIVE='#a6192e', INACTIVE='#e0e0e0';
+    if(tab==='journals'){
+        jContent.style.display='block'; pContent.style.display='none';
+        jTab.style.backgroundColor=ACTIVE; jTab.style.color='white';
+        pTab.style.backgroundColor=INACTIVE; pTab.style.color='#333';
+    }else{
+        jContent.style.display='none'; pContent.style.display='block';
+        pTab.style.backgroundColor=ACTIVE; pTab.style.color='white';
+        jTab.style.backgroundColor=INACTIVE; jTab.style.color='#333';
     }
 }
-</script>
 
-<script>
-    function fetchPresignedUrl(documentId) {
-        fetch(`/generate_presigned_url/${documentId}/`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.url) {
-                    window.open(data.url, '_blank');
-                } else {
-                    alert('Failed to generate download link.');
-                    console.error(data.error);
-                }
-            })
-            .catch(error => {
-                alert('Error fetching document.');
-                console.error(error);
-            });
-    }
-</script>
-<script>
-    console.log("Display Latest Posts Function is Loaded");
+// Utility to download a file via an invisible <a download>
+function downloadFile(url){
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=''; // let browser infer filename
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
-    function displayLatestPosts() {
-        const rawDocumentsJson = "{{ documents_json|escapejs }}";
-        const documents = JSON.parse(rawDocumentsJson);
-        console.log(documents);
+/* ---------------- Journals ---------------- */
+function displayLatestPosts(){
+    const raw=document.getElementById('documents-data').textContent.trim();
+    if(!raw) return;
+    const docs=JSON.parse(raw);
+    let html="<ul class='results-list'>";
+    docs.forEach(d=>{
+        const id=encodeURIComponent(d.id);
+        html+=`<li class="search-result-item">
+            <div class="result-meta">
+                <p class="result-type">RESEARCH REPORT</p>
+                <h3 onclick="fetchPresignedUrl('${id}')" class="result-title">${d.title}</h3>
+                <p class="result-author">${d.author}</p>
+                <p class="result-org">${d.category_name}</p>
+                <p>${d.description}</p>
+            </div>
+            <div class="result-actions">
+                <button class="download-btn" data-id="${id}">Download</button>
+                <button class="save-btn" data-id="${id}">Save</button>
+                <button class="cite-btn" data-id="${id}">Cite</button>
+                <button class="open-btn" onclick="window.location.href='/view_pdf/${id}/'">View PDF</button>
+            </div>
+        </li>`;});
+    html+="</ul>";
+    document.getElementById('latest-posts').innerHTML=html;
+}
 
-        let resultHTML = "<ul class='results-list'>";
+/* ---------------- Posters ---------------- */
+function displayLatestPosters(){
+    const raw=document.getElementById('images-data').textContent.trim();
+    if(!raw) return;
+    const posters=JSON.parse(raw);
+    let html='';
+    posters.forEach(p=>{
+        html+=`<div class="poster-card" onclick="downloadFile('${p.file_url}')">
+                    <img src="${p.file_url}" alt="${p.description||p.author}" class="poster-img">
+                    <div class="poster-caption"><h4>Author: ${p.author}</h4></div>
+                    <div class="poster-caption"><h4>Description: ${p.description}</h4></div>
 
-        documents.forEach(document => {
-            // Use encodeURIComponent to safely pass data into JavaScript function
-            const title = encodeURIComponent(document.title);
-            const id = encodeURIComponent(document.id)
-            const description = encodeURIComponent(document.description);
-            const fileUrl = encodeURIComponent(document.file_url); // Add this line
+                </div>`;
+    });
+    document.getElementById('latest-posters').innerHTML=html;
+}
 
-            resultHTML += `
-                <li class="search-result-item">
-                    <div class="result-meta">
-                        <p class="result-type">RESEARCH REPORT</p>
-                        <h3 onclick="fetchPresignedUrl('${fileUrl}')" class="result-title">${document.title}</h3>
-                        <p class="result-author">${document.author}</p>
-                        <p class="result-org">${document.category_name}</p>
-                        <p>${document.description}</p>
-                    </div>
-                    <div class="result-actions">
-                        <button class="download-btn" data-id="${id}">Download</button>
-                        <button class="save-btn" data-id="${id}">Save</button>
-                        <button class="cite-btn" data-id="${ id }">Cite</button>
-                        <button class="open-btn" onclick="window.location.href='/view_pdf/${id}/'">View PDF</button>
-                    </div>
-                </li>
-            `;
-        })
-        resultHTML += "</ul>";
-        document.getElementById("latest-posts").innerHTML = resultHTML;
-    }
-    document.addEventListener("DOMContentLoaded", displayLatestPosts);
-    console.log("DOM content loaded, calling displayLatestPosts...");
+document.addEventListener('DOMContentLoaded',()=>{
     displayLatestPosts();
-
+    displayLatestPosters();
+});
 </script>
 
-<script>
-    console.log("Documents JSON:", "{{ documents_json|escapejs }}");
-</script>
-<!-- Modal (for all featured posts) -->
-<div id="modal" class="modal" style="display: none;">
-    <div id="modal-content" class="modal-content">
-        <!-- Modal content will be injected here -->
-    </div>
+<!-- Modal placeholder -->
+<div id="modal" class="modal" style="display:none;">
+    <div id="modal-content" class="modal-content"></div>
 </div>
 
-<script>
-    function openModal(title) {
-
-        let modal = document.getElementById("modal");
-        let modalContent = document.getElementById("modal-content");
-
-        console.log('Opening modal with title:', title); // Check if this gets logged
-
-
-        // Ensure modal elements exist before modifying them
-        if (modal && modalContent) {
-            modal.style.display = "block";
-            modalContent.innerHTML = `
-                <div class="modal-content">
-                    <h2><strong>Log in to continue reading</strong></h2>
-                    <p>${title}</p>
-                    <a href="{% url 'login' %}">
-                        <button>Sign Up / Log In</button>
-                    </a>
-                    <a href="{% url 'student_dashboard' %}">
-                        <button>Continue as guest</button>
-                    </a>
-                    <button href="{% url 'homepage' %}">Continue as Guest</button>
-                    <button onclick="closeModal()">Close</button>
-                </div>
-            `;
-        }
-    }
-
-
-    function closeModal() {
-        let modal = document.getElementById("modal");
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    function redirectToLogin() {
-        alert("Redirecting to login page... (Placeholder Action)");
-    }
-
-    function continueAsGuest() {
-        alert("Continuing as guest... (Placeholder Action)");
-    }
-    </script>
-
-  <div id="modal" class="modal" style="display:none;">
-    <div id="modal-content" class="modal-content"></div>
-  </div>
-
-<!-- space between the footer and the featured post box -->
+<!-- Footer spacer -->
 <div class="spacer"></div>
 {% endblock %}
-
-{% comment %} <!-- space between the footer and the featured post box -->
-<div class="spacer"></div> {% endcomment %}
-{% comment %} 
-<!-- left and right black boxes in the footer -->
-<div class="footer-container">
-    <!-- Left and right "blocked out" areas -->
-    <div class="footer-buffer footer-buffer-left"></div>
-    <div class="footer-buffer footer-buffer-right"></div>
-
-    <!-- footer main content -->
-    <div class="footer-inner">
-        <!-- main title -->
-        <div class="main-title">
-            <h1>EXPLORE CIRT</h1>
-        </div>
-
-        <!-- footer sections -->
-        <div class="footer-sections">
-            <div class="footer-section">
-                <!-- first section -->
-                <h3>About Us</h3>
-                <ul>
-                    <li><a href="#">CIRT</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <!-- second section -->
-                <h3>Explore Content</h3>
-                <ul>
-                    <li><a href="#">Explore CIRT</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <!-- third section -->
-                <h3>Terms & Policies</h3>
-                <ul>
-                    <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <!-- fourth section -->
-                <h3>Description</h3>
-                <p style="color:white"> Organized in 2023, the CIRT is designed to offer a variety of academic pursuits including: education for students and training for criminal justice professionals; engaging in local, regional, and nationwide criminal justice research and policy events; publishing and promoting high-level multidisciplinary research; expanding faculty and student reach in grant and funding opportunities; and coordinating further collaboration with local criminal justice agencies.
-                </p>
-            </div>
-        </div>
-
-        <!-- Social media icons at the bottom -->
-        <!-- From Uiverse.io by Pradeepsaranbishnoi -->
-        <div class="social-links">
-            <a id="instagram" class="social-btn flex-center" href="https://www.instagram.com/utampacrm/" target="_blank">
-                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0-2A7.5 7.5 0 0 0 0 7.5v9A7.5 7.5 0 0 0 7.5 24h9A7.5 7.5 0 0 0 24 16.5v-9A7.5 7.5 0 0 0 16.5 0h-9zM12 6.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 2A3.5 3.5 0 1 0 12 16a3.5 3.5 0 0 0 0-7zm6-1a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
-                </svg>
-                <span>utampacrm</span>
-            </a>
-
-            <a id="linkedin" class="social-btn flex-center" href="https://www.linkedin.com/company/utampa-criminology-criminal-justice/" target="_blank">
-                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"></path>
-                </svg>
-                <span>utampacrm</span>
-            </a>
-
-            <a id="facebook" class="social-btn flex-center" href="https://www.facebook.com/utampacrm" target="_blank">
-                <svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.41c0-3.1 1.892-4.79 4.656-4.79 1.324 0 2.464.098 2.794.143v3.24h-1.916c-1.504 0-1.794.716-1.794 1.764v2.31h3.59l-.467 3.622h-3.123V24h6.116C23.403 24 24 23.403 24 22.675V1.325C24 .597 23.403 0 22.675 0z"/>
-                </svg>
-                <span>utamapcrm</span>
-            </a>
-        </div>
-
-    </div>
-</div>
-    <script src="{% static 'homepage.js' %}"></script>
-
-</body>
-</html>
-</html> {% endcomment %}

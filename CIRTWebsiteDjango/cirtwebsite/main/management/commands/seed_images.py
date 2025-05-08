@@ -7,9 +7,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         image_data = [
             # name,            author,            description,               file_type, file_size, file_url
-            ("cirt-image-1",  "System Seeder",  "Promo shot for landing",   "image/jpeg", "245 KB", "images/cirt-image-1.jpg"),
-            ("cirt-image-2",  "System Seeder",  "Hero banner background",   "image/jpeg", "310 KB", "images/cirt-image-2.jpg"),
-            ("cirt-image-3",  "System Seeder",  "Thumbnail placeholder",    "image/png",  "512 KB", "images/cirt-image-3.png"),
+            ("cirt-image-1",  "Timothy Knapp",  "Awesome Photo of CS",   "image/jpeg", "245 KB", "image/cirt-image-1.jpg"),
+            ("cirt-image-2",  "Sayed Imran Ali",  "Hero banner background",   "image/jpeg", "310 KB", "image/cirt-image-2.jpg"),
+            ("cirt-image-3",  "Jake Sussner",  "Password Security Banner",    "image/png",  "512 KB", "image/cirt-image3.jpg"),
         ]
 
         for name, author, description, file_type, file_size, file_url in image_data:
@@ -24,7 +24,7 @@ class Command(BaseCommand):
                     # leave submitted_user=None so you can fill it later if needed
                 },
             )
-            action = "✔  created" if created else "↻  skipped (exists)"
+            action = "created" if created else "skipped (exists)"
             self.stdout.write(f"{action}: {name}")
 
         self.stdout.write(self.style.SUCCESS("Image seeding complete."))

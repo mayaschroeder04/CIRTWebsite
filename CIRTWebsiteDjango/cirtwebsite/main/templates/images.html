@@ -105,3 +105,20 @@
         }
     </style>
 {% endblock %}
+
+
+function displayLatestPosters(){
+    const raw=document.getElementById('images-data').textContent.trim();
+    if(!raw) return;
+    const posters=JSON.parse(raw);
+    let html='';
+    posters.forEach(p=>{
+        html+=`<div class="poster-card" onclick="downloadFile('${p.file_url}')">
+                    <img src="${p.file_url}" alt="${p.description||p.author}" class="poster-img">
+                    <div class="poster-caption"><h4>Author: ${p.author}</h4></div>
+                    <div class="poster-caption"><h4>Description: ${p.description}</h4></div>
+
+                </div>`;
+    });
+    document.getElementById('latest-posters').innerHTML=html;
+}
