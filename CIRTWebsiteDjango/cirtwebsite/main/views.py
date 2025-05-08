@@ -119,7 +119,7 @@ def journals_view(request):
 
 
 def images_view(request):
-    images = Images.objects.all()
+    images = Images.objects.all().order_by('-created_at')
 
     s3 = boto3.client(
         "s3",
