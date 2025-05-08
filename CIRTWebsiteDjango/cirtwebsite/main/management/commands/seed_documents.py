@@ -45,4 +45,5 @@ class Command(BaseCommand):
                 }
             )
 
+
         self.stdout.write(self.style.SUCCESS("Categories, subcategories, user, and documents seeded successfully."))

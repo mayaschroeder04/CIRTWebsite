@@ -1,6 +1,7 @@
 
 from django.contrib.auth.models import AbstractUser, Group, Permission, UserManager
 from django.db import models
+from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -27,16 +28,21 @@ class Subcategory(models.Model):
 class Images(models.Model):
     name = models.CharField(max_length=255, unique=True)
     id = models.AutoField(primary_key=True)
-    author = models.CharField(max_length=255)
-    file_url = models.CharField(max_length=255)
-    file_size = models.CharField(max_length=255)
-    file_type = models.CharField(max_length=255)
-    description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=255, default="Unknown")
+    file_url = models.URLField(max_length=255, default="")
+    file_size = models.CharField(max_length=255, default="")
+    file_type = models.CharField(max_length=255, default="")
+    description = models.TextField(default='')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     submitted_user = models.IntegerField(null=True, blank=True)
 
+    class Meta:
+        db_table = "images"
 
-class Document(models.Model):
+    def __str__(self):
+        return self.name
+
+class Document(models.Model) :
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     # subcategory_id = models.IntegerField(null=True, blank=True)  # You can improve this later with a proper FK

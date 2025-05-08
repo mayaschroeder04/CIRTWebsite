@@ -2,6 +2,8 @@ import json
 import random
 import string
 import time
+from tkinter import Image
+
 import boto3
 from django.core.cache import cache
 from datetime import timedelta
@@ -10,7 +12,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
-from .models import Category, Document, Subcategory
+from .models import Category, Document, Subcategory, Images
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
@@ -42,6 +44,16 @@ def homepage(request):
         saved_document_ids = list(user.saved_documents.values_list('id', flat=True))
         print(saved_document_ids)
 
+    images = Images.objects.all().order_by('-created_at')[:3]
+    images_json = json.dumps([{
+        "author": image.author,
+        "description": image.description,
+        "file_type": image.file_type,
+        "file_size": image.file_size,
+        "file_url": image.file_url,}
+        for image in images
+    ])
+
     documents = Document.objects.select_related('category').order_by('-created_at')[:3]
     categories = Category.objects.all()
     category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
@@ -54,7 +66,7 @@ def homepage(request):
          "file_url": doc.file_url}
         for doc in documents
     ])
-    return render(request, "homepage.html", {"documents_json": documents_json, "categories": category_data, "saved_documents": saved_document_ids})
+    return render(request, "homepage.html", {"documents_json": documents_json, "categories": category_data, "saved_documents": saved_document_ids, "images": images_json})
 
 
 def fake_journal(request):
@@ -70,7 +82,17 @@ def journals_view(request):
 
 
 def images_view(request):
-    return render(request, "images.html")
+    images = Images.objects.all().order_by('-created_at')[:3]
+    images_json = json.dumps([{
+        "author": image.author,
+        "description": image.description,
+        "file_type": image.file_type,
+        "file_size": image.file_size,
+        "file_url": image.file_url, }
+        for image in images
+    ])
+    return render(request, "images.html", {"images": images_json})
+
 
 
 def authors_view(request):
