@@ -1,5 +1,5 @@
 #!/bin/bash
-set -o pipefail
+set -eo pipefail
 
 echo "Checking if netcat is installed..."
 which nc || echo "Netcat is NOT installed!"
