@@ -82,4 +82,8 @@ urlpatterns = [
     path("download-document/<path:documentId>/",views.download_document,name="download_document"),
 
     path("faculty/", views.faculty_view, name="faculty"),
+
+    path('assign-reviewer/<int:journalId>/<int:reviewerId>/', views.assign_reviewer, name="assign-reviewer"),
+
+    path('past-reviews/<int:journalId>/<path:status>/<path:comment>/', views.past_reviews, name="past_reviews"),
 ]

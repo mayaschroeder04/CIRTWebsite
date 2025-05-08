@@ -52,6 +52,8 @@ class Document(models.Model) :
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     submitted_user = models.IntegerField(null=True, blank=True)
+    reviewer_comments = models.TextField(default ='')
+    assigned_reviewer = models.CharField(max_length=255, default="")
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="documents")
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)  # Ensure this is defined
@@ -60,6 +62,7 @@ class Document(models.Model) :
         ('approved', 'Approved' ),
         ('rejected', 'Rejected' ),
         ('pending', 'Pending' ),
+        ('reviewing', 'Reviewing' ),
     ]
 
     TYPE = [
@@ -93,6 +96,8 @@ class CustomUser(AbstractUser):
     saved_documents = models.ManyToManyField('main.Document', blank=True, related_name='saved_by')
     groups = models.ManyToManyField(Group, blank=True, related_name="customuser_set")
     user_permissions = models.ManyToManyField(Permission, blank=True, related_name="customuser_set")
+    assigned_journals = models.ManyToManyField('main.Document', blank=True, related_name='assigned')
+    reviewed_journals = models.ManyToManyField('main.Document', blank=True, related_name='reviewed')
 
     objects = UserManager()
 
@@ -109,7 +114,9 @@ class Journal(models.Model):
     author = models.CharField(max_length=255)
     category_name = models.CharField(max_length=255)
     description = models.TextField()
-    file_url = models.URLField()  # Or FileField if you're uploading actual files
+    reviewer_comments = models.TextField(default='')
+    assigned_reviewer = models.CharField(max_length=255, default='')
+    file_url = models.URLField()
 
     def __str__(self):
         return self.title

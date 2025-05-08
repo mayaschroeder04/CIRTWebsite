@@ -28,9 +28,11 @@ class Command(BaseCommand):
         # Define users and their roles
         users = [
             ('JohnDoe', 'johndoe@example.com', 'password123', 'student', 'John', 'Doe', 1),
-            ('maya', 'janedoe@example.com', 'maya', 'reviewer', 'Alice', 'Doe', 1),
+            ('maya', 'janedoe@example.com', 'maya', 'reviewer', 'Maya', 'Schroeder', 1),
             ('sayedali', 'bobdoe@example.com', 'password789', 'editor', 'Sayed', 'Ali', 0),
             ('abc', 'abc@example.com', 'abc', 'student', 'Adam', 'Cobb', 0),
+            ('tim', 'janedoe@example.com', 'tim', 'reviewer', 'Tim', 'Knapp', 1),
+
         ]
 
         # Check if the "parker" user exists, if not, create it

@@ -54,7 +54,12 @@ def homepage(request):
         for image in images
     ])
 
-    documents = Document.objects.select_related('category').order_by('-created_at')[:3]
+    documents = (
+        Document.objects
+        .filter(status='approved')  # ← only approved
+        .select_related('category')
+        .order_by('-created_at')[:3]  # newest 3
+    )
     categories = Category.objects.all()
     category_data = [{"id": cat.id, "name": cat.name} for cat in categories]
     documents_json = json.dumps([
@@ -142,13 +147,44 @@ def view_uploads(request):
     })
 
 def assigned_journals(request):
-    journals = Document.objects.all()  # no filter
-    return render(request, 'assigned-journals.html', {
-        'pending_journals': journals
-    })
+    user = request.user
+    journals = user.assigned_journals.all()
 
-def past_reviews(request):
-    return render(request, "past-reviews.html")
+    journal_data = [
+        {
+            "id": doc.id,
+            "title": doc.title,
+            "author": str(doc.author),  # ensure plain text
+            "description": doc.description,
+            "category_name": doc.category.name,
+            "file_url": doc.file_url,
+            "status": doc.status  # so front-end can show it
+        }
+        for doc in journals
+    ]
+    return JsonResponse(journal_data, safe=False)
+
+def assign_reviewer(request, journalId, reviewerId):
+    reviewer = get_object_or_404(CustomerUser, pk=reviewerId)
+    reviewer.assigned_journals.add(journalId)
+    journal = Document.objects.get(id=journalId)
+    journal.status = 'reviewing'
+    journal.save()
+
+    return JsonResponse({"success": True})
+
+def past_reviews(request, journalId, status, comment):
+    journal = get_object_or_404(Document, pk=journalId)      # ← FIXED
+    journal.status = status
+    journal.reviewer_comments = comment
+    journal.save()
+    user = request.user
+    user.reviewed_journals.add(journalId)
+    print("hererere")
+
+    return JsonResponse({"success": True})
+
+
 
 
 def editor_dashboard(request):
@@ -242,18 +278,6 @@ def reviewer_dashboard(request):
 def view_uploads(request):
     journals = Document.objects.all()
     return render(request, "view-uploads.html", {"pending_journals": journals})
-
-
-def assigned_journals(request):
-    journals = Document.objects.all()  # no filter
-    return render(request, 'assigned-journals.html', {
-        'pending_journals': journals
-    })
-
-
-
-def past_reviews(request):
-    return render(request, "past-reviews.html")
 
 
 def editor_dashboard(request):
@@ -839,6 +863,7 @@ def get_reviewers(request):
 
 
 def feedback(request):
+    user = request.user
     journals = Document.objects.filter(status='')
     return JsonResponse(
         {
