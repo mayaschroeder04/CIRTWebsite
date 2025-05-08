@@ -49,6 +49,61 @@ document.addEventListener('DOMContentLoaded', function () {
                 contentDiv.innerHTML += '<p style="color: red;">Failed to load profile.</p>';
             });
     });
+    // Pending Journals
+    // Pending Journals with Comment Box
+    document.getElementById('pendingBtn').addEventListener('click', () => {
+        setActiveTab('pendingBtn');
+        contentDiv.innerHTML = `
+        <div class="pending-journals-box">
+            <h3>Pending Journals for Review</h3>
+
+            <div class="journal-entry">
+                <p><strong>Title:</strong> Crime Trends in 2024</p>
+                <p><strong>Author:</strong> Alice Martin</p>
+                <a href="#" target="_blank">View File</a><br>
+
+                <label for="comment1"><strong>Reviewer Comment:</strong></label><br>
+                <textarea id="comment1" class="review-comment" placeholder="Write your comment here..."></textarea><br>
+
+                <button class="review-btn approve">Approve</button>
+                <button class="review-btn reject">Reject</button>
+            </div>
+
+            <div class="journal-entry">
+                <p><strong>Title:</strong> AI and Law Enforcement</p>
+                <p><strong>Author:</strong> Brian Lee</p>
+                <a href="#" target="_blank">View File</a><br>
+
+                <label for="comment2"><strong>Reviewer Comment:</strong></label><br>
+                <textarea id="comment2" class="review-comment" placeholder="Write your comment here..."></textarea><br>
+
+                <button class="review-btn approve">Approve</button>
+                <button class="review-btn reject">Reject</button>
+            </div>
+        </div>
+    `;
+    });
+    // Reviewed Journals
+    document.getElementById('feedbackBtn').addEventListener('click', () => {
+        setActiveTab('feedbackBtn');
+        contentDiv.innerHTML = `
+        <div class="reviewed-journals-box">
+            <h3>Reviewed Journals</h3>
+            <div class="journal-entry">
+                <p><strong>Title:</strong> Cybersecurity Policies</p>
+                <p><strong>Author:</strong> Dana Smith</p>
+                <a href="#" target="_blank">View File</a>
+                <p><strong>Reviewer Comment:</strong> Well-researched and clearly written. Approved.</p>
+            </div>
+            <div class="journal-entry">
+                <p><strong>Title:</strong> Facial Recognition & Privacy</p>
+                <p><strong>Author:</strong> Kevin Tran</p>
+                <a href="#" target="_blank">View File</a>
+                <p><strong>Reviewer Comment:</strong> Needs stronger citations. Rejected for now.</p>
+            </div>
+        </div>
+    `;
+    });
 })
 
 

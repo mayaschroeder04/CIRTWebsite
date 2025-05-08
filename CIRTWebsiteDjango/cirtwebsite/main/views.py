@@ -470,10 +470,6 @@ def verify_otp_user(user, otp):
     return cached_otp == otp
 
 
-def terms_conditions(request):
-    return render(request, "terms_and_conditions.html")
-
-
 # ---------------------------
 # Document Upload & Viewing
 # ---------------------------
